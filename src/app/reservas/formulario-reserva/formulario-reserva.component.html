@@ -1,0 +1,166 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title mb-0">Nueva Reserva</h2>
+        </div>
+
+        <div class="card-body">
+          <!-- Mensajes de éxito -->
+          <div *ngIf="mensaje" class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ mensaje }}
+            <button type="button" class="btn-close" (click)="mensaje = null"></button>
+          </div>
+
+          <!-- Mensajes de error -->
+          <div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ error }}
+            <button type="button" class="btn-close" (click)="error = null"></button>
+          </div>
+
+          <form [formGroup]="reservaForm">
+            
+            <!-- Área Común -->
+            <div class="form-group mb-3">
+              <label for="area_comun" class="form-label">Área Común *</label>
+              <select 
+                id="area_comun" 
+                formControlName="area_comun"
+                class="form-control"
+                [class.is-invalid]="reservaForm.get('area_comun')?.invalid && reservaForm.get('area_comun')?.touched">
+                <option value="">Seleccionar área</option>
+                <option *ngFor="let area of areasComunes" [value]="area.id">
+                  {{ area.nombre }} - Bs{{ area.tarifa }}/hora
+                </option>
+              </select>
+              <div *ngIf="reservaForm.get('area_comun')?.errors?.['required'] && reservaForm.get('area_comun')?.touched" 
+                   class="invalid-feedback">
+                ⚠️ El área común es requerida
+              </div>
+            </div>
+
+            <!-- Fecha de Reserva -->
+            <div class="form-group mb-3">
+              <label for="fecha_reserva" class="form-label">Fecha de Reserva *</label>
+              <input 
+                type="date" 
+                id="fecha_reserva" 
+                formControlName="fecha_reserva"
+                [min]="getFechaMinima()"
+                class="form-control"
+                [class.is-invalid]="reservaForm.get('fecha_reserva')?.invalid && reservaForm.get('fecha_reserva')?.touched">
+              <div *ngIf="reservaForm.get('fecha_reserva')?.errors?.['required'] && reservaForm.get('fecha_reserva')?.touched" 
+                   class="invalid-feedback">
+                ⚠️ La fecha es requerida
+              </div>
+              <div *ngIf="reservaForm.get('fecha_reserva')?.errors?.['fechaInvalida']" 
+                   class="invalid-feedback">
+                ❌ La fecha no puede ser anterior a hoy
+              </div>
+            </div>
+
+            <!-- Hora de Inicio -->
+            <div class="form-group mb-3">
+              <label for="hora_inicio" class="form-label">Hora de Inicio *</label>
+              <select 
+                id="hora_inicio" 
+                formControlName="hora_inicio"
+                class="form-control"
+                [class.is-invalid]="(reservaForm.get('hora_inicio')?.invalid && reservaForm.get('hora_inicio')?.touched) || horariosInvalidos">
+                <option value="">Seleccionar hora</option>
+                <option *ngFor="let hora of horariosInicio" [value]="hora">{{ hora }}</option>
+              </select>
+              <div *ngIf="reservaForm.get('hora_inicio')?.errors?.['required'] && reservaForm.get('hora_inicio')?.touched" 
+                   class="invalid-feedback">
+                ⚠️ La hora de inicio es requerida
+              </div>
+            </div>
+
+            <!-- Hora de Fin -->
+            <div class="form-group mb-3">
+              <label for="hora_fin" class="form-label">Hora de Fin *</label>
+              <select 
+                id="hora_fin" 
+                formControlName="hora_fin"
+                class="form-control"
+                [class.is-invalid]="(reservaForm.get('hora_fin')?.invalid && reservaForm.get('hora_fin')?.touched) || horaFinInvalida || horariosInvalidos">
+                <option value="">Seleccionar hora</option>
+                <option *ngFor="let hora of horariosFin" [value]="hora">{{ hora }}</option>
+              </select>
+              
+              <div *ngIf="horaFinInvalida || horariosInvalidos" class="invalid-feedback">
+                ❌ La hora de fin debe ser posterior a la hora de inicio
+              </div>
+              
+              <div *ngIf="reservaForm.get('hora_fin')?.errors?.['required'] && reservaForm.get('hora_fin')?.touched" 
+                   class="invalid-feedback">
+                ⚠️ La hora de fin es requerida
+              </div>
+            </div>
+
+            <!-- Monto Calculado -->
+            <div class="form-group mb-3">
+              <label for="monto" class="form-label">Monto Total</label>
+              <input 
+                type="text" 
+                id="monto" 
+                formControlName="monto"
+                class="form-control"
+                readonly>
+              <small class="form-text text-muted">
+                Duración: {{ getDuracionHoras() }} hora(s)
+              </small>
+            </div>
+
+            <!-- Resumen de Reserva -->
+            <div *ngIf="reservaForm.get('area_comun')?.value && reservaForm.get('fecha_reserva')?.value" 
+                 class="card mb-4">
+              <div class="card-body">
+                <h5 class="card-title">Resumen de la Reserva:</h5>
+                <p><strong>Área:</strong> {{ getAreaDisplayName(reservaForm.get('area_comun')?.value) }}</p>
+                <p><strong>Fecha:</strong> {{ getFechaDisplay() }}</p>
+                <p><strong>Horario:</strong> {{ reservaForm.get('hora_inicio')?.value }} - {{ reservaForm.get('hora_fin')?.value }}</p>
+                <p><strong>Duración:</strong> {{ getDuracionHoras() }} horas</p>
+                <p><strong>Total:</strong> Bs{{ reservaForm.get('monto')?.value }}</p>
+              </div>
+            </div>
+
+            <!-- Botones -->
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <button 
+                type="button" 
+                class="btn btn-secondary me-md-2"
+                (click)="verificarDisponibilidad()"
+                [disabled]="reservaForm.invalid || verificandoDisponibilidad">
+                <span *ngIf="verificandoDisponibilidad" class="spinner-border spinner-border-sm me-2"></span>
+                {{ verificandoDisponibilidad ? 'Verificando...' : 'Verificar Disponibilidad' }}
+              </button>
+
+              <button 
+                type="button" 
+                class="btn btn-primary"
+                (click)="crearReserva()"
+                [disabled]="reservaForm.invalid || !disponible || cargando">
+                <span *ngIf="cargando" class="spinner-border spinner-border-sm me-2"></span>
+                {{ cargando ? 'Creando...' : 'Crear Reserva' }}
+              </button>
+
+              <button 
+                type="button" 
+                class="btn btn-outline-secondary"
+                routerLink="/reservas">
+                Cancelar
+              </button>
+            </div>
+
+            <!-- Mensaje de disponibilidad -->
+            <div *ngIf="disponibilidadVerificada && disponible" class="alert alert-info mt-3">
+              <strong>¡Horario disponible!</strong> Puedes proceder con la reserva.
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

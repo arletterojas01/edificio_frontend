@@ -1,0 +1,406 @@
+// ========================================
+// Variables de Color del Sistema
+// ========================================
+$color-primario: #0D3B66;      // Azul oscuro
+$color-secundario: #3A86FF;    // Azul claro
+$color-acento: #4CAF50;        // Verde brillante
+$color-neutro-claro: #F5F5F5;  // Gris suave
+$color-neutro-oscuro: #6C757D; // Gris medio
+
+// Colores adicionales
+$color-blanco: #FFFFFF;
+$color-error: #dc3545;
+$color-warning: #ffc107;
+$color-success: $color-acento;
+$color-info: $color-secundario;
+
+// ========================================
+// Transiciones y Sombras
+// ========================================
+$transicion-suave: all 0.3s ease;
+$sombra-card: 0 4px 12px rgba(13, 59, 102, 0.08);
+$sombra-hover: 0 8px 24px rgba(13, 59, 102, 0.15);
+$border-radius: 12px;
+
+// ========================================
+// Contenedor Principal
+// ========================================
+.lista-reservas-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+
+  h2 {
+    color: $color-primario;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
+    padding-bottom: 1rem;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, $color-secundario, $color-acento);
+      border-radius: 2px;
+    }
+  }
+}
+
+// ========================================
+// Alertas
+// ========================================
+.alert {
+  padding: 1rem 1.25rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  border: none;
+  animation: slideDown 0.3s ease;
+
+  &.alert-info {
+    background: linear-gradient(135deg, lighten($color-secundario, 42%) 0%, lighten($color-secundario, 38%) 100%);
+    color: darken($color-secundario, 20%);
+    border-left: 4px solid $color-secundario;
+    box-shadow: 0 2px 8px rgba(58, 134, 255, 0.15);
+  }
+}
+
+// ========================================
+// Estados de Carga
+// ========================================
+.loading {
+  text-align: center;
+  padding: 3rem 1rem;
+  
+  p {
+    color: $color-neutro-oscuro;
+    font-size: 1.1rem;
+    position: relative;
+    display: inline-block;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 3px;
+      background: $color-secundario;
+      animation: loading 1.5s ease-in-out infinite;
+    }
+  }
+}
+
+// ========================================
+// Estado Sin Reservas
+// ========================================
+.no-reservas {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, $color-neutro-claro 0%, lighten($color-neutro-claro, 2%) 100%);
+  border-radius: $border-radius;
+  box-shadow: $sombra-card;
+  margin: 2rem 0;
+
+  p {
+    color: $color-neutro-oscuro;
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+  }
+
+  .btn-primary {
+    display: inline-block;
+  }
+}
+
+// ========================================
+// Cards de Reservas
+// ========================================
+.reserva-card {
+  background: $color-blanco;
+  border-radius: $border-radius;
+  box-shadow: $sombra-card;
+  padding: 1.75rem;
+  margin-bottom: 1.5rem;
+  border-left: 5px solid $color-secundario;
+  transition: $transicion-suave;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  &:hover {
+    box-shadow: $sombra-hover;
+    transform: translateY(-3px);
+    border-left-color: $color-primario;
+  }
+
+  // Información de la reserva
+  .reserva-info {
+    h3 {
+      color: $color-primario;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid $color-neutro-claro;
+      padding-bottom: 0.75rem;
+    }
+
+    p {
+      color: $color-primario;
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 0.75rem;
+
+      strong {
+        color: $color-primario;
+        font-weight: 600;
+        margin-right: 0.5rem;
+        display: inline-block;
+        min-width: 130px;
+      }
+    }
+  }
+
+  // Acciones de la reserva
+  .reserva-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid $color-neutro-claro;
+
+    @media (max-width: 576px) {
+      flex-direction: column;
+
+      .btn {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// ========================================
+// Estados de Reserva
+// ========================================
+span[class*="estado-"] {
+  display: inline-block;
+  padding: 0.35rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.estado-pendiente {
+  background: linear-gradient(135deg, lighten($color-warning, 35%) 0%, lighten($color-warning, 30%) 100%);
+  color: darken($color-warning, 20%);
+  border: 2px solid $color-warning;
+}
+
+.estado-confirmada {
+  background: linear-gradient(135deg, lighten($color-acento, 45%) 0%, lighten($color-acento, 40%) 100%);
+  color: darken($color-acento, 20%);
+  border: 2px solid $color-acento;
+}
+
+.estado-cancelada {
+  background: linear-gradient(135deg, lighten($color-error, 40%) 0%, lighten($color-error, 35%) 100%);
+  color: darken($color-error, 10%);
+  border: 2px solid $color-error;
+}
+
+.estado-completada {
+  background: linear-gradient(135deg, lighten($color-secundario, 45%) 0%, lighten($color-secundario, 40%) 100%);
+  color: darken($color-secundario, 20%);
+  border: 2px solid $color-secundario;
+}
+
+// ========================================
+// Botones
+// ========================================
+.btn {
+  padding: 0.6rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: $transicion-suave;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  // Botón Primario
+  &.btn-primary {
+    background: linear-gradient(135deg, $color-primario 0%, darken($color-primario, 8%) 100%);
+    color: $color-blanco;
+    box-shadow: 0 4px 12px rgba(13, 59, 102, 0.3);
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, darken($color-primario, 5%) 0%, darken($color-primario, 13%) 100%);
+      box-shadow: 0 6px 16px rgba(13, 59, 102, 0.4);
+      transform: translateY(-2px);
+    }
+  }
+
+  // Botón Success (Confirmar)
+  &.btn-success {
+    background: linear-gradient(135deg, $color-acento 0%, darken($color-acento, 8%) 100%);
+    color: $color-blanco;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, darken($color-acento, 5%) 0%, darken($color-acento, 13%) 100%);
+      box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+      transform: translateY(-2px);
+    }
+  }
+
+  // Botón Warning (Cancelar)
+  &.btn-warning {
+    background: linear-gradient(135deg, $color-warning 0%, darken($color-warning, 8%) 100%);
+    color: darken($color-warning, 40%);
+    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, darken($color-warning, 5%) 0%, darken($color-warning, 13%) 100%);
+      box-shadow: 0 6px 16px rgba(255, 193, 7, 0.4);
+      transform: translateY(-2px);
+      color: darken($color-warning, 45%);
+    }
+  }
+
+  // Botón Danger (Eliminar)
+  &.btn-danger {
+    background: linear-gradient(135deg, $color-error 0%, darken($color-error, 8%) 100%);
+    color: $color-blanco;
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, darken($color-error, 5%) 0%, darken($color-error, 13%) 100%);
+      box-shadow: 0 6px 16px rgba(220, 53, 69, 0.4);
+      transform: translateY(-2px);
+    }
+  }
+
+  // Botón Info (Ver QR)
+  &.btn-info {
+    background: linear-gradient(135deg, $color-secundario 0%, darken($color-secundario, 8%) 100%);
+    color: $color-blanco;
+    box-shadow: 0 4px 12px rgba(58, 134, 255, 0.3);
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, darken($color-secundario, 5%) 0%, darken($color-secundario, 13%) 100%);
+      box-shadow: 0 6px 16px rgba(58, 134, 255, 0.4);
+      transform: translateY(-2px);
+    }
+  }
+
+  // Tamaño pequeño
+  &.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+}
+
+// ========================================
+// Animaciones
+// ========================================
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes loading {
+  0%, 100% {
+    width: 40px;
+  }
+  50% {
+    width: 80px;
+  }
+}
+
+// ========================================
+// Responsive
+// ========================================
+@media (max-width: 768px) {
+  .lista-reservas-container {
+    padding: 1.5rem 1rem;
+
+    h2 {
+      font-size: 1.75rem;
+    }
+  }
+
+  .reserva-card {
+    padding: 1.25rem;
+
+    .reserva-info {
+      h3 {
+        font-size: 1.25rem;
+      }
+
+      p {
+        font-size: 0.9rem;
+
+        strong {
+          display: block;
+          margin-bottom: 0.25rem;
+          min-width: auto;
+        }
+      }
+    }
+  }
+
+  span[class*="estado-"] {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.75rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .lista-reservas-container {
+    padding: 1rem 0.75rem;
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  .reserva-card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .no-reservas {
+    padding: 3rem 1.5rem;
+
+    p {
+      font-size: 1.1rem;
+    }
+  }
+}

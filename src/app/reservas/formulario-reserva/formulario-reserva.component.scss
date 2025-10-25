@@ -1,0 +1,365 @@
+// ========================================
+// Variables de Color del Sistema
+// ========================================
+$color-primario: #0D3B66;      // Azul oscuro
+$color-secundario: #3A86FF;    // Azul claro
+$color-acento: #4CAF50;        // Verde brillante
+$color-neutro-claro: #F5F5F5;  // Gris suave
+$color-neutro-oscuro: #6C757D; // Gris medio
+
+// Colores adicionales
+$color-blanco: #FFFFFF;
+$color-error: #dc3545;
+$color-warning: #ffc107;
+$color-success: $color-acento;
+
+// ========================================
+// Transiciones y Sombras
+// ========================================
+$transicion-suave: all 0.3s ease;
+$sombra-card: 0 4px 12px rgba(13, 59, 102, 0.08);
+$sombra-hover: 0 8px 24px rgba(13, 59, 102, 0.15);
+$border-radius: 12px;
+
+// ========================================
+// Estilos Globales del Contenedor
+// ========================================
+.container {
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.col-md-8 {
+  width: 100%;
+  max-width: 800px;
+}
+
+// ========================================
+// Card Principal
+// ========================================
+.card {
+  background: $color-blanco;
+  border-radius: $border-radius;
+  box-shadow: $sombra-card;
+  border: none;
+  overflow: hidden;
+  transition: $transicion-suave;
+
+  &:hover {
+    box-shadow: $sombra-hover;
+  }
+
+  .card-header {
+    background: linear-gradient(135deg, $color-primario 0%, darken($color-primario, 5%) 100%);
+    color: $color-blanco;
+    padding: 1.5rem 2rem;
+    border-bottom: 3px solid $color-secundario;
+
+    .card-title {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin: 0;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  .card-body {
+    padding: 2rem;
+    background: $color-neutro-claro;
+  }
+}
+
+// ========================================
+// Formulario
+// ========================================
+form {
+  .form-group {
+    margin-bottom: 1.5rem;
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      color: $color-primario;
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+      letter-spacing: 0.3px;
+    }
+
+    .form-control,
+    select.form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      border: 2px solid lighten($color-neutro-oscuro, 30%);
+      border-radius: 8px;
+      background: $color-blanco;
+      color: $color-primario;
+      transition: $transicion-suave;
+
+      &:focus {
+        outline: none;
+        border-color: $color-secundario;
+        box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.1);
+      }
+
+      &.is-invalid {
+        border-color: $color-error;
+        background: lighten($color-error, 45%);
+      }
+
+      &:disabled,
+      &[readonly] {
+        background: lighten($color-neutro-claro, 2%);
+        cursor: not-allowed;
+        color: $color-neutro-oscuro;
+      }
+    }
+
+    .invalid-feedback {
+      display: block;
+      color: $color-error;
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+      font-weight: 500;
+    }
+
+    .form-text {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+      color: $color-neutro-oscuro;
+    }
+  }
+}
+
+// ========================================
+// Alertas
+// ========================================
+.alert {
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  animation: slideDown 0.3s ease;
+
+  &.alert-success {
+    background: linear-gradient(135deg, lighten($color-acento, 40%) 0%, lighten($color-acento, 35%) 100%);
+    color: darken($color-acento, 20%);
+    border-left: 4px solid $color-acento;
+  }
+
+  &.alert-danger {
+    background: linear-gradient(135deg, lighten($color-error, 40%) 0%, lighten($color-error, 35%) 100%);
+    color: darken($color-error, 10%);
+    border-left: 4px solid $color-error;
+  }
+
+  &.alert-info {
+    background: linear-gradient(135deg, lighten($color-secundario, 40%) 0%, lighten($color-secundario, 35%) 100%);
+    color: darken($color-secundario, 20%);
+    border-left: 4px solid $color-secundario;
+  }
+
+  .btn-close {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: inherit;
+    opacity: 0.6;
+    transition: $transicion-suave;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+// ========================================
+// Resumen de Reserva
+// ========================================
+.card .card-body .card {
+  background: $color-blanco;
+  border: 2px solid $color-secundario;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(58, 134, 255, 0.1);
+
+  .card-body {
+    padding: 1.5rem;
+    background: $color-blanco;
+
+    .card-title {
+      color: $color-primario;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid $color-neutro-claro;
+      padding-bottom: 0.5rem;
+    }
+
+    p {
+      margin-bottom: 0.75rem;
+      color: $color-primario;
+      font-size: 0.95rem;
+      line-height: 1.6;
+
+      strong {
+        color: $color-primario;
+        font-weight: 600;
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}
+
+// ========================================
+// Botones
+// ========================================
+.btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: $transicion-suave;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &.btn-primary {
+    background: linear-gradient(135deg, $color-primario 0%, darken($color-primario, 8%) 100%);
+    color: $color-blanco;
+    box-shadow: 0 4px 12px rgba(13, 59, 102, 0.3);
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, darken($color-primario, 5%) 0%, darken($color-primario, 13%) 100%);
+      box-shadow: 0 6px 16px rgba(13, 59, 102, 0.4);
+      transform: translateY(-2px);
+    }
+  }
+
+  &.btn-secondary {
+    background: linear-gradient(135deg, $color-secundario 0%, darken($color-secundario, 8%) 100%);
+    color: $color-blanco;
+    box-shadow: 0 4px 12px rgba(58, 134, 255, 0.3);
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, darken($color-secundario, 5%) 0%, darken($color-secundario, 13%) 100%);
+      box-shadow: 0 6px 16px rgba(58, 134, 255, 0.4);
+      transform: translateY(-2px);
+    }
+  }
+
+  &.btn-outline-secondary {
+    background: transparent;
+    color: $color-neutro-oscuro;
+    border: 2px solid $color-neutro-oscuro;
+
+    &:hover:not(:disabled) {
+      background: $color-neutro-oscuro;
+      color: $color-blanco;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+.d-grid {
+  display: grid;
+  gap: 1rem;
+
+  &.d-md-flex {
+    @media (min-width: 768px) {
+      display: flex;
+    }
+  }
+}
+
+.justify-content-md-end {
+  @media (min-width: 768px) {
+    justify-content: flex-end;
+  }
+}
+
+// ========================================
+// Spinner de Carga
+// ========================================
+.spinner-border {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+
+  &.spinner-border-sm {
+    width: 0.875rem;
+    height: 0.875rem;
+    border-width: 2px;
+  }
+}
+
+// ========================================
+// Animaciones
+// ========================================
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ========================================
+// Responsive
+// ========================================
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem 0.5rem;
+  }
+
+  .card {
+    .card-header {
+      padding: 1.25rem 1.5rem;
+
+      .card-title {
+        font-size: 1.5rem;
+      }
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

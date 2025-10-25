@@ -1,0 +1,381 @@
+// Variables de diseño moderno
+$color-primary: #2C3E50;
+$color-secondary: #3498DB;
+$color-accent: #E74C3C;
+$color-success: #27AE60;
+$color-warning: #F39C12;
+$color-info: #17A2B8;
+$color-light: #ECF0F1;
+$color-dark: #2C3E50;
+$color-gray: #95A5A6;
+
+// Gradientes modernos
+$gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+$gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+$gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+$gradient-warning: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+$gradient-dark: linear-gradient(135deg, #2C3E50 0%, #4CA1AF 100%);
+
+// Sombras
+$shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+$shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+$shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+$shadow-xl: 0 20px 25px rgba(0,0,0,0.1);
+
+// Mixins
+@mixin card-base {
+  background: white;
+  border-radius: 16px;
+  box-shadow: $shadow-md;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255,255,255,0.2);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+}
+
+@mixin button-modern {
+  padding: 14px 28px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  &:hover::before {
+    left: 100%;
+  }
+}
+
+// Reset y base
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: $color-dark;
+}
+
+// Layout principal
+.dashboard-container {
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+// Header moderno
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: $shadow-lg;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: $gradient-primary;
+  }
+}
+
+.dashboard-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: $gradient-primary;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-subtitle {
+  color: $color-gray;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+// Badge de rol mejorado
+.role-badge-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.rol-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 700;
+  color: white;
+  font-size: 0.9rem;
+  box-shadow: $shadow-md;
+  background: $gradient-dark;
+  border: 2px solid rgba(255,255,255,0.2);
+  
+  .badge-icon {
+    font-size: 1.2rem;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+  }
+}
+
+// Navegación moderna
+.nav-menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.nav-item {
+  @include card-base;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  border: 2px solid transparent;
+  
+  &:hover {
+    border-color: $color-secondary;
+    transform: translateY(-5px) scale(1.02);
+  }
+  
+  .nav-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+  }
+  
+  .nav-text {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: $color-dark;
+    margin-bottom: 0.5rem;
+  }
+  
+  .nav-description {
+    color: $color-gray;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+}
+
+// Selector de roles mejorado
+.role-selector-container {
+  @include card-base;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  
+  .selector-label {
+    font-weight: 600;
+    color: $color-dark;
+    margin-bottom: 1rem;
+    display: block;
+    font-size: 1.1rem;
+  }
+}
+
+.role-dropdown {
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: 2px solid #e0e0e0;
+  background: white;
+  font-weight: 600;
+  font-size: 1rem;
+  color: $color-dark;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 250px;
+  
+  &:focus {
+    outline: none;
+    border-color: $color-secondary;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  }
+  
+  option {
+    padding: 10px;
+    font-weight: 600;
+  }
+}
+
+// Estados de los ítems de navegación por rol
+.nav-item[data-role="admin"] {
+  background: linear-gradient(135deg, #fff 0%, #ffecec 100%);
+  border-left: 4px solid $color-accent;
+}
+
+.nav-item[data-role="junta"] {
+  background: linear-gradient(135deg, #fff 0%, #fff4e6 100%);
+  border-left: 4px solid $color-warning;
+}
+
+.nav-item[data-role="personal"] {
+  background: linear-gradient(135deg, #fff 0%, #e6f7ff 100%);
+  border-left: 4px solid $color-info;
+}
+
+.nav-item[data-role="residente"] {
+  background: linear-gradient(135deg, #fff 0%, #f0fff4 100%);
+  border-left: 4px solid $color-success;
+}
+
+// Efectos de hover específicos
+.nav-item[data-role="admin"]:hover .nav-icon {
+  transform: scale(1.1);
+  color: $color-accent;
+}
+
+.nav-item[data-role="junta"]:hover .nav-icon {
+  transform: scale(1.1);
+  color: $color-warning;
+}
+
+.nav-item[data-role="personal"]:hover .nav-icon {
+  transform: scale(1.1);
+  color: $color-info;
+}
+
+.nav-item[data-role="residente"]:hover .nav-icon {
+  transform: scale(1.1);
+  color: $color-success;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 1rem;
+  }
+  
+  .dashboard-header {
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .dashboard-title {
+    font-size: 2rem;
+  }
+  
+  .nav-menu {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .nav-item {
+    padding: 1.5rem;
+    
+    .nav-icon {
+      font-size: 2.5rem;
+    }
+    
+    .nav-text {
+      font-size: 1.1rem;
+    }
+  }
+  
+  .role-dropdown {
+    min-width: 200px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-title {
+    font-size: 1.5rem;
+  }
+  
+  .role-badge-container {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .nav-item {
+    padding: 1rem;
+    
+    .nav-icon {
+      font-size: 2rem;
+    }
+  }
+}
+
+// Animaciones
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nav-item {
+  animation: fadeInUp 0.6s ease-out;
+  
+  &:nth-child(1) { animation-delay: 0.1s; }
+  &:nth-child(2) { animation-delay: 0.2s; }
+  &:nth-child(3) { animation-delay: 0.3s; }
+  &:nth-child(4) { animation-delay: 0.4s; }
+}
+
+// Estados de carga
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid $color-secondary;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}

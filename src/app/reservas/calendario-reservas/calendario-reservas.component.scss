@@ -1,0 +1,640 @@
+// Variables de colores del sistema
+$color-primario: #0D3B66;
+$color-secundario: #3A86FF;
+$color-acento: #4CAF50;
+$color-neutro-claro: #F5F5F5;
+$color-neutro-oscuro: #6C757D;
+$color-warning: #FFC107;
+$color-danger: #DC3545;
+$color-info: #17A2B8;
+$color-white: #FFFFFF;
+$color-black: #212529;
+
+.calendario-container {
+  padding: 2rem;
+  background: linear-gradient(135deg, $color-neutro-claro 0%, #E8E8E8 100%);
+  min-height: calc(100vh - 80px);
+
+  // Header Section
+  .header-section {
+    background: $color-white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 2rem;
+  }
+
+  // Título principal
+  h1, h2, .titulo-principal {
+    color: $color-primario;
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+
+    i {
+      color: $color-secundario;
+      font-size: 2.25rem;
+      margin-right: 0.75rem;
+    }
+  }
+
+  // Grupo de botones de acción - CORREGIDO
+  .btn-group,
+  .d-flex.gap-2 {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    align-items: stretch; // Asegura que todos tengan la misma altura
+
+    button, .btn, a.btn {
+      font-weight: 600;
+      border-radius: 10px;
+      padding: 0.75rem 1.5rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      min-width: 140px;
+      white-space: nowrap;
+      text-decoration: none;
+      flex-shrink: 0; // Evita que se compriman
+
+      i {
+        margin-right: 0.5rem;
+        font-size: 1.1rem;
+        transition: transform 0.3s ease;
+      }
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+        i {
+          transform: scale(1.15);
+        }
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+    }
+
+    // Botón Actualizar
+    button:first-child,
+    .btn-actualizar,
+    .btn-outline-secondary {
+      background: $color-white;
+      color: $color-neutro-oscuro;
+      border: 2px solid $color-neutro-oscuro !important;
+
+      &:hover {
+        background: $color-neutro-oscuro;
+        color: $color-white;
+        border-color: $color-neutro-oscuro;
+      }
+    }
+
+    // Botón Mis Reservas
+    .btn-info,
+    button:nth-child(2):not(.btn-outline-secondary),
+    a[routerlink*="mis-reservas"] {
+      background: linear-gradient(135deg, $color-secundario 0%, lighten($color-secundario, 10%) 100%);
+      color: $color-white;
+
+      &:hover {
+        background: linear-gradient(135deg, darken($color-secundario, 5%) 0%, $color-secundario 100%);
+      }
+    }
+
+    // Botón Nueva Reserva
+    .btn-primary,
+    .btn-success,
+    a[routerlink*="nueva"] {
+      background: linear-gradient(135deg, $color-primario 0%, lighten($color-primario, 10%) 100%);
+      color: $color-white;
+
+      &:hover {
+        background: linear-gradient(135deg, darken($color-primario, 5%) 0%, $color-primario 100%);
+      }
+    }
+  }
+
+  // Sección de estados - MEJORADA
+  .estados-section,
+  .row.mb-4 {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 1.25rem;
+    background: linear-gradient(135deg, rgba($color-primario, 0.03) 0%, rgba($color-secundario, 0.03) 100%);
+    border-radius: 12px;
+    border: 2px solid rgba($color-primario, 0.1);
+    margin-bottom: 1.5rem;
+
+    // Etiqueta "Estados:"
+    .label,
+    .fw-bold,
+    span:first-child {
+      font-weight: 700;
+      color: $color-primario;
+      font-size: 1.05rem;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+    }
+
+    // Contenedor de badges
+    .d-flex.flex-wrap,
+    .badges-container {
+      display: flex;
+      gap: 0.875rem; // Espacio uniforme entre badges
+      flex-wrap: wrap;
+      align-items: center;
+      flex: 1;
+    }
+  }
+
+  // Badges de estados - TODOS DEL MISMO TAMAÑO
+  .badge,
+  span.badge {
+    padding: 0.625rem 1.25rem;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    min-width: 130px; // Ancho mínimo uniforme
+    height: 38px; // Altura fija
+    text-align: center;
+
+    // Iconos dentro de badges
+    i {
+      font-size: 1rem;
+      margin: 0;
+    }
+
+    &:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    // Estado Confirmada
+    &.confirmada,
+    &.bg-success {
+      background: linear-gradient(135deg, $color-acento 0%, lighten($color-acento, 12%) 100%);
+      color: $color-white;
+      
+      &::before {
+        content: "✓";
+        font-weight: bold;
+        margin-right: 0.25rem;
+      }
+    }
+
+    // Estado Pendiente
+    &.pendiente,
+    &.bg-warning {
+      background: linear-gradient(135deg, $color-warning 0%, lighten($color-warning, 12%) 100%);
+      color: $color-black;
+      
+      &::before {
+        content: "⏱";
+        margin-right: 0.25rem;
+      }
+    }
+
+    // Estado Cancelada
+    &.cancelada,
+    &.bg-danger {
+      background: linear-gradient(135deg, $color-danger 0%, lighten($color-danger, 12%) 100%);
+      color: $color-white;
+      
+      &::before {
+        content: "✕";
+        font-weight: bold;
+        margin-right: 0.25rem;
+      }
+    }
+
+    // Estado Completada
+    &.completada,
+    &.bg-info {
+      background: linear-gradient(135deg, $color-secundario 0%, lighten($color-secundario, 12%) 100%);
+      color: $color-white;
+      
+      &::before {
+        content: "✔";
+        font-weight: bold;
+        margin-right: 0.25rem;
+      }
+    }
+  }
+
+  // Controles del calendario - MEJORADO
+  .calendar-controls,
+  .d-flex.justify-content-between.align-items-center {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding: 1.25rem;
+    background: $color-white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    flex-wrap: wrap;
+    gap: 1.25rem;
+
+    // Botones de navegación
+    .nav-buttons {
+      display: flex;
+      gap: 0.625rem;
+      align-items: center;
+
+      button {
+        width: 45px;
+        height: 45px;
+        padding: 0;
+        background: $color-primario;
+        color: $color-white;
+        border-radius: 10px;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: darken($color-primario, 5%);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba($color-primario, 0.3);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+
+        // Botón "Hoy"
+        &.btn-hoy {
+          width: auto;
+          padding: 0 1.25rem;
+          background: $color-secundario;
+          font-size: 1rem;
+          min-width: 70px;
+
+          &:hover {
+            background: darken($color-secundario, 5%);
+          }
+        }
+      }
+    }
+
+    // Título del mes/año
+    h3, h4,
+    .mes-anio {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: $color-primario;
+      text-align: center;
+      margin: 0;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    // Botones de vista (Mes, Semana, Día)
+    .view-buttons {
+      display: flex;
+      gap: 0.5rem;
+
+      button {
+        padding: 0.625rem 1.25rem;
+        background: $color-neutro-claro;
+        color: $color-primario;
+        font-weight: 600;
+        border-radius: 8px;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+
+        &.active {
+          background: $color-primario;
+          color: $color-white;
+          border-color: $color-primario;
+        }
+
+        &:hover:not(.active) {
+          background: $color-secundario;
+          color: $color-white;
+          border-color: $color-secundario;
+        }
+      }
+    }
+  }
+
+  // Card del calendario
+  .card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background: $color-white;
+    margin-bottom: 2rem;
+
+    .card-body {
+      padding: 1.5rem;
+    }
+  }
+
+  // Alertas
+  .alert {
+    border: none;
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+    animation: slideDown 0.4s ease;
+
+    &.alert-info {
+      background: linear-gradient(135deg, rgba($color-secundario, 0.1) 0%, rgba($color-secundario, 0.05) 100%);
+      border-left: 4px solid $color-secundario;
+      color: darken($color-secundario, 20%);
+    }
+
+    &.alert-danger {
+      background: linear-gradient(135deg, rgba($color-danger, 0.1) 0%, rgba($color-danger, 0.05) 100%);
+      border-left: 4px solid $color-danger;
+      color: darken($color-danger, 15%);
+    }
+
+    &.alert-success {
+      background: linear-gradient(135deg, rgba($color-acento, 0.1) 0%, rgba($color-acento, 0.05) 100%);
+      border-left: 4px solid $color-acento;
+      color: darken($color-acento, 20%);
+    }
+  }
+
+  // Estado vacío
+  .empty-state,
+  .text-center.py-5 {
+    padding: 3rem 1.5rem;
+    text-align: center;
+    background: $color-white;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    i {
+      font-size: 5rem;
+      color: $color-neutro-oscuro;
+      opacity: 0.3;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    h4, h5 {
+      color: $color-primario;
+      font-weight: 600;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    p {
+      color: $color-neutro-oscuro;
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, $color-acento 0%, lighten($color-acento, 10%) 100%);
+      color: $color-white;
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
+      border-radius: 12px;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba($color-acento, 0.4);
+
+      &:hover {
+        background: linear-gradient(135deg, darken($color-acento, 5%) 0%, $color-acento 100%);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 16px rgba($color-acento, 0.5);
+      }
+    }
+  }
+
+  // FullCalendar personalizado
+  ::ng-deep {
+    .fc {
+      .fc-toolbar {
+        padding: 1.25rem;
+        background: linear-gradient(135deg, $color-neutro-claro 0%, #FAFAFA 100%);
+        border-radius: 12px;
+        margin-bottom: 1.5rem;
+
+        .fc-toolbar-title {
+          font-size: 1.75rem;
+          font-weight: 700;
+          color: $color-primario;
+        }
+
+        .fc-button {
+          background: $color-primario;
+          border: none;
+          padding: 0.625rem 1.25rem;
+          border-radius: 10px;
+          font-weight: 500;
+          transition: all 0.3s ease;
+
+          &:hover {
+            background: darken($color-primario, 5%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba($color-primario, 0.4);
+          }
+
+          &.fc-button-active {
+            background: $color-secundario;
+          }
+        }
+      }
+
+      .fc-col-header-cell {
+        background: $color-primario;
+        color: $color-white;
+        font-weight: 600;
+        padding: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .fc-daygrid-day {
+        transition: background 0.2s ease;
+
+        &:hover {
+          background: rgba($color-secundario, 0.05);
+        }
+
+        &.fc-day-today {
+          background: rgba($color-acento, 0.1) !important;
+          border: 2px solid $color-acento;
+
+          .fc-daygrid-day-number {
+            color: $color-acento;
+            font-weight: 700;
+          }
+        }
+
+        .fc-daygrid-day-number {
+          color: $color-primario;
+          font-weight: 600;
+          padding: 0.5rem;
+        }
+      }
+
+      .fc-event {
+        border: none;
+        border-radius: 6px;
+        padding: 4px 8px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+
+        &:hover {
+          transform: scale(1.05);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+        }
+      }
+    }
+  }
+
+  // Animaciones
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  // Responsive
+  @media (max-width: 992px) {
+    padding: 1.5rem;
+
+    h1, h2 {
+      font-size: 1.75rem;
+    }
+
+    .d-flex.gap-2,
+    .btn-group {
+      gap: 0.75rem;
+
+      button, .btn {
+        min-width: 120px;
+        padding: 0.625rem 1.25rem;
+        font-size: 0.95rem;
+      }
+    }
+
+    .badge {
+      min-width: 120px;
+      font-size: 0.85rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+
+    h1, h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .d-flex.gap-2,
+    .btn-group {
+      flex-direction: column;
+      gap: 0.75rem;
+
+      button, .btn, a.btn {
+        width: 100%;
+        min-width: unset;
+      }
+    }
+
+    .estados-section,
+    .row.mb-4 {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 1rem;
+
+      .label,
+      .fw-bold {
+        margin-bottom: 0.75rem;
+        text-align: left;
+      }
+
+      .d-flex.flex-wrap {
+        flex-direction: column;
+        gap: 0.625rem;
+
+        .badge {
+          width: 100%;
+          min-width: unset;
+        }
+      }
+    }
+
+    .calendar-controls,
+    .d-flex.justify-content-between {
+      flex-direction: column;
+      gap: 1rem;
+
+      h3, h4 {
+        order: -1;
+        font-size: 1.5rem;
+      }
+
+      .nav-buttons,
+      .view-buttons {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  }
+
+  @media (max-width: 576px) {
+    .badge {
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+      height: 36px;
+    }
+  }
+}

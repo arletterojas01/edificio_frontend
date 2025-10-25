@@ -1,0 +1,84 @@
+<!-- lista-reservas.component.html -->
+<div class="lista-reservas-container">
+  <h2>Mis Reservas</h2>
+
+  @if (mensaje) {
+    <div class="alert alert-info">
+      {{ mensaje }}
+    </div>
+  }
+
+  @if (reservasCargando) {
+    <div class="loading">
+      <p>Cargando reservas...</p>
+    </div>
+  }
+
+  @if (!reservasCargando && reservas.length === 0) {
+    <div class="no-reservas">
+      <p>No tienes reservas activas</p>
+      <a routerLink="/reservas/crear" class="btn btn-primary">
+        Crear mi primera reserva
+      </a>
+    </div>
+  }
+
+  @for (reserva of reservas; track reserva.id) {
+    <div class="reserva-card">
+      <div class="reserva-info">
+        <h3>Reserva #{{ reserva.id }}</h3>
+        <!-- 🔹 CORREGIDO: usar area_comun_nombre en lugar de area_comun.nombre -->
+        <p><strong>Área Común:</strong> {{ reserva.area_comun_nombre || 'Área no especificada' }}</p>
+        <p><strong>Fecha:</strong> {{ reserva.fecha_reserva }}</p>
+        <p><strong>Horario:</strong> {{ reserva.hora_inicio }} - {{ reserva.hora_fin }}</p>
+        <p><strong>Monto:</strong> Bs{{ reserva.monto }}</p>
+        <p><strong>Estado:</strong> 
+          <span [class]="getEstadoClass(reserva.estado)">
+            {{ reserva.estado }}
+          </span>
+        </p>
+        @if (reserva.observaciones) {
+          <p><strong>Observaciones:</strong> {{ reserva.observaciones }}</p>
+        }
+      </div>
+      
+      <div class="reserva-actions">
+        <!-- Confirmar (solo pendientes) -->
+        @if (reserva.estado === 'pendiente') {
+          <button 
+            (click)="confirmarReserva(reserva)"
+            class="btn btn-success btn-sm">
+            ✅ Confirmar
+          </button>
+        }
+
+        <!-- Cancelar (solo pendientes o confirmadas) -->
+        @if (puedeCancelar(reserva)) {
+          <button 
+            (click)="cancelarReserva(reserva)"
+            class="btn btn-warning btn-sm">
+            ❌ Cancelar
+          </button>
+        }
+
+        <!-- Eliminar (si está cancelada o completada) -->
+        @if (puedeEliminar(reserva)) {
+          <button 
+            (click)="eliminarReserva(reserva)"
+            class="btn btn-danger btn-sm">
+            🗑️ Eliminar
+          </button>
+        }
+
+        <!-- QR (si está confirmada) -->
+        @if (reserva.estado === 'confirmada') {
+          <button 
+            [routerLink]="['/reservas/qr', reserva.id]"
+            class="btn btn-info btn-sm">
+            📱 Ver QR
+          </button>
+        }
+      </div>
+    </div>
+  }
+</div>

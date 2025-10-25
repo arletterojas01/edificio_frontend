@@ -1,0 +1,85 @@
+  <div *ngIf="mostrarQR" class="qr-modal">
+    <div class="qr-modal-content">
+      <h3>Activa tu autenticador</h3>
+      <p>Escanea este QR con tu app de autenticación (Google Authenticator, Authy, etc):</p>
+      <img [src]="qrImageUrl" alt="QR 2FA" style="max-width: 220px; margin: 0 auto; display: block; border: 2px solid #3A86FF; border-radius: 8px;">
+      <form (ngSubmit)="verificarCodigo2FA()" #qr2FAForm="ngForm" class="login-form">
+        <div class="form-group">
+          <label for="username2FAQR">Usuario:</label>
+          <input *ngIf="credencialesGuardadas" id="username2FAQR" name="username2FAQR" [value]="credencialesGuardadas.username" required class="input-field" readonly>
+        </div>
+        <div class="form-group">
+          <label for="codigo2FA">Código 2FA:</label>
+          <input id="codigo2FA" name="codigo2FA" [(ngModel)]="codigo2FA" required class="input-field">
+        </div>
+        <button type="submit" [disabled]="qr2FAForm.invalid" class="main-btn">Activar y verificar 2FA</button>
+      </form>
+    </div>
+    <div class="qr-modal-backdrop"></div>
+  </div>
+<div class="login-container">
+  <h2 class="login-title">Iniciar sesión</h2>
+  
+  <!-- Mensaje informativo del sistema -->
+  <div *ngIf="loginMessage" class="system-message" [ngClass]="{'info': !error, 'error': error}">
+    {{ loginMessage }}
+  </div>
+  
+  <form *ngIf="!mostrarTokenCorreo && !mostrarToken2FA" (ngSubmit)="login()" #loginForm="ngForm" class="login-form">
+    <div class="form-group">
+      <label for="username">Usuario:</label>
+      <input id="username" name="username" [(ngModel)]="username" required class="input-field" (blur)="verificarEstadoCuenta()">
+      <!-- Mensaje de estado de cuenta -->
+      <div *ngIf="estadoCuenta" class="estado-cuenta-msg" [ngStyle]="{'color': estadoCuentaColor}">
+        {{ estadoCuenta }}
+      </div>
+    </div>
+    <div class="form-group password-group">
+      <label for="password">Contraseña:</label>
+      <input id="password" name="password" [type]="mostrarPassword ? 'text' : 'password'" [(ngModel)]="password" required class="input-field password-input">
+      <button type="button" (click)="mostrarPassword = !mostrarPassword" tabindex="-1" class="toggle-password-btn">
+        <svg [attr.fill]="mostrarPassword ? '#3A86FF' : '#6C757D'" width="20" height="20" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="8" ry="5.5" stroke="#3A86FF" stroke-width="1.5" fill="none"/><circle cx="12" cy="12" r="2.5"/></svg>
+      </button>
+    </div>
+    <div class="form-group">
+      <label for="email">Correo de verificación:</label>
+      <input id="email" name="email" [(ngModel)]="email" type="email" class="input-field">
+    </div>
+    <div class="form-group">
+      <label for="captcha">Captcha:</label>
+      <div class="captcha-box">{{ captchaPregunta }}</div>
+      <input id="captcha" name="captcha" [(ngModel)]="captcha" autocomplete="off" class="input-field">
+      <button type="button" (click)="generarCaptcha()" class="captcha-btn">Nuevo captcha</button>
+    </div>
+    <button type="submit" [disabled]="loginForm.invalid" class="main-btn">Entrar</button>
+    <div *ngIf="error" class="login-error-msg" style="color: #c62828; margin-top: 1rem; font-weight: 500; text-align: center;">
+      {{ error }}
+    </div>
+  </form>
+  <form *ngIf="mostrarTokenCorreo" (ngSubmit)="verificarTokenCorreo()" #tokenCorreoForm="ngForm" class="login-form">
+    <div class="form-group">
+      <label for="tokenCorreo">Token de verificación (correo):</label>
+      <input id="tokenCorreo" name="tokenCorreo" [(ngModel)]="tokenCorreo" required class="input-field">
+    </div>
+    <button type="submit" [disabled]="tokenCorreoForm.invalid" class="main-btn">Verificar token</button>
+  </form>
+  <form *ngIf="mostrarToken2FA && !mostrarQR" (ngSubmit)="verificarCodigo2FA()" #token2FAForm="ngForm" class="login-form">
+    <div class="form-group">
+      <label for="username2FA">Usuario:</label>
+  <input *ngIf="credencialesGuardadas" id="username2FA" name="username2FA" [value]="credencialesGuardadas.username" required class="input-field" readonly>
+    </div>
+    <div class="form-group">
+      <label for="codigo2FA">Código 2FA (autenticador):</label>
+      <input id="codigo2FA" name="codigo2FA" [(ngModel)]="codigo2FA" required class="input-field">
+    </div>
+    <button type="submit" [disabled]="token2FAForm.invalid" class="main-btn">Verificar 2FA</button>
+  </form>
+  <div class="forgot-password-link">
+    <button type="button" (click)="onForgotPassword()">Olvidé mi contraseña</button>
+  </div>
+  <div class="volver-link">
+    <a routerLink="/" class="volver-btn">Volver</a>
+  </div>
+  <p class="login-success" *ngIf="mensaje && !error" style="color: #388e3c;">{{ mensaje }}</p>
+  <p class="login-error" *ngIf="error" style="color:#d32f2f;">{{ error }}</p>
+</div>

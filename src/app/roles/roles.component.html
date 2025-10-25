@@ -1,0 +1,33 @@
+<div class="roles-container">
+  <div class="header-section">
+    <button class="btn-back" (click)="volverAlDashboard()">← Volver al Dashboard</button>
+    <h1>🎭 Gestión de Roles</h1>
+    <p>Información sobre los roles del sistema</p>
+  </div>
+
+  <div *ngIf="esAdmin" class="admin-section">
+    <div class="admin-card">
+      <h3>👑 Panel de Administración</h3>
+      <p>Gestiona los roles de todos los usuarios</p>
+      <button class="btn-admin" (click)="goToGestionRoles()">
+        👥 Gestionar Roles de Usuarios
+      </button>
+    </div>
+  </div>
+
+  <div class="roles-grid">
+    <div *ngFor="let rol of rolesInfo" class="role-card">
+      <div class="role-header">
+        <span class="role-icon">{{ rol.icon }}</span>
+        <h3>{{ rol.title }}</h3>
+      </div>
+      <p>{{ rol.description }}</p>
+      <div class="permisos-section">
+        <h4>Permisos:</h4>
+        <ul>
+          <li *ngFor="let permiso of rol.permisos">✓ {{ permiso }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

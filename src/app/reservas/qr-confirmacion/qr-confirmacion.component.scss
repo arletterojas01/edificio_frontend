@@ -1,0 +1,606 @@
+// ========================================
+// Variables de Color del Sistema
+// ========================================
+$color-primario: #0D3B66;      // Azul oscuro
+$color-secundario: #3A86FF;    // Azul claro
+$color-acento: #4CAF50;        // Verde brillante
+$color-neutro-claro: #F5F5F5;  // Gris suave
+$color-neutro-oscuro: #6C757D; // Gris medio
+
+// Colores adicionales
+$color-blanco: #FFFFFF;
+$color-error: #dc3545;
+$color-warning: #ffc107;
+$color-success: $color-acento;
+
+// ========================================
+// Transiciones y Sombras
+// ========================================
+$transicion-suave: all 0.3s ease;
+$sombra-card: 0 4px 12px rgba(13, 59, 102, 0.08);
+$sombra-hover: 0 8px 24px rgba(13, 59, 102, 0.15);
+$sombra-qr: 0 4px 20px rgba(13, 59, 102, 0.12);
+$border-radius: 12px;
+
+// ========================================
+// Contenedor Principal
+// ========================================
+.qr-confirmacion-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  min-height: calc(100vh - 100px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// ========================================
+// Card Principal
+// ========================================
+.card {
+  background: $color-blanco;
+  border-radius: $border-radius;
+  box-shadow: $sombra-card;
+  border: none;
+  overflow: hidden;
+  width: 100%;
+  animation: fadeIn 0.4s ease;
+
+  .card-header {
+    background: linear-gradient(135deg, $color-primario 0%, darken($color-primario, 5%) 100%);
+    color: $color-blanco;
+    padding: 1.75rem 2rem;
+    border-bottom: 3px solid $color-secundario;
+
+    h4 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0.5px;
+
+      i {
+        font-size: 1.75rem;
+      }
+    }
+  }
+
+  .card-body {
+    padding: 2.5rem;
+    background: linear-gradient(180deg, $color-blanco 0%, lighten($color-neutro-claro, 3%) 100%);
+  }
+}
+
+// ========================================
+// Estados de Carga
+// ========================================
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+  border: 4px solid rgba(58, 134, 255, 0.2);
+  border-right-color: $color-secundario;
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+
+  &.text-primary {
+    border-right-color: $color-primario;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.text-muted {
+  color: $color-neutro-oscuro !important;
+  font-size: 0.95rem;
+}
+
+// ========================================
+// Alertas
+// ========================================
+.alert {
+  padding: 1.25rem 1.5rem;
+  border-radius: 10px;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: slideDown 0.3s ease;
+
+  &.alert-danger {
+    background: linear-gradient(135deg, lighten($color-error, 40%) 0%, lighten($color-error, 35%) 100%);
+    color: darken($color-error, 10%);
+    border-left: 4px solid $color-error;
+    box-shadow: 0 2px 8px rgba(220, 53, 69, 0.15);
+  }
+
+  &.alert-warning {
+    background: linear-gradient(135deg, lighten($color-warning, 38%) 0%, lighten($color-warning, 33%) 100%);
+    color: darken($color-warning, 30%);
+    border-left: 4px solid $color-warning;
+    box-shadow: 0 2px 8px rgba(255, 193, 7, 0.15);
+  }
+
+  i {
+    font-size: 1.25rem;
+  }
+
+  .mt-2 {
+    margin-top: 0.75rem;
+  }
+}
+
+// ========================================
+// Información de la Reserva
+// ========================================
+.reserva-info {
+  background: $color-blanco;
+  border-radius: 10px;
+  padding: 1.75rem;
+  box-shadow: 0 2px 8px rgba(13, 59, 102, 0.06);
+  border: 2px solid $color-neutro-claro;
+
+  h5 {
+    color: $color-primario;
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid $color-secundario;
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -0.75rem;
+  }
+
+  .col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 0 0.75rem;
+
+    @media (max-width: 768px) {
+      flex: 0 0 100%;
+      max-width: 100%;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .text-start {
+    text-align: left;
+  }
+
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    background: lighten($color-neutro-claro, 3%);
+    border-radius: 6px;
+    transition: $transicion-suave;
+
+    &:hover {
+      background: $color-neutro-claro;
+      transform: translateX(3px);
+    }
+
+    .label {
+      color: $color-neutro-oscuro;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.35rem;
+    }
+
+    .value {
+      color: $color-primario;
+      font-size: 1.05rem;
+      font-weight: 600;
+
+      &.badge {
+        display: inline-block;
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        width: fit-content;
+      }
+    }
+  }
+}
+
+// ========================================
+// Estados de Reserva (Badges)
+// ========================================
+.estado-pendiente {
+  background: linear-gradient(135deg, lighten($color-warning, 35%) 0%, lighten($color-warning, 30%) 100%);
+  color: darken($color-warning, 20%);
+  border: 2px solid $color-warning;
+}
+
+.estado-confirmada {
+  background: linear-gradient(135deg, lighten($color-acento, 45%) 0%, lighten($color-acento, 40%) 100%);
+  color: darken($color-acento, 20%);
+  border: 2px solid $color-acento;
+}
+
+.estado-cancelada {
+  background: linear-gradient(135deg, lighten($color-error, 40%) 0%, lighten($color-error, 35%) 100%);
+  color: darken($color-error, 10%);
+  border: 2px solid $color-error;
+}
+
+.estado-completada {
+  background: linear-gradient(135deg, lighten($color-secundario, 45%) 0%, lighten($color-secundario, 40%) 100%);
+  color: darken($color-secundario, 20%);
+  border: 2px solid $color-secundario;
+}
+
+// ========================================
+// Sección del Código QR
+// ========================================
+.qr-code-section {
+  h6 {
+    color: $color-primario;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+
+  .qr-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background: $color-blanco;
+    border-radius: 12px;
+    box-shadow: $sombra-qr;
+    border: 3px solid $color-secundario;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, $color-secundario, $color-acento, $color-secundario);
+      border-radius: 12px;
+      z-index: -1;
+      opacity: 0.3;
+      animation: borderGlow 3s ease-in-out infinite;
+    }
+
+    .qr-image {
+      max-width: 280px;
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+      transition: $transicion-suave;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  .small {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+}
+
+// ========================================
+// Botones de Acción
+// ========================================
+.action-buttons {
+  margin-top: 2rem;
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -0.5rem;
+  }
+
+  .col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 0 0.5rem;
+
+    @media (max-width: 768px) {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+
+  .mb-2 {
+    margin-bottom: 1rem;
+  }
+
+  .w-100 {
+    width: 100%;
+  }
+}
+
+// ========================================
+// Botones
+// ========================================
+.btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: $transicion-suave;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
+
+  i {
+    font-size: 1.1rem;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
+  // Botón Primario Outline
+  &.btn-outline-primary {
+    background: transparent;
+    color: $color-primario;
+    border: 2px solid $color-primario;
+
+    &:hover:not(:disabled) {
+      background: $color-primario;
+      color: $color-blanco;
+      box-shadow: 0 4px 12px rgba(13, 59, 102, 0.3);
+      transform: translateY(-2px);
+    }
+  }
+
+  // Botón Secundario
+  &.btn-secondary {
+    background: linear-gradient(135deg, $color-neutro-oscuro 0%, darken($color-neutro-oscuro, 8%) 100%);
+    color: $color-blanco;
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, darken($color-neutro-oscuro, 5%) 0%, darken($color-neutro-oscuro, 13%) 100%);
+      box-shadow: 0 6px 16px rgba(108, 117, 125, 0.4);
+      transform: translateY(-2px);
+    }
+  }
+
+  // Botón Small
+  &.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  // Botón Warning Outline
+  &.btn-outline-warning {
+    background: transparent;
+    color: darken($color-warning, 20%);
+    border: 2px solid $color-warning;
+
+    &:hover:not(:disabled) {
+      background: $color-warning;
+      color: darken($color-warning, 40%);
+      box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+      transform: translateY(-2px);
+    }
+  }
+
+  // Botón Danger Outline
+  &.btn-outline-danger {
+    background: transparent;
+    color: $color-error;
+    border: 2px solid $color-error;
+
+    &:hover:not(:disabled) {
+      background: $color-error;
+      color: $color-blanco;
+      box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// ========================================
+// Utilidades
+// ========================================
+.text-center {
+  text-align: center;
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.mb-3 {
+  margin-bottom: 1rem;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+
+.py-5 {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.me-2 {
+  margin-right: 0.5rem;
+}
+
+// ========================================
+// Animaciones
+// ========================================
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes borderGlow {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+// ========================================
+// Responsive
+// ========================================
+@media (max-width: 768px) {
+  .qr-confirmacion-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .card {
+    .card-header {
+      padding: 1.25rem 1.5rem;
+
+      h4 {
+        font-size: 1.25rem;
+
+        i {
+          font-size: 1.5rem;
+        }
+      }
+    }
+
+    .card-body {
+      padding: 1.75rem 1.25rem;
+    }
+  }
+
+  .reserva-info {
+    padding: 1.25rem;
+
+    h5 {
+      font-size: 1.1rem;
+    }
+
+    .info-item {
+      padding: 0.6rem;
+
+      .label {
+        font-size: 0.8rem;
+      }
+
+      .value {
+        font-size: 0.95rem;
+      }
+    }
+  }
+
+  .qr-code-section {
+    .qr-image-container {
+      padding: 1.5rem;
+
+      .qr-image {
+        max-width: 220px;
+      }
+    }
+  }
+
+  .action-buttons {
+    .btn {
+      font-size: 0.95rem;
+      padding: 0.65rem 1.25rem;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .qr-confirmacion-container {
+    padding: 1rem 0.75rem;
+  }
+
+  .card {
+    .card-header {
+      padding: 1rem 1.25rem;
+
+      h4 {
+        font-size: 1.1rem;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+
+    .card-body {
+      padding: 1.5rem 1rem;
+    }
+  }
+
+  .qr-code-section {
+    .qr-image-container {
+      padding: 1rem;
+
+      .qr-image {
+        max-width: 180px;
+      }
+    }
+  }
+}

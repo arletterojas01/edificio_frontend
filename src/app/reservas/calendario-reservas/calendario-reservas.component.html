@@ -1,0 +1,103 @@
+<div class="calendario-container">
+  <!-- DEBUG INFO - Solo en desarrollo -->
+  <div class="debug-info alert alert-info" *ngIf="false"> <!-- Cambia a *ngIf="true" para ver debug -->
+    <h6>🔧 DEBUG INFO</h6>
+    <p>Reservas cargadas: {{ reservas.length }}</p>
+    <p>Loading: {{ loading }}</p>
+    <p>Error: {{ error }}</p>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">
+      <i class="bi bi-calendar-event me-2"></i>
+      Calendario de Reservas
+    </h2>
+    <div class="d-flex gap-2">
+      <button 
+        class="btn btn-outline-secondary" 
+        (click)="refrescarCalendario()" 
+        [disabled]="loading"
+        title="Actualizar calendario">
+        <i class="bi bi-arrow-clockwise me-1" [class.spin]="loading"></i>
+        {{ loading ? 'Actualizando...' : 'Actualizar' }}
+      </button>
+      
+      <!-- NUEVO BOTÓN: Mis Reservas -->
+      <button 
+        class="btn btn-info text-white" 
+        routerLink="/reservas/mis-reservas"
+        title="Ver mis reservas">
+        <i class="bi bi-list-check me-1"></i>
+        Mis Reservas
+      </button>
+      
+      <button 
+        class="btn btn-primary" 
+        routerLink="/reservas/nueva"
+        title="Crear nueva reserva">
+        <i class="bi bi-plus-circle me-1"></i>
+        Nueva Reserva
+      </button>
+    </div>
+  </div>
+
+  <!-- Estados -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="d-flex flex-wrap gap-2 align-items-center">
+        <span class="fw-bold me-2">Estados:</span>
+        <span class="badge bg-success">Confirmada</span>
+        <span class="badge bg-warning text-dark">Pendiente</span>
+        <span class="badge bg-danger">Cancelada</span>
+        <span class="badge bg-info">Completada</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensajes de estado -->
+  <div *ngIf="loading" class="alert alert-info text-center">
+    <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+    <strong>Cargando reservas...</strong>
+    <div class="mt-1 small">Espere mientras se cargan sus reservas</div>
+  </div>
+
+  <div *ngIf="error && !loading" class="alert alert-danger">
+    <i class="bi bi-exclamation-triangle me-2"></i>
+    <strong>Error:</strong> {{ error }}
+    <button class="btn btn-sm btn-outline-danger ms-2" (click)="cargarReservas()">
+      Reintentar
+    </button>
+  </div>
+
+  <!-- Calendario -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body p-3">
+          <full-calendar [options]="calendarOptions"></full-calendar>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sin reservas -->
+  <div *ngIf="!loading && !error && reservas.length === 0" class="text-center py-5">
+    <div class="empty-state">
+      <i class="bi bi-calendar-x display-1 text-muted"></i>
+      <h4 class="mt-3 text-muted">No tienes reservas</h4>
+      <p class="text-muted mb-4">Comienza creando tu primera reserva para verla en el calendario</p>
+      <button class="btn btn-primary btn-lg" routerLink="/reservas/nueva">
+        <i class="bi bi-plus-circle me-2"></i>
+        Crear Primera Reserva
+      </button>
+    </div>
+  </div>
+
+  <!-- Info de reservas cargadas -->
+  <div *ngIf="!loading && !error && reservas.length > 0" class="mt-3">
+    <div class="alert alert-success">
+      <i class="bi bi-check-circle me-2"></i>
+      <strong>{{ reservas.length }}</strong> reserva(s) cargada(s) en el calendario
+    </div>
+  </div>
+</div>

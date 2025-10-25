@@ -1,0 +1,209 @@
+<div class="usuarios-container">
+  <!-- Header Mejorado -->
+  <div class="header-section">
+    <div class="header-content">
+      <div class="title-group">
+        <h1>👥 Gestión de Usuarios</h1>
+        <p>Administra los roles y permisos de los usuarios del sistema</p>
+      </div>
+      <button class="btn-refresh" (click)="cargarUsuarios()">
+        <i class="bi bi-arrow-clockwise"></i>
+        <span>Actualizar</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Filtros Mejorados -->
+  <div class="filters-card">
+    <div class="filters-content">
+      <div class="search-box">
+        <i class="bi bi-search"></i>
+        <input type="text" 
+               class="search-input" 
+               placeholder="Buscar por nombre, apellido o usuario..."
+               [(ngModel)]="searchTerm" 
+               (input)="filtrarUsuarios()">
+      </div>
+      
+      <div class="filter-group">
+        <div class="select-wrapper">
+          <i class="bi bi-funnel"></i>
+          <select class="filter-select" [(ngModel)]="selectedRol" (change)="filtrarUsuarios()">
+            <option value="todos">Todos los roles</option>
+            <option value="admin">👑 Administradores</option>
+            <option value="junta">🏛️ Junta</option>
+            <option value="personal">👔 Personal</option>
+            <option value="residente">🏠 Residentes</option>
+          </select>
+        </div>
+        
+        <div class="results-badge">
+          <i class="bi bi-people-fill"></i>
+          <span>{{ filteredUsuarios.length }}</span>
+          <small>usuarios</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla Mejorada -->
+  <div class="users-card">
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Cargando usuarios...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && filteredUsuarios.length === 0" class="empty-state">
+      <div class="empty-icon">
+        <i class="bi bi-people"></i>
+      </div>
+      <h3>No se encontraron usuarios</h3>
+      <p>No hay usuarios que coincidan con los filtros aplicados</p>
+    </div>
+
+    <!-- Tabla -->
+    <div *ngIf="!isLoading && filteredUsuarios.length > 0" class="table-wrapper">
+      <table class="users-table">
+        <thead>
+          <tr>
+            <th>
+              <div class="th-content">
+                <i class="bi bi-person-badge"></i>
+                <span>Usuario</span>
+              </div>
+            </th>
+            <th>
+              <div class="th-content">
+                <i class="bi bi-person"></i>
+                <span>Nombre Completo</span>
+              </div>
+            </th>
+            <th>
+              <div class="th-content">
+                <i class="bi bi-envelope"></i>
+                <span>Email</span>
+              </div>
+            </th>
+            <th>
+              <div class="th-content">
+                <i class="bi bi-card-text"></i>
+                <span>Cédula</span>
+              </div>
+            </th>
+            <th>
+              <div class="th-content">
+                <i class="bi bi-shield-check"></i>
+                <span>Rol Actual</span>
+              </div>
+            </th>
+            <th>
+              <div class="th-content">
+                <i class="bi bi-activity"></i>
+                <span>Estado</span>
+              </div>
+            </th>
+            <th *ngIf="esAdmin">
+              <div class="th-content">
+                <i class="bi bi-gear"></i>
+                <span>Acciones</span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let usuario of filteredUsuarios" class="user-row">
+            <td>
+              <div class="user-info">
+                <div class="user-avatar">
+                  {{ usuario.username.charAt(0).toUpperCase() }}
+                </div>
+                <strong>{{ usuario.username }}</strong>
+              </div>
+            </td>
+            <td>
+              <div class="full-name">
+                {{ usuario.persona.nombre }} {{ usuario.persona.apellido }}
+              </div>
+            </td>
+            <td>
+              <div class="email-cell">
+                <i class="bi bi-envelope-fill"></i>
+                {{ usuario.email }}
+              </div>
+            </td>
+            <td>
+              <div class="ci-cell">
+                {{ usuario.persona.ci }}
+              </div>
+            </td>
+            <td>
+              <span class="role-badge" [ngClass]="getRolBadgeClass(usuario.rol)">
+                <i [ngClass]="getRolIcon(usuario.rol)"></i>
+                {{ getRolDisplay(usuario.rol) }}
+              </span>
+            </td>
+            <td>
+              <div class="status-cell">
+                <span class="status-badge" [ngClass]="usuario.is_active ? 'active' : 'inactive'">
+                  <i [ngClass]="usuario.is_active ? 'bi bi-check-circle-fill' : 'bi bi-x-circle-fill'"></i>
+                  {{ usuario.is_active ? 'Activo' : 'Inactivo' }}
+                </span>
+                <span *ngIf="!usuario.is_email_verified" class="status-badge warning">
+                  <i class="bi bi-exclamation-triangle-fill"></i>
+                  Email no verificado
+                </span>
+              </div>
+            </td>
+            <td *ngIf="esAdmin">
+              <div class="actions-cell">
+                <div class="dropdown">
+                  <button class="btn-action" type="button" 
+                          data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-three-dots-vertical"></i>
+                    <span>Cambiar Rol</span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a class="dropdown-item" 
+                         (click)="cambiarRol(usuario, 'admin')"
+                         [class.active]="usuario.rol === 'admin'">
+                        <i class="bi bi-shield-fill-check"></i>
+                        <span>Administrador</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" 
+                         (click)="cambiarRol(usuario, 'junta')"
+                         [class.active]="usuario.rol === 'junta'">
+                        <i class="bi bi-building"></i>
+                        <span>Junta</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" 
+                         (click)="cambiarRol(usuario, 'personal')"
+                         [class.active]="usuario.rol === 'personal'">
+                        <i class="bi bi-briefcase"></i>
+                        <span>Personal</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" 
+                         (click)="cambiarRol(usuario, 'residente')"
+                         [class.active]="usuario.rol === 'residente'">
+                        <i class="bi bi-house-door"></i>
+                        <span>Residente</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

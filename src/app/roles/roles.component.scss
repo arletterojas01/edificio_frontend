@@ -1,0 +1,312 @@
+.roles-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  .header-section {
+    margin-bottom: 3rem;
+    text-align: center;
+
+    .btn-back {
+      position: absolute;
+      left: 2rem;
+      top: 2rem;
+      background: #ffffff;
+      border: 2px solid #e0e0e0;
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #333;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+      &:hover {
+        background: #f8f9fa;
+        border-color: #6366f1;
+        color: #6366f1;
+        transform: translateX(-4px);
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+      }
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #666;
+      font-weight: 400;
+    }
+  }
+
+  .admin-section {
+    margin-bottom: 3rem;
+    animation: slideDown 0.5s ease;
+
+    .admin-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 2rem;
+      border-radius: 20px;
+      text-align: center;
+      color: white;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        animation: pulse 3s ease-in-out infinite;
+      }
+
+      h3 {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        position: relative;
+        z-index: 1;
+      }
+
+      p {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+        opacity: 0.95;
+        position: relative;
+        z-index: 1;
+      }
+
+      .btn-admin {
+        background: white;
+        color: #667eea;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 1;
+
+        &:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+          background: #f8f9ff;
+        }
+
+        &:active {
+          transform: translateY(-1px);
+        }
+      }
+    }
+  }
+
+  .roles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    animation: fadeIn 0.6s ease;
+
+    .role-card {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid #f0f0f0;
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s ease;
+      }
+
+      &:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 40px rgba(99, 102, 241, 0.15);
+
+        &::before {
+          transform: scaleX(1);
+        }
+
+        .role-icon {
+          transform: scale(1.2) rotate(10deg);
+        }
+      }
+
+      .role-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+
+        .role-icon {
+          font-size: 2.5rem;
+          transition: all 0.4s ease;
+          filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        h3 {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: #1a1a1a;
+          margin: 0;
+        }
+      }
+
+      > p {
+        color: #666;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+      }
+
+      .permisos-section {
+        h4 {
+          font-size: 1rem;
+          font-weight: 600;
+          color: #333;
+          margin-bottom: 1rem;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+
+          &::before {
+            content: '🔐';
+            font-size: 1.1rem;
+          }
+        }
+
+        ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+
+          li {
+            padding: 0.5rem 0;
+            color: #555;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+
+            &::before {
+              content: '✓';
+              color: #10b981;
+              font-weight: bold;
+              font-size: 1.1rem;
+            }
+
+            &:hover {
+              color: #6366f1;
+              transform: translateX(5px);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Animaciones
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.5;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .roles-container {
+    padding: 1rem;
+
+    .header-section {
+      margin-bottom: 2rem;
+
+      .btn-back {
+        position: static;
+        margin-bottom: 1rem;
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+    }
+
+    .admin-section .admin-card {
+      padding: 1.5rem;
+
+      h3 {
+        font-size: 1.5rem;
+      }
+    }
+
+    .roles-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+
+      .role-card {
+        padding: 1.5rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,510 @@
+// ============================================
+// PALETA DE COLORES
+// ============================================
+$color-primario: #0D3B66;
+$color-secundario: #3A86FF;
+$color-acento: #4CAF50;
+$color-neutro-claro: #F5F5F5;
+$color-neutro-oscuro: #6C757D;
+$color-error: #d32f2f;
+$color-success: #2e7d32;
+
+// Sombras profesionales
+$shadow-sm: 0 1px 3px rgba(13, 59, 102, 0.08), 0 1px 2px rgba(13, 59, 102, 0.06);
+$shadow-md: 0 4px 6px rgba(13, 59, 102, 0.07), 0 2px 4px rgba(13, 59, 102, 0.06);
+$shadow-lg: 0 10px 15px rgba(13, 59, 102, 0.1), 0 4px 6px rgba(13, 59, 102, 0.05);
+$shadow-xl: 0 20px 25px rgba(13, 59, 102, 0.15), 0 10px 10px rgba(13, 59, 102, 0.04);
+
+// Transiciones suaves
+$transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+$transition-fast: all 0.15s ease-in-out;
+
+// ============================================
+// COMPONENTE REGISTER
+// ============================================
+.register-container {
+  max-width: 480px;
+  margin: 3rem auto;
+  padding: 3rem 2.5rem;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: $shadow-lg;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, $color-acento 0%, $color-secundario 50%, $color-primario 100%);
+  }
+}
+
+.register-title {
+  text-align: center;
+  color: $color-primario;
+  font-size: 1.85rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
+}
+
+.register-subtitle {
+  text-align: center;
+  color: $color-neutro-oscuro;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+  font-weight: 400;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  
+  label {
+    color: $color-primario;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-left: 2px;
+  }
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  border: 2px solid #e0e7ef;
+  background: #ffffff;
+  color: $color-primario;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: $transition-base;
+  
+  &:focus {
+    outline: none;
+    border-color: $color-acento;
+    box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.1);
+  }
+  
+  &::placeholder {
+    color: #b0b8c1;
+  }
+  
+  &:disabled {
+    background: #f8f9fa;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+// ============================================
+// PASSWORD GROUP
+// ============================================
+.password-group {
+  position: relative;
+}
+
+.password-input {
+  padding-right: 3.2rem;
+}
+
+.toggle-password-btn {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: $transition-fast;
+  color: $color-neutro-oscuro;
+  
+  &:hover {
+    background: rgba(76, 175, 80, 0.08);
+    color: $color-acento;
+  }
+  
+  &:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+  
+  svg {
+    width: 20px;
+    height: 20px;
+    transition: $transition-fast;
+  }
+}
+
+// ============================================
+// BOTONES
+// ============================================
+.main-btn {
+  width: 100%;
+  padding: 0.95rem 1.5rem;
+  background: $color-primario;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: $transition-base;
+  box-shadow: $shadow-md;
+  letter-spacing: 0.3px;
+  
+  &:hover:not(:disabled) {
+    background: $color-secundario;
+    box-shadow: $shadow-lg;
+    transform: translateY(-2px);
+  }
+  
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+  
+  &:disabled {
+    background: $color-neutro-oscuro;
+    cursor: not-allowed;
+    opacity: 0.6;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+// ============================================
+// ENLACES
+// ============================================
+.volver-btn,
+.volver-link button {
+  background: none;
+  border: none;
+  color: $color-secundario;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.5rem;
+  transition: $transition-fast;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: $color-secundario;
+    transition: $transition-fast;
+  }
+  
+  &:hover {
+    color: $color-primario;
+    
+    &::after {
+      width: 100%;
+    }
+  }
+}
+
+.volver-link {
+  text-align: center;
+  margin-top: 1.25rem;
+  display: inline-block;
+}
+
+// ============================================
+// ALERTAS PROFESIONALES
+// ============================================
+.alert {
+  margin: 1.5rem 0;
+  padding: 1.25rem 1.5rem;
+  border-radius: 12px;
+  border: 2px solid;
+  animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: $shadow-sm;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+  }
+
+  &.success {
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    border-color: $color-acento;
+    color: $color-success;
+    
+    &::before {
+      background: $color-acento;
+    }
+
+    .alert-content h4 {
+      color: $color-success;
+      margin: 0 0 0.75rem 0;
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      
+      &::before {
+        content: '✓';
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        background: $color-acento;
+        color: white;
+        border-radius: 50%;
+        font-size: 0.85rem;
+        font-weight: bold;
+        flex-shrink: 0;
+      }
+    }
+
+    .redirect-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-style: italic;
+      font-size: 0.9rem;
+      margin-top: 0.75rem;
+      padding: 0.75rem;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 8px;
+      font-weight: 500;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2.5px solid $color-success;
+      border-top: 2.5px solid transparent;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      flex-shrink: 0;
+    }
+  }
+
+  &.error {
+    background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+    border-color: #f44336;
+    color: #c62828;
+    
+    &::before {
+      background: #f44336;
+    }
+
+    .alert-content h4 {
+      color: #c62828;
+      margin: 0 0 0.75rem 0;
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      
+      &::before {
+        content: '✕';
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        background: #f44336;
+        color: white;
+        border-radius: 50%;
+        font-size: 0.85rem;
+        font-weight: bold;
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  &.info {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border-color: #2196f3;
+    color: #1565c0;
+    
+    &::before {
+      background: #2196f3;
+    }
+
+    .alert-content h4 {
+      color: #1565c0;
+      margin: 0 0 0.75rem 0;
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      
+      &::before {
+        content: 'i';
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        background: #2196f3;
+        color: white;
+        border-radius: 50%;
+        font-size: 0.9rem;
+        font-weight: bold;
+        font-style: italic;
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  .alert-content {
+    p {
+      margin: 0.5rem 0;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    strong {
+      font-weight: 700;
+    }
+    
+    ul {
+      margin: 0.5rem 0 0 1.25rem;
+      padding: 0;
+      
+      li {
+        margin: 0.35rem 0;
+        line-height: 1.4;
+      }
+    }
+  }
+}
+
+.register-error {
+  text-align: center;
+  color: $color-error;
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  border: 2px solid #f44336;
+  box-shadow: $shadow-sm;
+}
+
+// ============================================
+// ANIMACIONES
+// ============================================
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  0% { 
+    transform: rotate(0deg); 
+  }
+  100% { 
+    transform: rotate(360deg); 
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// ============================================
+// RESPONSIVE
+// ============================================
+@media (max-width: 600px) {
+  .register-container {
+    max-width: calc(100vw - 2rem);
+    margin: 2rem 1rem;
+    padding: 2rem 1.5rem;
+    border-radius: 16px;
+  }
+  
+  .register-title {
+    font-size: 1.5rem;
+  }
+  
+  .register-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .main-btn {
+    font-size: 1rem;
+    padding: 0.85rem;
+  }
+
+  .alert {
+    margin: 1.25rem 0;
+    padding: 1rem 1.25rem;
+    
+    &.success,
+    &.error,
+    &.info {
+      .alert-content h4 {
+        font-size: 1rem;
+      }
+    }
+    
+    .redirect-info {
+      font-size: 0.85rem;
+      padding: 0.65rem;
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .register-container {
+    padding: 1.5rem 1.25rem;
+  }
+  
+  .register-form {
+    gap: 1.25rem;
+  }
+  
+  .input-field {
+    padding: 0.75rem 0.85rem;
+    font-size: 0.95rem;
+  }
+}

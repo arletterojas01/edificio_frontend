@@ -1,0 +1,500 @@
+// ============================================
+// PALETA DE COLORES
+// ============================================
+$color-primario: #0D3B66;
+$color-secundario: #3A86FF;
+$color-acento: #4CAF50;
+$color-neutro-claro: #F5F5F5;
+$color-neutro-oscuro: #6C757D;
+$color-error: #d32f2f;
+$color-success: #2e7d32;
+$color-warning: #f57c00;
+
+// Sombras profesionales
+$shadow-sm: 0 1px 3px rgba(13, 59, 102, 0.08), 0 1px 2px rgba(13, 59, 102, 0.06);
+$shadow-md: 0 4px 6px rgba(13, 59, 102, 0.07), 0 2px 4px rgba(13, 59, 102, 0.06);
+$shadow-lg: 0 10px 15px rgba(13, 59, 102, 0.1), 0 4px 6px rgba(13, 59, 102, 0.05);
+$shadow-xl: 0 20px 25px rgba(13, 59, 102, 0.15), 0 10px 10px rgba(13, 59, 102, 0.04);
+
+// Transiciones suaves
+$transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+$transition-fast: all 0.15s ease-in-out;
+
+// ============================================
+// COMPONENTE LOGIN
+// ============================================
+.login-container {
+  max-width: 440px;
+  margin: 4rem auto;
+  padding: 3rem 2.5rem;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: $shadow-lg;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, $color-primario 0%, $color-secundario 50%, $color-acento 100%);
+  }
+}
+
+.login-title {
+  text-align: center;
+  color: $color-primario;
+  font-size: 1.85rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
+}
+
+.login-subtitle {
+  text-align: center;
+  color: $color-neutro-oscuro;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+  font-weight: 400;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  
+  label {
+    color: $color-primario;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-left: 2px;
+  }
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  border: 2px solid #e0e7ef;
+  background: #ffffff;
+  color: $color-primario;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: $transition-base;
+  
+  &:focus {
+    outline: none;
+    border-color: $color-secundario;
+    box-shadow: 0 0 0 4px rgba(58, 134, 255, 0.1);
+  }
+  
+  &::placeholder {
+    color: #b0b8c1;
+  }
+}
+
+.password-group {
+  position: relative;
+}
+
+.password-input {
+  padding-right: 3.2rem;
+}
+
+.toggle-password-btn {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: $transition-fast;
+  color: $color-neutro-oscuro;
+  
+  &:hover {
+    background: rgba(58, 134, 255, 0.08);
+    color: $color-secundario;
+  }
+  
+  &:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+  
+  svg {
+    width: 20px;
+    height: 20px;
+    transition: $transition-fast;
+  }
+}
+
+// CAPTCHA mejorado
+.captcha-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, #f8fbff 0%, #f0f7ff 100%);
+  border-radius: 12px;
+  border: 2px solid #e3f0ff;
+}
+
+.captcha-label {
+  color: $color-primario;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.captcha-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.captcha-box {
+  flex: 1;
+  font-weight: 700;
+  letter-spacing: 4px;
+  font-size: 1.5rem;
+  user-select: none;
+  background: #ffffff;
+  color: $color-primario;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  text-align: center;
+  border: 2px solid #d4e3f2;
+  box-shadow: $shadow-sm;
+  font-family: 'Courier New', monospace;
+}
+
+.captcha-btn {
+  background: $color-secundario;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: $transition-base;
+  box-shadow: $shadow-sm;
+  white-space: nowrap;
+  
+  &:hover {
+    background: darken($color-secundario, 8%);
+    box-shadow: $shadow-md;
+    transform: translateY(-1px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// BOTONES
+.main-btn {
+  width: 100%;
+  padding: 0.95rem 1.5rem;
+  background: $color-primario;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: $transition-base;
+  box-shadow: $shadow-md;
+  letter-spacing: 0.3px;
+  
+  &:hover {
+    background: $color-secundario;
+    box-shadow: $shadow-lg;
+    transform: translateY(-2px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  &:disabled {
+    background: $color-neutro-oscuro;
+    cursor: not-allowed;
+    opacity: 0.6;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+.auditoria-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #fff;
+  text-decoration: none;
+  background: $color-acento;
+  padding: 0.65rem 1.4rem;
+  border-radius: 10px;
+  font-weight: 600;
+  box-shadow: $shadow-md;
+  transition: $transition-base;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  border: none;
+  font-size: 0.95rem;
+  
+  &:hover {
+    background: darken($color-acento, 8%);
+    box-shadow: $shadow-lg;
+    transform: translateY(-2px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// ENLACES
+.forgot-password-link,
+.volver-link {
+  text-align: center;
+  margin-top: 1.25rem;
+  
+  button {
+    background: none;
+    border: none;
+    color: $color-secundario;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.5rem;
+    transition: $transition-fast;
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background: $color-secundario;
+      transition: $transition-fast;
+    }
+    
+    &:hover {
+      color: $color-primario;
+      
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// MENSAJES DEL SISTEMA
+.system-message {
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border: 2px solid;
+  box-shadow: $shadow-sm;
+  
+  &::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+  
+  &.info {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    color: #1565c0;
+    border-color: #2196f3;
+    
+    &::before {
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%231565c0' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'/%3E%3C/svg%3E") no-repeat center;
+    }
+  }
+  
+  &.error {
+    background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+    color: #c62828;
+    border-color: #f44336;
+    
+    &::before {
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23c62828' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E") no-repeat center;
+    }
+  }
+  
+  &.success {
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    color: $color-success;
+    border-color: $color-acento;
+    
+    &::before {
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%232e7d32' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3E%3C/svg%3E") no-repeat center;
+    }
+  }
+}
+
+.login-error {
+  text-align: center;
+  color: $color-error;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: #ffebee;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+// ============================================
+// MODAL QR
+// ============================================
+.qr-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.qr-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(13, 59, 102, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+}
+
+.qr-modal-content {
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: $shadow-xl;
+  position: relative;
+  z-index: 1001;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  h3 {
+    color: $color-primario;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  
+  .qr-code {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: $color-neutro-claro;
+    border-radius: 12px;
+  }
+  
+  button {
+    margin-top: 1.5rem;
+  }
+}
+
+// ============================================
+// ANIMACIONES
+// ============================================
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ============================================
+// RESPONSIVE
+// ============================================
+@media (max-width: 600px) {
+  .login-container {
+    max-width: calc(100vw - 2rem);
+    margin: 2rem 1rem;
+    padding: 2rem 1.5rem;
+    border-radius: 16px;
+  }
+  
+  .login-title {
+    font-size: 1.5rem;
+  }
+  
+  .login-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .main-btn {
+    font-size: 1rem;
+    padding: 0.85rem;
+  }
+  
+  .captcha-box {
+    font-size: 1.3rem;
+    letter-spacing: 3px;
+  }
+  
+  .qr-modal-content {
+    max-width: calc(100vw - 2rem);
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .captcha-display {
+    flex-direction: column;
+  }
+  
+  .captcha-btn {
+    width: 100%;
+  }
+}

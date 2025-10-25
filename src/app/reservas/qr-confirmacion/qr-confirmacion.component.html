@@ -1,0 +1,124 @@
+<!-- qr-confirmacion.component.html -->
+<div class="qr-confirmacion-container">
+  <div class="card">
+    <div class="card-header text-center">
+      <h4 class="mb-0">
+        <i class="bi bi-qr-code me-2"></i>
+        Código QR de Reserva
+      </h4>
+    </div>
+
+    <div class="card-body text-center">
+      <!-- Loading -->
+      @if (loading) {
+        <div class="py-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Cargando...</span>
+          </div>
+          <p class="mt-2 text-muted">Cargando información de la reserva...</p>
+        </div>
+      }
+
+      <!-- Error -->
+      @if (error && !loading) {
+        <div class="alert alert-danger">
+          <i class="bi bi-exclamation-triangle me-2"></i>
+          {{ error }}
+          @if (error.includes('conexión')) {
+            <div class="mt-2">
+              <button class="btn btn-sm btn-outline-danger" (click)="cargarReserva(reserva?.id || 0)">
+                Reintentar
+              </button>
+            </div>
+          }
+        </div>
+      }
+
+      <!-- Información de la Reserva -->
+      @if (reserva && !loading && !error) {
+        <div class="reserva-info mb-4">
+          <h5 class="mb-3">Detalles de la Reserva</h5>
+          <div class="row text-start">
+            <div class="col-md-6">
+              <div class="info-item">
+                <span class="label">Número de Reserva:</span>
+                <span class="value">#{{ reserva.id }}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">Área Común:</span>
+                <span class="value">{{ reserva.area_comun_nombre || 'N/A' }}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">Fecha:</span>
+                <span class="value">{{ reserva.fecha_reserva | date:'fullDate' }}</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="info-item">
+                <span class="label">Horario:</span>
+                <span class="value">{{ reserva.hora_inicio }} - {{ reserva.hora_fin }}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">Monto:</span>
+                <span class="value">Bs{{ reserva.monto }}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">Estado:</span>
+                <span class="value badge" [class]="getEstadoClass(reserva.estado)">
+                  {{ reserva.estado }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Código QR -->
+        @if (reserva.codigo_qr) {
+          <div class="qr-code-section mb-4">
+            <h6 class="mb-3">Escanea este código QR</h6>
+            <div class="qr-image-container">
+              <img 
+                [src]="reserva.codigo_qr" 
+                alt="Código QR de la reserva" 
+                class="qr-image"
+                (error)="onImageError($event)">
+            </div>
+            <p class="text-muted mt-3 small">
+              Presenta este código QR al administrador para confirmar tu reserva
+            </p>
+          </div>
+        } @else {
+          <div class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            No hay código QR disponible para esta reserva
+            <div class="mt-2">
+              <button class="btn btn-sm btn-outline-warning" (click)="regenerarQR()">
+                Generar QR
+              </button>
+            </div>
+          </div>
+        }
+
+        <!-- Botones de Acción -->
+        <div class="action-buttons">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <button class="btn btn-outline-primary w-100" 
+                      (click)="descargarQR()" 
+                      [disabled]="!reserva.codigo_qr">
+                <i class="bi bi-download me-2"></i>
+                Descargar QR
+              </button>
+            </div>
+            <div class="col-md-6 mb-2">
+              <button class="btn btn-secondary w-100" routerLink="/reservas">
+                <i class="bi bi-arrow-left me-2"></i>
+                Volver a Reservas
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>
