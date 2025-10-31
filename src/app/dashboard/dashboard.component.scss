@@ -1,54 +1,127 @@
-// Variables de diseño moderno
-$color-primary: #2C3E50;
-$color-secondary: #3498DB;
-$color-accent: #E74C3C;
-$color-success: #27AE60;
-$color-warning: #F39C12;
-$color-info: #17A2B8;
-$color-light: #ECF0F1;
-$color-dark: #2C3E50;
-$color-gray: #95A5A6;
+// ============================================
+// VARIABLES
+// ============================================
+$primary-dark: #0D3B66;
+$primary-light: #3A86FF;
+$accent-green: #4CAF50;
+$neutral-light: #F5F5F5;
+$neutral-dark: #6C757D;
+$white: #ffffff;
 
-// Gradientes modernos
-$gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-$gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-$gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-$gradient-warning: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-$gradient-dark: linear-gradient(135deg, #2C3E50 0%, #4CA1AF 100%);
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+$spacing-xxl: 3rem;
 
-// Sombras
-$shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
-$shadow-md: 0 4px 6px rgba(0,0,0,0.1);
-$shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
-$shadow-xl: 0 20px 25px rgba(0,0,0,0.1);
+$border-radius: 12px;
+$border-radius-sm: 8px;
 
-// Mixins
-@mixin card-base {
-  background: white;
-  border-radius: 16px;
-  box-shadow: $shadow-md;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid rgba(255,255,255,0.2);
+$shadow-sm: 0 2px 8px rgba($primary-dark, 0.08);
+$shadow-md: 0 4px 16px rgba($primary-dark, 0.12);
+$shadow-lg: 0 8px 32px rgba($primary-dark, 0.15);
+
+$transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+// ============================================
+// CONTAINER
+// ============================================
+.dashboard-container {
+  padding: $spacing-xl;
+  background: linear-gradient(135deg, #f8f9fa 0%, $neutral-light 100%);
+  min-height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+// ============================================
+// WELCOME SECTION
+// ============================================
+.welcome-section {
+  background: linear-gradient(135deg, $primary-dark 0%, lighten($primary-dark, 15%) 100%);
+  padding: $spacing-xxl;
+  border-radius: $border-radius;
+  box-shadow: $shadow-lg;
+  margin-bottom: $spacing-xl;
+  position: relative;
+  overflow: hidden;
   
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: $shadow-lg;
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba($primary-light, 0.2) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -5%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba($accent-green, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float 8s ease-in-out infinite reverse;
   }
 }
 
-@mixin button-modern {
-  padding: 14px 28px;
-  border: none;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
+.dashboard-title {
+  color: $white;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 $spacing-lg 0;
+  position: relative;
+  z-index: 1;
+  animation: slideInDown 0.6s ease;
+}
+
+.rol-badge {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  text-decoration: none;
+  gap: $spacing-sm;
+  padding: $spacing-sm $spacing-lg;
+  border-radius: 50px;
+  color: $white;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1;
+  animation: slideInUp 0.6s ease 0.2s both;
+  
+  .badge-icon {
+    font-size: 1.25rem;
+    animation: rotate 3s linear infinite;
+  }
+}
+
+// ============================================
+// NAVIGATION MENU
+// ============================================
+.nav-menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: $spacing-lg;
+  margin-bottom: 5rem;
+}
+
+.nav-item {
+  background: $white;
+  padding: $spacing-xl;
+  border-radius: $border-radius;
+  box-shadow: $shadow-sm;
+  cursor: pointer;
+  transition: $transition;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-md;
   position: relative;
   overflow: hidden;
   
@@ -59,283 +132,118 @@ $shadow-xl: 0 20px 25px rgba(0,0,0,0.1);
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s;
+    background: linear-gradient(90deg, transparent, rgba($primary-light, 0.1), transparent);
+    transition: left 0.5s ease;
   }
   
-  &:hover::before {
-    left: 100%;
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: $shadow-lg;
+    
+    &::before {
+      left: 100%;
+    }
+    
+    .nav-icon {
+      transform: scale(1.2) rotate(10deg);
+    }
+    
+    .nav-text {
+      color: $primary-light;
+    }
+  }
+  
+  &:active {
+    transform: translateY(-4px);
   }
 }
 
-// Reset y base
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.nav-icon {
+  font-size: 3rem;
+  transition: $transition;
+  filter: drop-shadow(0 2px 4px rgba($primary-dark, 0.1));
 }
 
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  min-height: 100vh;
-  color: $color-dark;
-}
-
-// Layout principal
-.dashboard-container {
-  min-height: 100vh;
-  padding: 2rem;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-}
-
-// Header moderno
-.dashboard-header {
+.nav-text {
+  color: $primary-dark;
+  font-weight: 600;
+  font-size: 1rem;
   text-align: center;
-  margin-bottom: 3rem;
-  padding: 2rem;
-  background: white;
-  border-radius: 20px;
-  box-shadow: $shadow-lg;
-  position: relative;
-  overflow: hidden;
+  transition: $transition;
+}
+
+// ============================================
+// FLOATING AGENT BUTTON
+// ============================================
+.btn-agente {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: linear-gradient(135deg, $accent-green 0%, darken($accent-green, 12%) 100%);
+  color: $white;
+  border: none;
+  padding: 1rem 1.75rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba($accent-green, 0.4);
+  transition: $transition;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  animation: bounce 2s ease-in-out infinite;
   
   &::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: $gradient-primary;
+    inset: 0;
+    border-radius: 50px;
+    background: linear-gradient(135deg, rgba($white, 0.3) 0%, transparent 100%);
+    opacity: 0;
+    transition: $transition;
   }
-}
-
-.dashboard-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  background: $gradient-primary;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 0.5rem;
-}
-
-.dashboard-subtitle {
-  color: $color-gray;
-  font-size: 1.1rem;
-  margin-bottom: 1.5rem;
-}
-
-// Badge de rol mejorado
-.role-badge-container {
-  display: inline-flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.rol-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: 50px;
-  font-weight: 700;
-  color: white;
-  font-size: 0.9rem;
-  box-shadow: $shadow-md;
-  background: $gradient-dark;
-  border: 2px solid rgba(255,255,255,0.2);
-  
-  .badge-icon {
-    font-size: 1.2rem;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-  }
-}
-
-// Navegación moderna
-.nav-menu {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
-}
-
-.nav-item {
-  @include card-base;
-  padding: 2rem;
-  text-align: center;
-  cursor: pointer;
-  border: 2px solid transparent;
   
   &:hover {
-    border-color: $color-secondary;
-    transform: translateY(-5px) scale(1.02);
-  }
-  
-  .nav-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    display: block;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
-  }
-  
-  .nav-text {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: $color-dark;
-    margin-bottom: 0.5rem;
-  }
-  
-  .nav-description {
-    color: $color-gray;
-    font-size: 0.9rem;
-    line-height: 1.4;
-  }
-}
-
-// Selector de roles mejorado
-.role-selector-container {
-  @include card-base;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  text-align: center;
-  
-  .selector-label {
-    font-weight: 600;
-    color: $color-dark;
-    margin-bottom: 1rem;
-    display: block;
-    font-size: 1.1rem;
-  }
-}
-
-.role-dropdown {
-  padding: 12px 20px;
-  border-radius: 10px;
-  border: 2px solid #e0e0e0;
-  background: white;
-  font-weight: 600;
-  font-size: 1rem;
-  color: $color-dark;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  min-width: 250px;
-  
-  &:focus {
-    outline: none;
-    border-color: $color-secondary;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-  }
-  
-  option {
-    padding: 10px;
-    font-weight: 600;
-  }
-}
-
-// Estados de los ítems de navegación por rol
-.nav-item[data-role="admin"] {
-  background: linear-gradient(135deg, #fff 0%, #ffecec 100%);
-  border-left: 4px solid $color-accent;
-}
-
-.nav-item[data-role="junta"] {
-  background: linear-gradient(135deg, #fff 0%, #fff4e6 100%);
-  border-left: 4px solid $color-warning;
-}
-
-.nav-item[data-role="personal"] {
-  background: linear-gradient(135deg, #fff 0%, #e6f7ff 100%);
-  border-left: 4px solid $color-info;
-}
-
-.nav-item[data-role="residente"] {
-  background: linear-gradient(135deg, #fff 0%, #f0fff4 100%);
-  border-left: 4px solid $color-success;
-}
-
-// Efectos de hover específicos
-.nav-item[data-role="admin"]:hover .nav-icon {
-  transform: scale(1.1);
-  color: $color-accent;
-}
-
-.nav-item[data-role="junta"]:hover .nav-icon {
-  transform: scale(1.1);
-  color: $color-warning;
-}
-
-.nav-item[data-role="personal"]:hover .nav-icon {
-  transform: scale(1.1);
-  color: $color-info;
-}
-
-.nav-item[data-role="residente"]:hover .nav-icon {
-  transform: scale(1.1);
-  color: $color-success;
-}
-
-// Responsive design
-@media (max-width: 768px) {
-  .dashboard-container {
-    padding: 1rem;
-  }
-  
-  .dashboard-header {
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-  }
-  
-  .dashboard-title {
-    font-size: 2rem;
-  }
-  
-  .nav-menu {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  
-  .nav-item {
-    padding: 1.5rem;
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 12px 32px rgba($accent-green, 0.5);
+    animation: none;
     
-    .nav-icon {
-      font-size: 2.5rem;
-    }
-    
-    .nav-text {
-      font-size: 1.1rem;
+    &::before {
+      opacity: 1;
     }
   }
   
-  .role-dropdown {
-    min-width: 200px;
-    width: 100%;
+  &:active {
+    transform: translateY(-2px) scale(1.02);
   }
 }
 
-@media (max-width: 480px) {
-  .dashboard-title {
-    font-size: 1.5rem;
+// ============================================
+// ANIMATIONS
+// ============================================
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
   }
-  
-  .role-badge-container {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  
-  .nav-item {
-    padding: 1rem;
-    
-    .nav-icon {
-      font-size: 2rem;
-    }
+  50% {
+    transform: translateY(-20px) scale(1.05);
   }
 }
 
-// Animaciones
-@keyframes fadeInUp {
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInUp {
   from {
     opacity: 0;
     transform: translateY(30px);
@@ -346,36 +254,149 @@ body {
   }
 }
 
-.nav-item {
-  animation: fadeInUp 0.6s ease-out;
-  
-  &:nth-child(1) { animation-delay: 0.1s; }
-  &:nth-child(2) { animation-delay: 0.2s; }
-  &:nth-child(3) { animation-delay: 0.3s; }
-  &:nth-child(4) { animation-delay: 0.4s; }
-}
-
-// Estados de carga
-.loading {
-  opacity: 0.7;
-  pointer-events: none;
-  
-  &::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 20px;
-    height: 20px;
-    border: 2px solid #f3f3f3;
-    border-top: 2px solid $color-secondary;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-10deg);
+  }
+  75% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(0deg);
   }
 }
 
-@keyframes spin {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+// ============================================
+// RESPONSIVE DESIGN
+// ============================================
+@media (max-width: 992px) {
+  .dashboard-container {
+    padding: $spacing-lg;
+  }
+  
+  .nav-menu {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: $spacing-md;
+  }
+  
+  .nav-item {
+    padding: $spacing-lg;
+  }
+  
+  .nav-icon {
+    font-size: 2.5rem;
+  }
+  
+  .nav-text {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: $spacing-md;
+  }
+  
+  .welcome-section {
+    padding: $spacing-xl;
+  }
+  
+  .dashboard-title {
+    font-size: 1.5rem;
+  }
+  
+  .nav-menu {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-sm;
+  }
+  
+  .nav-item {
+    padding: $spacing-md;
+  }
+  
+  .nav-icon {
+    font-size: 2rem;
+  }
+  
+  .nav-text {
+    font-size: 0.85rem;
+  }
+  
+  .btn-agente {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    padding: 0.875rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .nav-menu {
+    grid-template-columns: 1fr;
+    margin-bottom: 6rem;
+  }
+  
+  .nav-item {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: $spacing-lg;
+  }
+  
+  .nav-icon {
+    font-size: 2rem;
+  }
+  
+  .btn-agente {
+    bottom: 1rem;
+    right: 1rem;
+    width: calc(100% - 2rem);
+    justify-content: center;
+  }
+}
+
+// ============================================
+// ACCESSIBILITY
+// ============================================
+.nav-item:focus,
+.btn-agente:focus {
+  outline: 3px solid rgba($primary-light, 0.5);
+  outline-offset: 3px;
+}
+
+// ============================================
+// SPECIAL EFFECTS
+// ============================================
+.nav-item:nth-child(1) { animation: slideInUp 0.6s ease 0.1s both; }
+.nav-item:nth-child(2) { animation: slideInUp 0.6s ease 0.2s both; }
+.nav-item:nth-child(3) { animation: slideInUp 0.6s ease 0.3s both; }
+.nav-item:nth-child(4) { animation: slideInUp 0.6s ease 0.4s both; }
+.nav-item:nth-child(5) { animation: slideInUp 0.6s ease 0.5s both; }
+.nav-item:nth-child(6) { animation: slideInUp 0.6s ease 0.6s both; }
+
+// Hover glow effect
+.nav-item::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: $border-radius;
+  background: linear-gradient(45deg, $primary-light, $accent-green);
+  opacity: 0;
+  z-index: -1;
+  transition: $transition;
+}
+
+.nav-item:hover::after {
+  opacity: 0.15;
 }

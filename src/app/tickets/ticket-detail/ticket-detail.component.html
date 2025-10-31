@@ -1,0 +1,366 @@
+<div class="ticket-container">
+  <!-- Cargando -->
+  <div *ngIf="loading" class="loading">
+    <p>Cargando ticket...</p>
+  </div>
+
+  <!-- Contenido principal del ticket -->
+  <div *ngIf="ticket && !loading" class="ticket-content">
+    
+    <!-- Header del ticket -->
+    <div class="ticket-header">
+      <h1>Ticket #{{ticket.id_ticket}}</h1>
+      <div class="ticket-meta">
+        <span class="status-badge" [ngClass]="getEstadoClass(ticket.estado)">
+          {{getEstadoDisplay(ticket.estado)}}
+        </span>
+        <span class="priority-badge" [ngClass]="getPrioridadClass(ticket.prioridad)">
+          {{getPrioridadDisplay(ticket.prioridad)}}
+        </span>
+      </div>
+    </div>
+
+    <!-- Información del ticket -->
+    <div class="ticket-info">
+      <div class="info-grid">
+        <div class="info-item">
+          <label>Usuario:</label>
+          <span>{{getNombreCompletoUsuario()}}</span>
+        </div>
+        <div class="info-item">
+          <label>Email:</label>
+          <span>{{getEmailUsuario()}}</span>
+        </div>
+        <div class="info-item">
+          <label>Fecha creación:</label>
+          <span>{{formatearFecha(ticket.fecha_creacion)}}</span>
+        </div>
+        <div class="info-item">
+          <label>Técnico asignado:</label>
+          <span *ngIf="tieneTecnicoAsignado" class="tecnico-asignado">
+            {{getNombreCompletoTecnico()}}
+          </span>
+          <span *ngIf="!tieneTecnicoAsignado" class="no-tecnico">
+            No asignado
+          </span>
+        </div>
+      </div>
+
+      <!-- Título del problema -->
+      <div class="problem-title">
+        <h3>Título del Problema</h3>
+        <p><strong>{{ticket.titulo}}</strong></p>
+      </div>
+
+      <!-- Descripción del problema -->
+      <div class="problem-description">
+        <h3>Descripción del problema</h3>
+        <p>{{ticket.descripcion}}</p>
+      </div>
+
+      <!-- Adjuntos -->
+      <div *ngIf="ticket.imagenes && ticket.imagenes.length > 0" class="attachments">
+        <h3>Archivos adjuntos</h3>
+        <div class="attachment-list">
+          <div *ngFor="let imagen of ticket.imagenes" class="attachment-item">
+            <button (click)="downloadFile(imagen.imagen)" class="btn-download">
+              <span [class]="'file-icon ' + getTipoArchivo(imagen.imagen)"></span>
+              {{getNombreArchivo(imagen.imagen)}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección de administración (solo para admin) -->
+    <div *ngIf="esAdmin" class="admin-section">
+      
+      <!-- Cambiar estado del ticket -->
+      <div class="state-management">
+        <h3>Gestión de Estado</h3>
+        <div class="state-controls">
+          <label for="estadoSelect">Cambiar estado:</label>
+          <select 
+            id="estadoSelect" 
+            [value]="ticket.estado" 
+            (change)="onEstadoChange($event)"
+            class="form-control"
+            style="max-width: 250px; display: inline-block; margin-left: 10px;">
+            <option *ngFor="let estado of estados" [value]="estado.value">
+              {{estado.label}}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Sección de registro de técnico -->
+      <div class="assignment-section">
+        <div class="section-header">
+          <h2>Registro de Técnico</h2>
+        </div>
+
+        <!-- Estado actual -->
+        <div class="current-assignment" *ngIf="tieneTecnicoAsignado">
+          <div class="assignment-info">
+            <div class="info-alert success">
+              <strong>✅ Técnico asignado:</strong> {{getNombreCompletoTecnico()}}
+            </div>
+            <div class="assignment-actions">
+              <button (click)="desasignarTecnico()" class="btn btn-warning" [disabled]="asignandoTecnico">
+                {{asignandoTecnico ? 'Procesando...' : 'Desasignar Técnico'}}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botón para registrar técnico -->
+        <div *ngIf="!tieneTecnicoAsignado && !mostrarFormularioTecnico" class="assignment-prompt">
+          <div class="info-alert">
+            <strong>📋 Registrar información de técnico</strong>
+            <p>Registre la información del técnico que atendió este ticket.</p>
+            <button (click)="abrirFormularioTecnico()" class="btn btn-primary">
+              Registrar Técnico
+            </button>
+          </div>
+        </div>
+
+        <!-- Formulario de registro de técnico -->
+        <div *ngIf="mostrarFormularioTecnico" class="assignment-form">
+          <div class="form-header">
+            <h3>Registrar Información del Técnico</h3>
+            <p class="form-description">
+              Registre la información del técnico que realizó el servicio. <strong>El estado del ticket no cambiará automáticamente.</strong>
+            </p>
+          </div>
+
+          <form [formGroup]="formularioTecnico" (ngSubmit)="registrarTecnico()">
+            <!-- Campo para escribir el nombre del técnico -->
+            <div class="form-group">
+              <label for="nombre_tecnico">Nombre del Técnico *</label>
+              <input 
+                type="text" 
+                id="nombre_tecnico" 
+                formControlName="nombre_tecnico" 
+                class="form-control"
+                placeholder="Ingrese el nombre completo del técnico"
+                [class.is-invalid]="formularioTecnico.get('nombre_tecnico')?.invalid && formularioTecnico.get('nombre_tecnico')?.touched">
+              <div *ngIf="formularioTecnico.get('nombre_tecnico')?.invalid && formularioTecnico.get('nombre_tecnico')?.touched" 
+                   class="error-message">
+                El nombre del técnico es requerido
+              </div>
+            </div>
+
+            <!-- Salario -->
+            <div class="form-group">
+              <label for="salario">Costo del Servicio ($) *</label>
+              <input 
+                type="number" 
+                id="salario" 
+                formControlName="salario" 
+                class="form-control"
+                min="0"
+                step="0.01"
+                placeholder="0.00"
+                [class.is-invalid]="formularioTecnico.get('salario')?.invalid && formularioTecnico.get('salario')?.touched">
+              <div *ngIf="formularioTecnico.get('salario')?.invalid && formularioTecnico.get('salario')?.touched" 
+                   class="error-message">
+                <span *ngIf="formularioTecnico.get('salario')?.errors?.['required']">El costo es requerido</span>
+                <span *ngIf="formularioTecnico.get('salario')?.errors?.['min']">El costo debe ser mayor o igual a 0</span>
+              </div>
+            </div>
+
+            <!-- Comentario de solución -->
+            <div class="form-group">
+              <label for="comentario_solucion">Descripción del Trabajo Realizado *</label>
+              <textarea 
+                id="comentario_solucion" 
+                formControlName="comentario_solucion" 
+                class="form-control"
+                rows="4"
+                placeholder="Describa detalladamente el trabajo realizado..."
+                [class.is-invalid]="formularioTecnico.get('comentario_solucion')?.invalid && formularioTecnico.get('comentario_solucion')?.touched">
+              </textarea>
+              <div *ngIf="formularioTecnico.get('comentario_solucion')?.invalid && formularioTecnico.get('comentario_solucion')?.touched" 
+                   class="error-message">
+                <span *ngIf="formularioTecnico.get('comentario_solucion')?.errors?.['required']">La descripción del trabajo es requerida</span>
+                <span *ngIf="formularioTecnico.get('comentario_solucion')?.errors?.['minlength']">La descripción debe tener al menos 10 caracteres</span>
+              </div>
+              <div class="char-count">
+                {{formularioTecnico.get('comentario_solucion')?.value?.length || 0}} caracteres
+              </div>
+            </div>
+
+            <!-- Acciones del formulario -->
+            <div class="form-actions">
+              <button 
+                type="button" 
+                (click)="cancelarAsignacion()" 
+                class="btn btn-secondary"
+                [disabled]="asignandoTecnico">
+                Cancelar
+              </button>
+              <button 
+                type="submit" 
+                class="btn btn-primary"
+                [disabled]="formularioTecnico.invalid || asignandoTecnico">
+                {{asignandoTecnico ? 'Registrando...' : 'Registrar Técnico'}}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Zona peligrosa - Eliminar ticket -->
+      <div *ngIf="puedeEliminarTicket" class="danger-actions">
+        <h3>🚨 Zona Peligrosa</h3>
+        
+        <button 
+          (click)="confirmarEliminarTicket()" 
+          class="btn btn-danger"
+          [disabled]="eliminandoTicket">
+          🗑️ {{eliminandoTicket ? 'Eliminando...' : 'Eliminar Ticket'}}
+        </button>
+        
+        <p class="danger-warning">
+          Esta acción no se puede deshacer. Se eliminará permanentemente el ticket y toda su información.
+        </p>
+      </div>
+    </div>
+
+    <!-- Sección para personal (no admin) -->
+    <div *ngIf="esPersonal && !esAdmin" class="personal-section">
+      
+      <!-- Cambiar estado del ticket -->
+      <div class="state-management">
+        <h3>Gestión de Estado</h3>
+        <div class="state-controls">
+          <label for="estadoSelectPersonal">Cambiar estado:</label>
+          <select 
+            id="estadoSelectPersonal" 
+            [value]="ticket.estado" 
+            (change)="onEstadoChange($event)"
+            class="form-control"
+            style="max-width: 250px; display: inline-block; margin-left: 10px;">
+            <option *ngFor="let estado of estados" [value]="estado.value">
+              {{estado.label}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Historial de comentarios -->
+    <div class="comments-section">
+      <h3>Historial de Comentarios</h3>
+      <div *ngIf="ticket.comentarios && ticket.comentarios.length > 0; else noComments" class="comments-list">
+        <div *ngFor="let comentario of ticket.comentarios" class="comment-item">
+          <div class="comment-header">
+            <span class="comment-author">{{getNombreAutorComentario(comentario)}}</span>
+            <span class="comment-date">{{formatearFecha(comentario.fecha_creacion)}}</span>
+            <span *ngIf="comentario.es_interno" class="internal-badge">Interno</span>
+          </div>
+          <div class="comment-content">
+            {{comentario.contenido}}
+          </div>
+        </div>
+      </div>
+      <ng-template #noComments>
+        <p class="no-comments">No hay comentarios aún.</p>
+      </ng-template>
+    </div>
+
+    <!-- Formulario para nuevo comentario -->
+    <div *ngIf="puedeComentarInterno()" class="add-comment-section">
+      <h3>Agregar Comentario</h3>
+      <form [formGroup]="comentarioForm" (ngSubmit)="agregarComentario()">
+        
+        <!-- Selector de archivos -->
+        <div class="form-group">
+          <label for="fileInput" class="file-input-label">
+            📎 Adjuntar archivos (opcional)
+          </label>
+          <input 
+            type="file" 
+            id="fileInput" 
+            (change)="onFileSelected($event)" 
+            multiple
+            class="file-input"
+            accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx">
+        </div>
+
+        <!-- Archivos seleccionados -->
+        <div *ngIf="selectedFiles.length > 0" class="selected-files">
+          <h4>Archivos seleccionados:</h4>
+          <div *ngFor="let file of selectedFiles; let i = index" class="selected-file-item">
+            <span class="file-name">{{file.name}}</span>
+            <button type="button" (click)="removeSelectedFile(i)" class="btn-remove-file">×</button>
+          </div>
+          <button type="button" (click)="limpiarArchivos()" class="btn-clear-files">
+            Limpiar todos
+          </button>
+        </div>
+
+        <div class="form-group">
+          <textarea 
+            formControlName="contenido" 
+            class="form-control"
+            rows="3"
+            placeholder="Escribe tu comentario..."></textarea>
+          <div *ngIf="comentarioForm.get('contenido')?.invalid && comentarioForm.get('contenido')?.touched" 
+               class="error-message">
+            El comentario debe tener al menos 5 caracteres
+          </div>
+        </div>
+        
+        <div class="comment-options">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="es_interno">
+            Comentario interno (solo visible para personal)
+          </label>
+          
+          <button 
+            type="submit" 
+            class="btn btn-primary"
+            [disabled]="comentarioForm.invalid || addingComment || estaCargando">
+            {{addingComment ? 'Agregando...' : 'Agregar Comentario'}}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de confirmación para eliminar -->
+  <div *ngIf="mostrarConfirmacionEliminar" class="modal-overlay">
+    <div class="modal-content">
+      <h3>⚠️ Confirmar Eliminación</h3>
+      
+      <p><strong>¿Estás seguro de que quieres eliminar este ticket?</strong></p>
+      
+      <div *ngIf="ticket" class="ticket-info">
+        <p><strong>Ticket #{{ticket.id_ticket}}</strong></p>
+        <p><strong>Título:</strong> {{ticket.titulo}}</p>
+        <p><strong>Usuario:</strong> {{getNombreCompletoUsuario()}}</p>
+        <p><strong>Estado:</strong> {{getEstadoDisplay(ticket.estado)}}</p>
+      </div>
+      
+      <p class="danger-warning-modal">
+        ❌ Esta acción NO se puede deshacer. Se eliminará permanentemente.
+      </p>
+      
+      <div class="modal-actions">
+        <button 
+          (click)="cancelarEliminarTicket()" 
+          class="btn btn-secondary"
+          [disabled]="eliminandoTicket">
+          Cancelar
+        </button>
+        <button 
+          (click)="eliminarTicket()" 
+          class="btn btn-danger"
+          [disabled]="eliminandoTicket">
+          🗑️ {{eliminandoTicket ? 'Eliminando...' : 'Sí, Eliminar'}}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

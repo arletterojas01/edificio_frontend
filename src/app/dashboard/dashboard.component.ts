@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { TicketsService } from '../services/tickets.service'; // ✅ Añade este import
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -20,11 +21,22 @@ export class DashboardComponent implements OnInit {
   rolBadgeColor: string = '#6C757D';
   usuarioActual: any = null;
 
-  constructor(private auth: AuthService, private router: Router) {}
+  // ✅ NUEVAS PROPIEDADES PARA TICKETS
+  ticketsRecientes: any[] = [];
+  loadingTickets: boolean = false;
+  totalTickets: number = 0;
+  ticketsAbiertos: number = 0;
+
+  constructor(
+    private auth: AuthService, 
+    private router: Router,
+    private ticketsService: TicketsService // ✅ Inyecta el servicio
+  ) {}
 
   ngOnInit() {
     console.log('🔍 Iniciando dashboard...');
     this.cargarPerfilYVerificarRol();
+    this.cargarTicketsRecientes(); // ✅ Cargar tickets al iniciar
   }
 
   // MÉTODO PRINCIPAL - Cargar perfil y verificar rol
@@ -45,6 +57,71 @@ export class DashboardComponent implements OnInit {
         this.verificarRolConFallback();
       }
     });
+  }
+
+  // ✅ NUEVO MÉTODO: CARGAR TICKETS RECIENTES
+  cargarTicketsRecientes() {
+    console.log('🎫 Cargando tickets recientes...');
+    this.loadingTickets = true;
+
+    this.ticketsService.getRecentTickets(5).subscribe({
+      next: (tickets: any[]) => {
+        console.log('✅ Tickets cargados:', tickets);
+        this.ticketsRecientes = tickets;
+        this.calcularEstadisticasTickets(tickets);
+        this.loadingTickets = false;
+      },
+      error: (error) => {
+        console.error('❌ Error cargando tickets:', error);
+        this.loadingTickets = false;
+        // Datos de ejemplo para desarrollo
+        this.cargarTicketsEjemplo();
+      }
+    });
+  }
+
+  // ✅ MÉTODO PARA CALCULAR ESTADÍSTICAS
+  calcularEstadisticasTickets(tickets: any[]) {
+    this.totalTickets = tickets.length;
+    this.ticketsAbiertos = tickets.filter(ticket => 
+      ticket.estado === 'abierto' || ticket.estado === 'en_progreso'
+    ).length;
+  }
+
+  // ✅ MÉTODO DE FALLBACK CON DATOS DE EJEMPLO
+  cargarTicketsEjemplo() {
+    console.log('🔄 Cargando datos de ejemplo...');
+    this.ticketsRecientes = [
+      {
+        id: 1,
+        titulo: 'Problema con el ascensor',
+        descripcion: 'El ascensor del edificio A no funciona',
+        estado: 'abierto',
+        prioridad: 'alta',
+        fechaCreacion: new Date()
+      },
+      {
+        id: 2,
+        titulo: 'Fuga de agua en el pasillo',
+        descripcion: 'Hay una fuga en el pasillo del 3er piso',
+        estado: 'en_progreso',
+        prioridad: 'media',
+        fechaCreacion: new Date(Date.now() - 86400000)
+      }
+    ];
+    this.calcularEstadisticasTickets(this.ticketsRecientes);
+  }
+
+  // ✅ NUEVO MÉTODO: IR A DETALLE DE TICKET
+  verTicket(ticketId: number) {
+    console.log('🔍 Viendo ticket:', ticketId);
+    this.router.navigate(['/tickets', ticketId]);
+  }
+
+  // ✅ NUEVO MÉTODO: CREAR NUEVO TICKET
+  crearNuevoTicket() {
+    console.log('➕ Creando nuevo ticket...');
+    this.router.navigate(['/tickets/ticket-create']);
   }
 
   // Fallback si falla la carga del perfil
@@ -116,6 +193,18 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  goToTickets() {
+    console.log('🎫 Navegando a Tickets de Soporte...');
+    this.router.navigate(['/tickets']).then(success => {
+      if (success) {
+        console.log('✅ Navegación exitosa a tickets de soporte');
+      } else {
+        console.error('❌ Error navegando a tickets de soporte');
+        alert('La página de tickets de soporte no está disponible');
+      }
+    });
+  }
+
   goToRoles() {
     console.log('🎭 Navegando a Gestión de Roles...');
     
@@ -147,6 +236,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+
   logout() {
     console.log('🚪 Cerrando sesión...');
     this.auth.logout().subscribe({
@@ -167,6 +257,7 @@ export class DashboardComponent implements OnInit {
     console.log('Usuario actual:', this.usuarioActual);
     console.log('Rol:', this.userRole);
     console.log('Es admin:', this.esAdmin);
+    console.log('Tickets recientes:', this.ticketsRecientes);
     console.log('LocalStorage currentUser:', localStorage.getItem('currentUser'));
     console.log('Token access:', localStorage.getItem('access') ? 'EXISTE' : 'NO EXISTE');
   }
@@ -175,5 +266,12 @@ export class DashboardComponent implements OnInit {
   actualizarPerfil() {
     console.log('🔄 Forzando actualización de perfil...');
     this.cargarPerfilYVerificarRol();
+    this.cargarTicketsRecientes(); // ✅ Actualizar tickets también
   }
+  abrirChatAgente() {
+  // Aquí puedes integrar el flujo con n8n, o abrir una ventana/chat
+  console.log("Chat Agente activado");
+  // Por ejemplo:
+  // window.open('https://tu-n8n-instance/chat', '_blank');
+}
 }

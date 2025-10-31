@@ -6,15 +6,10 @@
       <span class="badge-icon">🎯</span>
       {{ rolDisplay }}
     </div>
-    
-    <p class="dashboard-msg">Selecciona una opción del menú</p>
   </div>
 
   <!-- Menú de Navegación -->
   <div class="nav-menu">
-    <!-- ✅ NUEVO ÍTEM: RESERVAS -->
-    
-    
     <div class="nav-item" (click)="goToPerfil()">
       <span class="nav-icon">👤</span>
       <span class="nav-text">Mi Perfil</span>
@@ -25,7 +20,12 @@
       <span class="nav-text">Reservas</span>
     </div>
 
-    <div class="nav-item" (click)="goToRoles()">
+    <div class="nav-item" (click)="goToTickets()">
+      <span class="nav-icon">🎫</span>
+      <span class="nav-text">Tickets de Soporte</span>
+    </div>
+    
+    <div class="nav-item" (click)="goToRoles()" *ngIf="esAdmin">
       <span class="nav-icon">🎭</span>
       <span class="nav-text">Gestión de Roles</span>
     </div>
@@ -40,4 +40,7 @@
       <span class="nav-text">Cerrar Sesión</span>
     </div>
   </div>
+
+  <!-- Botón de Chat Agente -->
+  <button class="btn-agente" (click)="abrirChatAgente()">💬 Agente</button>
 </div>

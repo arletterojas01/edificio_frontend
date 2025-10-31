@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 import { GuestGuard } from './guards/guest.guard';
 
-
 // Componentes existentes
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -21,6 +20,12 @@ import { CalendarioReservasComponent } from './reservas/calendario-reservas/cale
 import { ListaReservasComponent } from './reservas/lista-reservas/lista-reservas.component';
 import { FormularioReservaComponent } from './reservas/formulario-reserva/formulario-reserva.component';
 import { QrConfirmacionComponent } from './reservas/qr-confirmacion/qr-confirmacion.component';
+
+// ✅ AÑADE ESTOS IMPORTS DE TICKETS
+import { TicketsListComponent } from './tickets/tickets-list/tickets-list.component';
+import { TicketCreateComponent } from './tickets/ticket-create/ticket-create.component';
+import { TicketDetailComponent } from './tickets/ticket-detail/ticket-detail.component';
+import { TicketsReportesComponent } from './tickets/tickets-reportes/tickets-reportes.component';
 
 export const routes: Routes = [
   // Rutas públicas (solo para usuarios NO autenticados)
@@ -82,7 +87,34 @@ export const routes: Routes = [
     canActivate: [AuthGuard] 
   },
 
-  // ✅ RUTAS DEL SISTEMA DE RESERVAS - ACCESIBLE PARA TODOS LOS USUARIOS AUTENTICADOS
+  // ✅ RUTAS DEL SISTEMA DE TICKETS - AÑADE ESTO
+  { 
+    path: 'tickets', 
+    children: [
+      { 
+        path: '', 
+        component: TicketsListComponent, 
+        canActivate: [AuthGuard] 
+      },
+      { 
+        path: 'create', 
+        component: TicketCreateComponent, 
+        canActivate: [AuthGuard] 
+      },
+      { 
+        path: ':id', 
+        component: TicketDetailComponent, 
+        canActivate: [AuthGuard] 
+      },
+      { 
+        path: 'reportes', 
+        component: TicketsReportesComponent, 
+        canActivate: [AuthGuard] 
+      }
+    ]
+  },
+
+  // ✅ RUTAS DEL SISTEMA DE RESERVAS
   { 
     path: 'reservas', 
     children: [

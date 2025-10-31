@@ -1,0 +1,25 @@
+.card {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.bg-orange {
+  background-color: #fd7e14 !important;
+}
+
+// Estilos para las tarjetas de estadísticas
+.card.bg-primary,
+.card.bg-warning,
+.card.bg-info,
+.card.bg-success,
+.card.bg-secondary {
+  transition: transform 0.2s ease-in-out;
+  
+  &:hover {
+    transform: translateY(-2px);
+  }
+}

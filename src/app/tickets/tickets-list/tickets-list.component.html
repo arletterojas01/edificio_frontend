@@ -1,0 +1,168 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <!-- Header -->
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0">
+          <i class="bi bi-ticket-detailed me-2"></i>
+          Gestión de Tickets
+        </h1>
+        <button class="btn btn-primary" (click)="createTicket()">
+          <i class="bi bi-plus-circle me-1"></i>
+          Nuevo Ticket
+        </button>
+      </div>
+
+      <!-- Filtros -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label for="search" class="form-label">Buscar</label>
+              <input
+                type="text"
+                class="form-control"
+                id="search"
+                [(ngModel)]="searchTerm"
+                (input)="applyFilters()"
+                placeholder="Buscar por título o descripción...">
+            </div>
+            <div class="col-md-3">
+              <label for="statusFilter" class="form-label">Estado</label>
+              <select
+                class="form-select"
+                id="statusFilter"
+                [(ngModel)]="statusFilter"
+                (change)="applyFilters()">
+                <option value="">Todos los estados</option>
+                <option *ngFor="let status of statuses" [value]="status.value">
+                  {{ status.label }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="priorityFilter" class="form-label">Prioridad</label>
+              <select
+                class="form-select"
+                id="priorityFilter"
+                [(ngModel)]="priorityFilter"
+                (change)="applyFilters()">
+                <option value="">Todas las prioridades</option>
+                <option *ngFor="let priority of priorities" [value]="priority.value">
+                  {{ priority.label }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+              <button class="btn btn-outline-secondary w-100" (click)="clearFilters()">
+                <i class="bi bi-arrow-clockwise me-1"></i>
+                Limpiar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading -->
+      <div *ngIf="loading" class="text-center py-4">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p class="mt-2 mb-0">Cargando tickets...</p>
+      </div>
+
+      <!-- Error -->
+      <div *ngIf="error && !loading" class="alert alert-danger" role="alert">
+        <i class="bi bi-exclamation-triangle me-2"></i>
+        {{ error }}
+      </div>
+
+      <!-- Tabla de Tickets -->
+      <div *ngIf="!loading && !error" class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Título</th>
+                  <th>Estado</th>
+                  <th>Prioridad</th>
+                  <th>Categoría</th>
+                  <th>Fecha Creación</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let ticket of paginatedTickets" class="cursor-pointer">
+                  <td class="fw-bold">#{{ ticket.id_ticket }}</td>
+                  <td>
+                    <div class="fw-semibold">{{ ticket.titulo }}</div>
+                    <small class="text-muted text-truncate">{{ ticket.descripcion | slice:0:100 }}{{ ticket.descripcion.length > 100 ? '...' : '' }}</small>
+                  </td>
+                  <td>
+                    <span class="badge" [ngClass]="getStatusBadgeClass(ticket.estado)">
+                      {{ ticket.estado | titlecase }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="badge" [ngClass]="getPriorityBadgeClass(ticket.prioridad)">
+                      {{ ticket.prioridad | titlecase }}
+                    </span>
+                  </td>
+                  <td>{{ ticket.categoria_nombre || 'N/A' }}</td>
+                  <td>{{ ticket.fecha_creacion | date:'dd/MM/yyyy HH:mm' }}</td>
+                  <td>
+                    <button class="btn btn-sm btn-outline-primary" (click)="viewTicket(ticket.id_ticket)">
+                      <i class="bi bi-eye me-1"></i>
+                      Ver
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Empty State -->
+          <div *ngIf="filteredTickets.length === 0" class="text-center py-5">
+            <i class="bi bi-inbox display-1 text-muted"></i>
+            <h4 class="mt-3 text-muted">No se encontraron tickets</h4>
+            <p class="text-muted">No hay tickets que coincidan con los filtros aplicados.</p>
+            <button class="btn btn-primary" (click)="clearFilters()">
+              <i class="bi bi-arrow-clockwise me-1"></i>
+              Limpiar filtros
+            </button>
+          </div>
+
+          <!-- Paginación -->
+          <div *ngIf="filteredTickets.length > 0" class="d-flex justify-content-between align-items-center mt-3">
+            <div class="text-muted">
+              Mostrando {{ (currentPage - 1) * itemsPerPage + 1 }} - 
+              {{ Math.min(currentPage * itemsPerPage, totalItems) }} de {{ totalItems }} tickets
+            </div>
+            <nav>
+              <ul class="pagination mb-0">
+                <li class="page-item" [class.disabled]="currentPage === 1">
+                  <a class="page-link" (click)="onPageChange(currentPage - 1)" style="cursor: pointer;">
+                    Anterior
+                  </a>
+                </li>
+                <li *ngFor="let page of [].constructor(Math.ceil(totalItems/itemsPerPage)); let i = index"
+                    class="page-item" [class.active]="currentPage === i + 1">
+                  <a class="page-link" (click)="onPageChange(i + 1)" style="cursor: pointer;">
+                    {{ i + 1 }}
+                  </a>
+                </li>
+                <li class="page-item" [class.disabled]="currentPage === Math.ceil(totalItems/itemsPerPage)">
+                  <a class="page-link" (click)="onPageChange(currentPage + 1)" style="cursor: pointer;">
+                    Siguiente
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,126 @@
+<div class="reportes-container">
+  <div class="header">
+    <h2>📊 Reportes de Tickets</h2>
+    <p>Estadísticas y métricas del sistema de tickets</p>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Cargando estadísticas...</p>
+  </div>
+
+  <div *ngIf="!loading && estadisticas" class="estadisticas-grid">
+    
+    <!-- TARJETA: RESUMEN GENERAL -->
+    <div class="card summary-card">
+      <h3>📈 Resumen General</h3>
+      <div class="stats-grid">
+        <div class="stat-card total">
+          <div class="stat-icon">📋</div>
+          <div class="stat-info">
+            <span class="stat-number">{{ estadisticas.totales.total }}</span>
+            <span class="stat-label">Total Tickets</span>
+          </div>
+        </div>
+
+        <div class="stat-card abiertos">
+          <div class="stat-icon">🟡</div>
+          <div class="stat-info">
+            <span class="stat-number">{{ estadisticas.totales.abiertos }}</span>
+            <span class="stat-label">Abiertos</span>
+            <span class="stat-percent">
+              {{ getPorcentaje(estadisticas.totales.total, estadisticas.totales.abiertos) }}%
+            </span>
+          </div>
+        </div>
+
+        <div class="stat-card en-progreso">
+          <div class="stat-icon">🔵</div>
+          <div class="stat-info">
+            <span class="stat-number">{{ estadisticas.totales.en_progreso }}</span>
+            <span class="stat-label">En Progreso</span>
+            <span class="stat-percent">
+              {{ getPorcentaje(estadisticas.totales.total, estadisticas.totales.en_progreso) }}%
+            </span>
+          </div>
+        </div>
+
+        <div class="stat-card cerrados">
+          <div class="stat-icon">🟢</div>
+          <div class="stat-info">
+            <span class="stat-number">{{ estadisticas.totales.cerrados }}</span>
+            <span class="stat-label">Cerrados</span>
+            <span class="stat-percent">
+              {{ getPorcentaje(estadisticas.totales.total, estadisticas.totales.cerrados) }}%
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TARJETA: POR CATEGORÍA -->
+    <div class="card" *ngIf="estadisticas.por_categoria.length > 0">
+      <h3>📂 Tickets por Categoría</h3>
+      <div class="table-container">
+        <table class="stats-table">
+          <thead>
+            <tr>
+              <th>Categoría</th>
+              <th>Cantidad</th>
+              <th>Porcentaje</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cat of estadisticas.por_categoria">
+              <td>
+                <span class="category-badge" [style.background]="cat.color">
+                  {{ cat.categoria }}
+                </span>
+              </td>
+              <td class="number">{{ cat.cantidad }}</td>
+              <td class="number">
+                {{ getPorcentaje(estadisticas.totales.total, cat.cantidad) }}%
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TARJETA: POR PRIORIDAD -->
+    <div class="card" *ngIf="estadisticas.por_prioridad.length > 0">
+      <h3>🚦 Tickets por Prioridad</h3>
+      <div class="table-container">
+        <table class="stats-table">
+          <thead>
+            <tr>
+              <th>Prioridad</th>
+              <th>Cantidad</th>
+              <th>Porcentaje</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let prio of estadisticas.por_prioridad">
+              <td>
+                <span class="priority-badge" [class]="prio.prioridad">
+                  {{ prio.prioridad | titlecase }}
+                </span>
+              </td>
+              <td class="number">{{ prio.cantidad }}</td>
+              <td class="number">
+                {{ getPorcentaje(estadisticas.totales.total, prio.cantidad) }}%
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="!loading && !estadisticas" class="no-data">
+    <div class="no-data-icon">📊</div>
+    <h3>No hay datos disponibles</h3>
+    <p>No se encontraron estadísticas para mostrar.</p>
+  </div>
+</div>
