@@ -1,32 +1,143 @@
 .auditoria-container {
-  max-width: 900px;
+  font-family: Arial, sans-serif;
+  max-width: 1200px;
   margin: 2rem auto;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px #0002;
-  padding: 2rem 2.5rem;
+  padding: 2rem;
+  background: #F5F5F5;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  button {
+    margin-bottom: 1.5rem;
+    background: #3A86FF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 0.6rem 1.5rem;
+    font-weight: bold;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: Arial, sans-serif;
+
+    &:hover {
+      background: #0D3B66;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(58, 134, 255, 0.3);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  h2 {
+    color: #0D3B66;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 3px solid #3A86FF;
+  }
+
+  .auditoria-table {
+    width: 100%;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    border-collapse: collapse;
+
+    thead {
+      background: #0D3B66;
+      
+      tr th {
+        color: #fff;
+        padding: 1rem;
+        text-align: left;
+        font-weight: bold;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+    }
+
+    tbody {
+      tr {
+        border-bottom: 1px solid #F5F5F5;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+          background-color: rgba(58, 134, 255, 0.05);
+        }
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        td {
+          padding: 1rem;
+          color: #0D3B66;
+          font-size: 0.9rem;
+
+          &:nth-child(1) {
+            color: #6C757D;
+            font-weight: 500;
+          }
+
+          &:nth-child(2) {
+            font-weight: bold;
+            color: #0D3B66;
+          }
+
+          &:nth-child(3) {
+            color: #3A86FF;
+            font-weight: 600;
+          }
+
+          &:nth-child(4) {
+            color: #6C757D;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+          }
+
+          &:nth-child(5) {
+            color: #6C757D;
+          }
+        }
+      }
+    }
+  }
+
+  .no-logs {
+    background: #fff;
+    padding: 3rem;
+    text-align: center;
+    border-radius: 8px;
+    color: #6C757D;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    border: 2px dashed #3A86FF;
+  }
 }
-.auditoria-container h2 {
-  color: #1976d2;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-.auditoria-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 1rem;
-}
-.auditoria-table th, .auditoria-table td {
-  border: 1px solid #e0e0e0;
-  padding: 0.7rem 0.5rem;
-  text-align: left;
-}
-.auditoria-table th {
-  background: #f5f5f5;
-  color: #1976d2;
-}
-.no-logs {
-  color: #888;
-  text-align: center;
-  margin-top: 2rem;
+
+// Responsive design
+@media (max-width: 768px) {
+  .auditoria-container {
+    padding: 1rem;
+    margin: 1rem;
+
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    .auditoria-table {
+      font-size: 0.85rem;
+
+      thead tr th,
+      tbody tr td {
+        padding: 0.7rem 0.5rem;
+      }
+    }
+  }
 }

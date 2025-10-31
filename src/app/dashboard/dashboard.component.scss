@@ -27,6 +27,7 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 // CONTAINER
 // ============================================
 .dashboard-container {
+  font-family: Arial, sans-serif;
   padding: $spacing-xl;
   background: linear-gradient(135deg, #f8f9fa 0%, $neutral-light 100%);
   min-height: 100vh;
@@ -38,6 +39,7 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 // WELCOME SECTION
 // ============================================
 .welcome-section {
+  font-family: Arial, sans-serif;
   background: linear-gradient(135deg, $primary-dark 0%, lighten($primary-dark, 15%) 100%);
   padding: $spacing-xxl;
   border-radius: $border-radius;
@@ -72,6 +74,7 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .dashboard-title {
+  font-family: Arial, sans-serif;
   color: $white;
   font-size: 2rem;
   font-weight: 700;
@@ -82,6 +85,7 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .rol-badge {
+  font-family: Arial, sans-serif;
   display: inline-flex;
   align-items: center;
   gap: $spacing-sm;
@@ -112,6 +116,7 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-item {
+  font-family: Arial, sans-serif;
   background: $white;
   padding: $spacing-xl;
   border-radius: $border-radius;
@@ -165,6 +170,7 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-text {
+  font-family: Arial, sans-serif;
   color: $primary-dark;
   font-weight: 600;
   font-size: 1rem;
@@ -176,6 +182,7 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 // FLOATING AGENT BUTTON
 // ============================================
 .btn-agente {
+  font-family: Arial, sans-serif;
   position: fixed;
   bottom: 2rem;
   right: 2rem;

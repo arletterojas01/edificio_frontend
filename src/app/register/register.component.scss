@@ -31,6 +31,7 @@ $transition-fast: all 0.15s ease-in-out;
   box-shadow: $shadow-lg;
   position: relative;
   overflow: hidden;
+  font-family: Arial, sans-serif;
   
   &::before {
     content: '';
@@ -50,6 +51,7 @@ $transition-fast: all 0.15s ease-in-out;
   font-weight: 700;
   margin-bottom: 0.5rem;
   letter-spacing: -0.5px;
+  font-family: Arial, sans-serif;
 }
 
 .register-subtitle {
@@ -58,24 +60,28 @@ $transition-fast: all 0.15s ease-in-out;
   font-size: 0.95rem;
   margin-bottom: 2rem;
   font-weight: 400;
+  font-family: Arial, sans-serif;
 }
 
 .register-form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  font-family: Arial, sans-serif;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  font-family: Arial, sans-serif;
   
   label {
     color: $color-primario;
     font-weight: 600;
     font-size: 0.9rem;
     margin-left: 2px;
+    font-family: Arial, sans-serif;
   }
 }
 
@@ -89,6 +95,7 @@ $transition-fast: all 0.15s ease-in-out;
   font-size: 1rem;
   box-sizing: border-box;
   transition: $transition-base;
+  font-family: Arial, sans-serif;
   
   &:focus {
     outline: none;
@@ -98,6 +105,7 @@ $transition-fast: all 0.15s ease-in-out;
   
   &::placeholder {
     color: #b0b8c1;
+    font-family: Arial, sans-serif;
   }
   
   &:disabled {
@@ -112,6 +120,7 @@ $transition-fast: all 0.15s ease-in-out;
 // ============================================
 .password-group {
   position: relative;
+  font-family: Arial, sans-serif;
 }
 
 .password-input {
@@ -135,6 +144,7 @@ $transition-fast: all 0.15s ease-in-out;
   border-radius: 8px;
   transition: $transition-fast;
   color: $color-neutro-oscuro;
+  font-family: Arial, sans-serif;
   
   &:hover {
     background: rgba(76, 175, 80, 0.08);
@@ -168,6 +178,7 @@ $transition-fast: all 0.15s ease-in-out;
   transition: $transition-base;
   box-shadow: $shadow-md;
   letter-spacing: 0.3px;
+  font-family: Arial, sans-serif;
   
   &:hover:not(:disabled) {
     background: $color-secundario;
@@ -203,6 +214,7 @@ $transition-fast: all 0.15s ease-in-out;
   padding: 0.5rem;
   transition: $transition-fast;
   position: relative;
+  font-family: Arial, sans-serif;
   
   &::after {
     content: '';
@@ -229,6 +241,7 @@ $transition-fast: all 0.15s ease-in-out;
   text-align: center;
   margin-top: 1.25rem;
   display: inline-block;
+  font-family: Arial, sans-serif;
 }
 
 // ============================================
@@ -243,6 +256,7 @@ $transition-fast: all 0.15s ease-in-out;
   box-shadow: $shadow-sm;
   position: relative;
   overflow: hidden;
+  font-family: Arial, sans-serif;
   
   &::before {
     content: '';
@@ -270,6 +284,7 @@ $transition-fast: all 0.15s ease-in-out;
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      font-family: Arial, sans-serif;
       
       &::before {
         content: '✓';
@@ -284,6 +299,7 @@ $transition-fast: all 0.15s ease-in-out;
         font-size: 0.85rem;
         font-weight: bold;
         flex-shrink: 0;
+        font-family: Arial, sans-serif;
       }
     }
 
@@ -298,6 +314,7 @@ $transition-fast: all 0.15s ease-in-out;
       background: rgba(255, 255, 255, 0.6);
       border-radius: 8px;
       font-weight: 500;
+      font-family: Arial, sans-serif;
     }
 
     .spinner {
@@ -329,6 +346,7 @@ $transition-fast: all 0.15s ease-in-out;
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      font-family: Arial, sans-serif;
       
       &::before {
         content: '✕';
@@ -343,6 +361,7 @@ $transition-fast: all 0.15s ease-in-out;
         font-size: 0.85rem;
         font-weight: bold;
         flex-shrink: 0;
+        font-family: Arial, sans-serif;
       }
     }
   }
@@ -364,6 +383,7 @@ $transition-fast: all 0.15s ease-in-out;
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      font-family: Arial, sans-serif;
       
       &::before {
         content: 'i';
@@ -379,6 +399,7 @@ $transition-fast: all 0.15s ease-in-out;
         font-weight: bold;
         font-style: italic;
         flex-shrink: 0;
+        font-family: Arial, sans-serif;
       }
     }
   }
@@ -388,19 +409,23 @@ $transition-fast: all 0.15s ease-in-out;
       margin: 0.5rem 0;
       line-height: 1.5;
       font-size: 0.95rem;
+      font-family: Arial, sans-serif;
     }
 
     strong {
       font-weight: 700;
+      font-family: Arial, sans-serif;
     }
     
     ul {
       margin: 0.5rem 0 0 1.25rem;
       padding: 0;
+      font-family: Arial, sans-serif;
       
       li {
         margin: 0.35rem 0;
         line-height: 1.4;
+        font-family: Arial, sans-serif;
       }
     }
   }
@@ -417,6 +442,7 @@ $transition-fast: all 0.15s ease-in-out;
   font-size: 0.95rem;
   border: 2px solid #f44336;
   box-shadow: $shadow-sm;
+  font-family: Arial, sans-serif;
 }
 
 // ============================================

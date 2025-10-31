@@ -1,9 +1,19 @@
+// ============================================
+// VARIABLES - PALETA DE COLORES
+// ============================================
+$color-primario: #0D3B66;
+$color-secundario: #3A86FF;
+$color-acento: #4CAF50;
+$color-neutro-claro: #F5F5F5;
+$color-neutro-oscuro: #6C757D;
+$color-blanco: #ffffff;
+
 .usuarios-container {
   max-width: 1600px;
   margin: 0 auto;
   padding: 2rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, $color-neutro-claro 0%, darken($color-neutro-claro, 5%) 100%);
   min-height: 100vh;
 
   // Header Section
@@ -15,36 +25,36 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: white;
+      background: $color-blanco;
       padding: 2rem;
       border-radius: 20px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 8px 32px rgba($color-primario, 0.08);
 
       .title-group {
         h1 {
+          font-family: Arial, sans-serif;
           font-size: 2.5rem;
           font-weight: 700;
           margin-bottom: 0.5rem;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
+          color: $color-primario;
           display: flex;
           align-items: center;
           gap: 0.5rem;
         }
 
         p {
-          color: #666;
+          font-family: Arial, sans-serif;
+          color: $color-neutro-oscuro;
           font-size: 1.05rem;
           margin: 0;
         }
       }
 
       .btn-refresh {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, $color-secundario 0%, darken($color-secundario, 10%) 100%);
         border: none;
-        color: white;
+        color: $color-blanco;
         padding: 1rem 2rem;
         border-radius: 14px;
         font-weight: 600;
@@ -53,7 +63,7 @@
         gap: 0.75rem;
         cursor: pointer;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        box-shadow: 0 4px 15px rgba($color-secundario, 0.4);
 
         i {
           font-size: 1.2rem;
@@ -61,8 +71,9 @@
         }
 
         &:hover {
+          background: linear-gradient(135deg, $color-primario 0%, darken($color-primario, 5%) 100%);
           transform: translateY(-3px);
-          box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+          box-shadow: 0 8px 25px rgba($color-primario, 0.5);
 
           i {
             transform: rotate(360deg);
@@ -78,11 +89,11 @@
 
   // Filters Card
   .filters-card {
-    background: white;
+    background: $color-blanco;
     border-radius: 20px;
     padding: 1.5rem;
     margin-bottom: 2rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 32px rgba($color-primario, 0.08);
     animation: fadeIn 0.6s ease;
 
     .filters-content {
@@ -101,28 +112,29 @@
           left: 1.25rem;
           top: 50%;
           transform: translateY(-50%);
-          color: #999;
+          color: $color-neutro-oscuro;
           font-size: 1.1rem;
         }
 
         .search-input {
+          font-family: Arial, sans-serif;
           width: 100%;
           padding: 1rem 1rem 1rem 3.5rem;
-          border: 2px solid #e8e8e8;
+          border: 2px solid darken($color-neutro-claro, 5%);
           border-radius: 14px;
           font-size: 0.95rem;
           transition: all 0.3s ease;
-          background: #fafafa;
+          background: $color-neutro-claro;
 
           &:focus {
             outline: none;
-            border-color: #667eea;
-            background: white;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            border-color: $color-secundario;
+            background: $color-blanco;
+            box-shadow: 0 0 0 4px rgba($color-secundario, 0.1);
           }
 
           &::placeholder {
-            color: #999;
+            color: $color-neutro-oscuro;
           }
         }
       }
@@ -140,44 +152,47 @@
             left: 1rem;
             top: 50%;
             transform: translateY(-50%);
-            color: #667eea;
+            color: $color-secundario;
             font-size: 1rem;
             z-index: 1;
           }
 
           .filter-select {
+            font-family: Arial, sans-serif;
             padding: 1rem 1.5rem 1rem 3rem;
-            border: 2px solid #e8e8e8;
+            border: 2px solid darken($color-neutro-claro, 5%);
             border-radius: 14px;
             font-size: 0.95rem;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: white;
+            background: $color-blanco;
             min-width: 220px;
+            color: $color-primario;
 
             &:focus {
               outline: none;
-              border-color: #667eea;
-              box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+              border-color: $color-secundario;
+              box-shadow: 0 0 0 4px rgba($color-secundario, 0.1);
             }
 
             &:hover {
-              border-color: #667eea;
+              border-color: $color-secundario;
             }
           }
         }
 
         .results-badge {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          color: white;
+          font-family: Arial, sans-serif;
+          background: linear-gradient(135deg, $color-primario 0%, $color-secundario 100%);
+          color: $color-blanco;
           padding: 1rem 1.5rem;
           border-radius: 14px;
           display: flex;
           align-items: center;
           gap: 0.5rem;
           font-weight: 600;
-          box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+          box-shadow: 0 4px 15px rgba($color-primario, 0.3);
           white-space: nowrap;
 
           i {
@@ -199,9 +214,9 @@
 
   // Users Card
   .users-card {
-    background: white;
+    background: $color-blanco;
     border-radius: 20px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 32px rgba($color-primario, 0.08);
     overflow: hidden;
     animation: fadeIn 0.7s ease;
 
@@ -213,15 +228,16 @@
       .spinner {
         width: 50px;
         height: 50px;
-        border: 4px solid #f3f3f3;
-        border-top: 4px solid #667eea;
+        border: 4px solid $color-neutro-claro;
+        border-top: 4px solid $color-secundario;
         border-radius: 50%;
         margin: 0 auto 1.5rem;
         animation: spin 1s linear infinite;
       }
 
       p {
-        color: #666;
+        font-family: Arial, sans-serif;
+        color: $color-neutro-oscuro;
         font-size: 1.1rem;
         font-weight: 500;
       }
@@ -236,7 +252,7 @@
         width: 100px;
         height: 100px;
         margin: 0 auto 1.5rem;
-        background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+        background: linear-gradient(135deg, $color-neutro-claro 0%, darken($color-neutro-claro, 5%) 100%);
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -244,19 +260,21 @@
 
         i {
           font-size: 3rem;
-          color: #ccc;
+          color: $color-neutro-oscuro;
         }
       }
 
       h3 {
-        color: #333;
+        font-family: Arial, sans-serif;
+        color: $color-primario;
         font-size: 1.5rem;
         font-weight: 600;
         margin-bottom: 0.5rem;
       }
 
       p {
-        color: #999;
+        font-family: Arial, sans-serif;
+        color: $color-neutro-oscuro;
         font-size: 1rem;
       }
     }
@@ -270,10 +288,11 @@
         border-collapse: collapse;
 
         thead {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          color: white;
+          background: linear-gradient(135deg, $color-primario 0%, darken($color-primario, 5%) 100%);
+          color: $color-blanco;
 
           th {
+            font-family: Arial, sans-serif;
             padding: 1.25rem 1.5rem;
             text-align: left;
             font-weight: 600;
@@ -297,13 +316,13 @@
 
         tbody {
           .user-row {
-            border-bottom: 1px solid #f0f0f0;
+            border-bottom: 1px solid $color-neutro-claro;
             transition: all 0.3s ease;
 
             &:hover {
-              background: linear-gradient(to right, #f8f9ff 0%, #fff 100%);
+              background: linear-gradient(to right, lighten($color-secundario, 40%) 0%, $color-blanco 100%);
               transform: scale(1.005);
-              box-shadow: 0 4px 12px rgba(102, 126, 234, 0.08);
+              box-shadow: 0 4px 12px rgba($color-secundario, 0.08);
             }
 
             &:last-child {
@@ -311,6 +330,7 @@
             }
 
             td {
+              font-family: Arial, sans-serif;
               padding: 1.5rem 1.5rem;
               vertical-align: middle;
               font-size: 0.95rem;
@@ -324,47 +344,51 @@
                   width: 45px;
                   height: 45px;
                   border-radius: 12px;
-                  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                  color: white;
+                  background: linear-gradient(135deg, $color-secundario 0%, $color-primario 100%);
+                  color: $color-blanco;
                   display: flex;
                   align-items: center;
                   justify-content: center;
                   font-weight: 700;
                   font-size: 1.2rem;
-                  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+                  box-shadow: 0 4px 12px rgba($color-secundario, 0.3);
                 }
 
                 strong {
-                  color: #1a1a1a;
+                  font-family: Arial, sans-serif;
+                  color: $color-primario;
                   font-weight: 600;
                   font-size: 1rem;
                 }
               }
 
               .full-name {
-                color: #555;
+                font-family: Arial, sans-serif;
+                color: $color-neutro-oscuro;
                 font-weight: 500;
               }
 
               .email-cell {
+                font-family: Arial, sans-serif;
                 display: flex;
                 align-items: center;
                 gap: 0.5rem;
-                color: #555;
+                color: $color-neutro-oscuro;
 
                 i {
-                  color: #667eea;
+                  color: $color-secundario;
                   font-size: 0.9rem;
                 }
               }
 
               .ci-cell {
-                color: #555;
-                font-family: 'Courier New', monospace;
+                font-family: Arial, sans-serif;
+                color: $color-neutro-oscuro;
                 font-weight: 500;
               }
 
               .role-badge {
+                font-family: Arial, sans-serif;
                 display: inline-flex;
                 align-items: center;
                 gap: 0.5rem;
@@ -381,28 +405,28 @@
                 }
 
                 &.bg-danger {
-                  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
-                  color: white;
+                  background: linear-gradient(135deg, #d32f2f 0%, #c62828 100%);
+                  color: $color-blanco;
                 }
 
                 &.bg-primary {
-                  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-                  color: white;
+                  background: linear-gradient(135deg, $color-secundario 0%, $color-primario 100%);
+                  color: $color-blanco;
                 }
 
                 &.bg-warning {
-                  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-                  color: #333;
+                  background: linear-gradient(135deg, #f57c00 0%, #ff9800 100%);
+                  color: $color-blanco;
                 }
 
                 &.bg-info {
-                  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-                  color: #333;
+                  background: linear-gradient(135deg, lighten($color-secundario, 20%) 0%, lighten($color-secundario, 10%) 100%);
+                  color: $color-primario;
                 }
 
                 &.bg-success {
-                  background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
-                  color: white;
+                  background: linear-gradient(135deg, $color-acento 0%, darken($color-acento, 10%) 100%);
+                  color: $color-blanco;
                 }
               }
 
@@ -412,6 +436,7 @@
                 gap: 0.5rem;
 
                 .status-badge {
+                  font-family: Arial, sans-serif;
                   display: inline-flex;
                   align-items: center;
                   gap: 0.5rem;
@@ -427,21 +452,21 @@
                   }
 
                   &.active {
-                    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-                    color: white;
-                    box-shadow: 0 2px 8px rgba(56, 239, 125, 0.3);
+                    background: linear-gradient(135deg, $color-acento 0%, darken($color-acento, 10%) 100%);
+                    color: $color-blanco;
+                    box-shadow: 0 2px 8px rgba($color-acento, 0.3);
                   }
 
                   &.inactive {
-                    background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
-                    color: white;
-                    box-shadow: 0 2px 8px rgba(235, 51, 73, 0.3);
+                    background: linear-gradient(135deg, #d32f2f 0%, #c62828 100%);
+                    color: $color-blanco;
+                    box-shadow: 0 2px 8px rgba(#d32f2f, 0.3);
                   }
 
                   &.warning {
-                    background: linear-gradient(135deg, #f2994a 0%, #f2c94c 100%);
-                    color: #333;
-                    box-shadow: 0 2px 8px rgba(242, 153, 74, 0.3);
+                    background: linear-gradient(135deg, #f57c00 0%, #ff9800 100%);
+                    color: $color-blanco;
+                    box-shadow: 0 2px 8px rgba(#f57c00, 0.3);
                   }
                 }
               }
@@ -449,9 +474,10 @@
               .actions-cell {
                 .dropdown {
                   .btn-action {
-                    background: white;
-                    border: 2px solid #667eea;
-                    color: #667eea;
+                    font-family: Arial, sans-serif;
+                    background: $color-blanco;
+                    border: 2px solid $color-secundario;
+                    color: $color-secundario;
                     padding: 0.75rem 1.25rem;
                     border-radius: 10px;
                     font-weight: 600;
@@ -468,26 +494,28 @@
                     }
 
                     &:hover {
-                      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                      color: white;
+                      background: linear-gradient(135deg, $color-secundario 0%, $color-primario 100%);
+                      color: $color-blanco;
                       transform: translateY(-2px);
-                      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+                      box-shadow: 0 4px 12px rgba($color-secundario, 0.3);
                     }
                   }
 
                   .dropdown-menu {
                     border: none;
                     border-radius: 14px;
-                    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+                    box-shadow: 0 12px 40px rgba($color-primario, 0.15);
                     padding: 0.75rem;
                     margin-top: 0.5rem;
                     min-width: 220px;
                     animation: dropdownSlide 0.3s ease;
+                    background: $color-blanco;
 
                     .dropdown-item {
+                      font-family: Arial, sans-serif;
                       padding: 0.875rem 1.25rem;
                       border-radius: 10px;
-                      color: #333;
+                      color: $color-primario;
                       font-weight: 500;
                       transition: all 0.2s ease;
                       cursor: pointer;
@@ -498,18 +526,23 @@
                       i {
                         font-size: 1.1rem;
                         width: 20px;
+                        color: $color-secundario;
                       }
 
                       &:hover {
-                        background: linear-gradient(to right, #f0f0ff 0%, #fff 100%);
-                        color: #667eea;
+                        background: linear-gradient(to right, lighten($color-secundario, 45%) 0%, $color-blanco 100%);
+                        color: $color-secundario;
                         transform: translateX(4px);
                       }
 
                       &.active {
-                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                        color: white;
+                        background: linear-gradient(135deg, $color-secundario 0%, $color-primario 100%);
+                        color: $color-blanco;
                         position: relative;
+
+                        i {
+                          color: $color-blanco;
+                        }
 
                         &::after {
                           content: '✓';
