@@ -1,493 +1,115 @@
 // ============================================
-// VARIABLES
+// Variables de Diseño
 // ============================================
-$primary-dark: #0D3B66;
-$primary-light: #3A86FF;
-$accent-green: #4CAF50;
-$neutral-light: #F5F5F5;
-$neutral-dark: #6C757D;
-$white: #ffffff;
-$danger: #dc3545;
-$warning: #ffc107;
-$info: #17a2b8;
 
-$spacing-sm: 0.5rem;
+// Paleta de Colores
+$color-primario: #0D3B66;
+$color-secundario: #3A86FF;
+$color-acento: #4CAF50;
+$color-neutro-claro: #F5F5F5;
+$color-neutro-oscuro: #6C757D;
+
+// Colores Adicionales
+$color-blanco: #FFFFFF;
+$color-error: #DC3545;
+$color-warning: #FFC107;
+$color-info: #17A2B8;
+$color-border: #DEE2E6;
+$color-shadow: rgba(13, 59, 102, 0.08);
+$color-hover: rgba(58, 134, 255, 0.1);
+$color-overlay: rgba(0, 0, 0, 0.6);
+
+// Estados de Tickets
+$color-abierto: #3A86FF;
+$color-en-progreso: #FFC107;
+$color-resuelto: #4CAF50;
+$color-cerrado: #6C757D;
+
+// Prioridades
+$color-prioridad-baja: #4CAF50;
+$color-prioridad-media: #FFC107;
+$color-prioridad-alta: #FF6B6B;
+$color-prioridad-urgente: #DC3545;
+
+// Tipografía
+$font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+$font-size-base: 15px;
+$font-size-sm: 13px;
+$font-size-lg: 17px;
+$font-size-xl: 20px;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 600;
+
+// Espaciado
+$spacing-xs: 0.5rem;
+$spacing-sm: 0.75rem;
 $spacing-md: 1rem;
 $spacing-lg: 1.5rem;
 $spacing-xl: 2rem;
+$spacing-xxl: 3rem;
 
-$border-radius: 10px;
-$border-radius-sm: 6px;
+// Border Radius
+$border-radius-sm: 4px;
+$border-radius-md: 6px;
+$border-radius-lg: 8px;
+$border-radius-xl: 12px;
 
-$shadow-sm: 0 2px 8px rgba($primary-dark, 0.06);
-$shadow-md: 0 4px 16px rgba($primary-dark, 0.1);
-$shadow-lg: 0 8px 32px rgba($primary-dark, 0.12);
+// Transiciones
+$transition-base: all 0.3s ease;
+$transition-fast: all 0.15s ease;
 
-$transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+// Sombras
+$shadow-sm: 0 1px 3px $color-shadow;
+$shadow-md: 0 4px 6px $color-shadow;
+$shadow-lg: 0 8px 16px $color-shadow;
 
 // ============================================
-// LAYOUT
+// Container Principal
 // ============================================
-.container-fluid.py-4 {
-  background: linear-gradient(135deg, #f8f9fa 0%, $neutral-light 100%);
+
+.ticket-container {
+  font-family: $font-family;
+  font-size: $font-size-base;
+  color: $color-primario;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $spacing-xl;
+  background-color: $color-neutro-claro;
   min-height: 100vh;
-  padding: $spacing-xl !important;
 }
 
 // ============================================
-// HEADER
+// Loading State
 // ============================================
-.d-flex.justify-content-between.align-items-center.mb-4 {
-  padding: $spacing-lg $spacing-xl;
-  background: $white;
-  border-radius: $border-radius;
-  box-shadow: $shadow-sm;
-  margin-bottom: $spacing-lg !important;
-  
-  h1.h3 {
-    color: $primary-dark;
-    font-weight: 700;
-    font-size: 1.5rem;
-    margin: 0;
-  }
-}
 
-// ============================================
-// CARDS
-// ============================================
-.card {
-  border: none;
-  border-radius: $border-radius;
-  box-shadow: $shadow-md;
-  background: $white;
-  transition: $transition;
-  
-  &:hover {
-    box-shadow: $shadow-lg;
-  }
-  
-  .card-header {
-    background: linear-gradient(135deg, lighten($primary-dark, 5%) 0%, $primary-dark 100%);
-    color: $white;
-    border: none;
-    padding: $spacing-md $spacing-lg;
-    border-radius: $border-radius $border-radius 0 0;
-    
-    .card-title {
-      font-weight: 600;
-      font-size: 1.125rem;
-      margin: 0;
-    }
-  }
-  
-  .card-body {
-    padding: $spacing-lg;
-  }
-}
-
-// ============================================
-// BADGES
-// ============================================
-.badge {
-  padding: 0.4rem 0.875rem;
-  border-radius: $border-radius-sm;
-  font-weight: 600;
-  font-size: 0.75rem;
-  letter-spacing: 0.3px;
-  display: inline-flex;
+.loading {
+  display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 0.25rem;
-  
-  // Estados
-  &.bg-primary {
-    background: $primary-light !important;
-    color: $white;
-  }
-  
-  &.bg-warning {
-    background: $warning !important;
-    color: $primary-dark !important;
-  }
-  
-  &.bg-success {
-    background: $accent-green !important;
-    color: $white;
-  }
-  
-  &.bg-secondary {
-    background: $neutral-dark !important;
-    color: $white;
-  }
-  
-  &.bg-danger {
-    background: $danger !important;
-    color: $white;
-    animation: pulse 2s ease-in-out infinite;
-  }
-  
-  &.bg-info {
-    background: $info !important;
-    color: $white;
-  }
-  
-  // Badge en comentarios internos
-  &.text-dark {
-    color: $primary-dark !important;
+  min-height: 400px;
+  font-size: $font-size-lg;
+  color: $color-secundario;
+  font-weight: $font-weight-medium;
+
+  p {
+    animation: pulse 1.5s ease-in-out infinite;
   }
 }
 
 @keyframes pulse {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.85; }
+  50% { opacity: 0.5; }
 }
 
 // ============================================
-// UBICACIÓN E IMÁGENES
+// Ticket Content
 // ============================================
-h6 {
-  color: $primary-dark;
-  font-weight: 600;
-  font-size: 0.95rem;
-  margin-bottom: $spacing-sm;
+
+.ticket-content {
+  animation: fadeIn 0.4s ease-out;
 }
 
-.image-preview {
-  position: relative;
-  transition: $transition;
-  
-  &:hover {
-    transform: scale(1.05);
-    
-    .img-thumbnail {
-      box-shadow: 0 8px 20px rgba($primary-light, 0.2);
-    }
-  }
-}
-
-.img-thumbnail {
-  border: 2px solid #e0e6ed;
-  border-radius: $border-radius-sm;
-  transition: $transition;
-  cursor: pointer;
-  
-  &:hover {
-    border-color: $primary-light;
-  }
-}
-
-// ============================================
-// METADATA
-// ============================================
-.text-muted.small {
-  color: $neutral-dark !important;
-  font-size: 0.875rem;
-  line-height: 1.8;
-  
-  strong {
-    color: $primary-dark;
-    font-weight: 600;
-  }
-}
-
-// ============================================
-// COMMENTS SECTION
-// ============================================
-.comment-item {
-  background: lighten($neutral-light, 4%);
-  border: 1px solid #e0e6ed !important;
-  border-radius: $border-radius-sm !important;
-  transition: $transition;
-  
-  &:hover {
-    background: $white;
-    box-shadow: $shadow-sm;
-    transform: translateX(4px);
-  }
-  
-  strong {
-    color: $primary-dark;
-    font-size: 0.95rem;
-  }
-  
-  p {
-    color: darken($neutral-dark, 10%);
-    line-height: 1.6;
-    margin: 0;
-  }
-}
-
-// ============================================
-// FORM ELEMENTS
-// ============================================
-.form-label {
-  color: $primary-dark;
-  font-weight: 600;
-  font-size: 0.875rem;
-  margin-bottom: $spacing-sm;
-}
-
-.form-control,
-.form-select {
-  border: 2px solid #e0e6ed;
-  border-radius: $border-radius-sm;
-  padding: 0.75rem 1rem;
-  transition: $transition;
-  font-size: 0.9375rem;
-  
-  &:focus {
-    border-color: $primary-light;
-    box-shadow: 0 0 0 4px rgba($primary-light, 0.1);
-    outline: none;
-  }
-  
-  &::placeholder {
-    color: lighten($neutral-dark, 20%);
-  }
-}
-
-textarea.form-control {
-  resize: vertical;
-  min-height: 90px;
-}
-
-// ============================================
-// CHECKBOX
-// ============================================
-.form-check {
-  padding-left: 1.75rem;
-  
-  .form-check-input {
-    width: 1.25rem;
-    height: 1.25rem;
-    border: 2px solid #e0e6ed;
-    cursor: pointer;
-    
-    &:checked {
-      background-color: $primary-light;
-      border-color: $primary-light;
-    }
-    
-    &:focus {
-      box-shadow: 0 0 0 4px rgba($primary-light, 0.1);
-    }
-  }
-  
-  .form-check-label {
-    color: $neutral-dark;
-    font-size: 0.9rem;
-    cursor: pointer;
-    margin-left: 0.5rem;
-  }
-}
-
-// ============================================
-// FILE INPUT
-// ============================================
-input[type="file"] {
-  padding: 0.75rem;
-  
-  &::file-selector-button {
-    background: $primary-light;
-    color: $white;
-    border: none;
-    padding: 0.5rem 1.25rem;
-    border-radius: $border-radius-sm;
-    cursor: pointer;
-    transition: $transition;
-    margin-right: $spacing-md;
-    font-weight: 600;
-    font-size: 0.875rem;
-    
-    &:hover {
-      background: darken($primary-light, 8%);
-      transform: translateY(-1px);
-    }
-  }
-}
-
-.form-text {
-  color: lighten($neutral-dark, 10%);
-  font-size: 0.8125rem;
-  margin-top: 0.375rem;
-}
-
-// ============================================
-// SELECTED FILES BADGES
-// ============================================
-.badge.bg-secondary.d-flex {
-  background: lighten($neutral-dark, 10%) !important;
-  padding: 0.5rem 0.875rem;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  border-radius: $border-radius-sm;
-  gap: $spacing-sm;
-  
-  .btn-close {
-    font-size: 0.7rem;
-    opacity: 0.8;
-    margin-left: $spacing-sm;
-    
-    &:hover {
-      opacity: 1;
-      transform: scale(1.1);
-    }
-  }
-}
-
-// ============================================
-// BUTTONS
-// ============================================
-.btn {
-  padding: 0.625rem 1.5rem;
-  border-radius: $border-radius-sm;
-  font-weight: 600;
-  transition: $transition;
-  border: none;
-  font-size: 0.9375rem;
-  
-  &.btn-sm {
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-  }
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, $accent-green 0%, darken($accent-green, 10%) 100%);
-  color: $white;
-  box-shadow: 0 4px 12px rgba($accent-green, 0.25);
-  
-  &:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba($accent-green, 0.35);
-  }
-  
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-}
-
-.btn-outline-secondary {
-  border: 2px solid #d1d8e0;
-  color: $neutral-dark;
-  background: $white;
-  
-  &:hover {
-    background: $primary-dark;
-    border-color: $primary-dark;
-    color: $white;
-    transform: translateY(-2px);
-  }
-}
-
-.btn-outline-primary {
-  border: 2px solid $primary-light;
-  color: $primary-light;
-  background: $white;
-  
-  &:hover {
-    background: $primary-light;
-    border-color: $primary-light;
-    color: $white;
-    transform: translateY(-2px);
-  }
-}
-
-.btn-outline-danger {
-  border: 2px solid $danger;
-  color: $danger;
-  background: $white;
-  
-  &:hover {
-    background: $danger;
-    border-color: $danger;
-    color: $white;
-    transform: translateY(-2px);
-  }
-}
-
-// ============================================
-// SIDEBAR INFO
-// ============================================
-dl.row {
-  font-size: 0.875rem;
-  
-  dt {
-    color: $neutral-dark;
-    font-weight: 600;
-  }
-  
-  dd {
-    color: $primary-dark;
-    font-weight: 500;
-  }
-}
-
-// ============================================
-// NO COMMENTS
-// ============================================
-.text-center.text-muted.py-4 {
-  color: $neutral-dark !important;
-  padding: $spacing-xl 0 !important;
-  
-  p {
-    font-size: 1rem;
-    font-style: italic;
-  }
-}
-
-// ============================================
-// LOADING & EMPTY STATES
-// ============================================
-.text-center {
-  .spinner-border {
-    width: 3rem;
-    height: 3rem;
-    border-width: 0.3rem;
-    
-    &.text-primary {
-      color: $primary-light !important;
-    }
-  }
-  
-  &.py-5 {
-    padding: $spacing-xl 0 !important;
-    
-    h3 {
-      color: $primary-dark;
-      font-weight: 600;
-      margin-bottom: $spacing-md;
-    }
-    
-    p.text-muted {
-      color: $neutral-dark !important;
-      font-size: 1rem;
-    }
-  }
-}
-
-// ============================================
-// SPINNER
-// ============================================
-.spinner-border-sm {
-  width: 1rem;
-  height: 1rem;
-  border-width: 0.15em;
-}
-
-// ============================================
-// VALIDATION
-// ============================================
-.text-danger.small {
-  color: $danger !important;
-  font-size: 0.8125rem;
-  margin-top: 0.375rem;
-  font-weight: 500;
-}
-
-// ============================================
-// ANIMATIONS
-// ============================================
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -499,670 +121,1323 @@ dl.row {
   }
 }
 
-.card {
-  animation: fadeIn 0.5s ease;
-  
-  &:nth-child(1) { animation-delay: 0.1s; }
-  &:nth-child(2) { animation-delay: 0.2s; }
-  &:nth-child(3) { animation-delay: 0.3s; }
-}
-
 // ============================================
-// RESPONSIVE
+// Ticket Header
 // ============================================
-@media (max-width: 992px) {
-  .container-fluid.py-4 {
-    padding: $spacing-lg !important;
-  }
-  
-  .card .card-body {
-    padding: $spacing-md;
-  }
-  
-  .d-flex.justify-content-between.align-items-center.mb-4 {
-    flex-direction: column;
-    gap: $spacing-md;
-    padding: $spacing-md;
-    
-    h1.h3 {
-      font-size: 1.25rem;
-    }
-  }
-}
 
-@media (max-width: 768px) {
-  .col-lg-8,
-  .col-lg-4 {
-    margin-bottom: $spacing-lg;
-  }
-  
-  .form-control,
-  .form-select {
-    font-size: 16px;
-  }
-  
-  .btn {
-    width: 100%;
-    margin-bottom: $spacing-sm;
-  }
-  
-  .d-flex.flex-wrap.gap-2 {
-    gap: $spacing-sm !important;
-  }
-  
-  .img-thumbnail {
-    max-width: 100px !important;
-    max-height: 100px !important;
-  }
-}
-
-// ============================================
-// ACCESSIBILITY
-// ============================================
-.form-control:focus,
-.form-select:focus,
-.btn:focus,
-.form-check-input:focus {
-  outline: 2px solid rgba($primary-light, 0.5);
-  outline-offset: 2px;
-}
-
-// ============================================
-// UTILITIES
-// ============================================
-.w-100 {
-  width: 100% !important;
-}
-
-.mb-2 {
-  margin-bottom: $spacing-sm !important;
-}
-
-.text-muted {
-  color: $neutral-dark !important;
-}// Variables de paleta de colores
-$primary-blue: #0D3B66;
-$secondary-blue: #3A86FF;
-$accent-green: #4CAF50;
-$neutral-light: #F5F5F5;
-$neutral-dark: #6C757D;
-$white: #FFFFFF;
-$error-red: #DC3545;
-$warning-orange: #FF9800;
-
-// Mixins
-@mixin card-shadow {
-  box-shadow: 0 2px 8px rgba($primary-blue, 0.1);
-}
-
-@mixin button-base {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 14px;
-  
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-}
-
-// Contenedor principal
-.ticket-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px;
-  background-color: $neutral-light;
-  min-height: 100vh;
-}
-
-// Loading
-.loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 400px;
-  
-  p {
-    color: $primary-blue;
-    font-size: 18px;
-    font-weight: 500;
-  }
-}
-
-// Contenido del ticket
-.ticket-content {
-  background-color: $white;
-  border-radius: 12px;
-  @include card-shadow;
-  overflow: hidden;
-}
-
-// Header del ticket
 .ticket-header {
-  background: linear-gradient(135deg, $primary-blue 0%, darken($primary-blue, 5%) 100%);
-  color: $white;
-  padding: 32px;
-  
+  background-color: $color-blanco;
+  padding: $spacing-xl;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-md;
+  margin-bottom: $spacing-xl;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 5px solid $color-secundario;
+
   h1 {
-    margin: 0 0 16px 0;
-    font-size: 32px;
-    font-weight: 700;
+    font-size: 28px;
+    font-weight: $font-weight-bold;
+    color: $color-primario;
+    margin: 0;
   }
-  
+
   .ticket-meta {
     display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
+    gap: $spacing-md;
+    align-items: center;
   }
 }
 
-// Badges de estado y prioridad
+// ============================================
+// Badges - Estados y Prioridades
+// ============================================
+
 .status-badge,
 .priority-badge {
-  padding: 6px 16px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 600;
+  padding: $spacing-xs $spacing-md;
+  border-radius: $border-radius-md;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  box-shadow: $shadow-sm;
+
+  &::before {
+    content: '●';
+    font-size: 12px;
+  }
 }
 
+// Estados
 .status-badge {
   &.estado-abierto {
-    background-color: $secondary-blue;
-    color: $white;
+    background-color: lighten($color-abierto, 40%);
+    color: darken($color-abierto, 10%);
+    border: 2px solid $color-abierto;
   }
-  
-  &.estado-en-proceso {
-    background-color: $warning-orange;
-    color: $white;
+
+  &.estado-en-progreso {
+    background-color: lighten($color-en-progreso, 40%);
+    color: darken($color-en-progreso, 20%);
+    border: 2px solid $color-en-progreso;
   }
-  
+
+  &.estado-resuelto {
+    background-color: lighten($color-resuelto, 45%);
+    color: darken($color-resuelto, 15%);
+    border: 2px solid $color-resuelto;
+  }
+
   &.estado-cerrado {
-    background-color: $accent-green;
-    color: $white;
-  }
-  
-  &.estado-cancelado {
-    background-color: $error-red;
-    color: $white;
+    background-color: lighten($color-cerrado, 40%);
+    color: darken($color-cerrado, 10%);
+    border: 2px solid $color-cerrado;
   }
 }
 
+// Prioridades
 .priority-badge {
   &.prioridad-baja {
-    background-color: lighten($accent-green, 10%);
-    color: $white;
+    background-color: lighten($color-prioridad-baja, 45%);
+    color: darken($color-prioridad-baja, 15%);
+    border: 2px solid $color-prioridad-baja;
   }
-  
+
   &.prioridad-media {
-    background-color: $warning-orange;
-    color: $white;
+    background-color: lighten($color-prioridad-media, 40%);
+    color: darken($color-prioridad-media, 20%);
+    border: 2px solid $color-prioridad-media;
   }
-  
+
   &.prioridad-alta {
-    background-color: $error-red;
-    color: $white;
+    background-color: lighten($color-prioridad-alta, 35%);
+    color: darken($color-prioridad-alta, 10%);
+    border: 2px solid $color-prioridad-alta;
+  }
+
+  &.prioridad-urgente {
+    background-color: lighten($color-prioridad-urgente, 40%);
+    color: darken($color-prioridad-urgente, 10%);
+    border: 2px solid $color-prioridad-urgente;
   }
 }
 
-// Información del ticket
+.internal-badge {
+  padding: 4px $spacing-sm;
+  border-radius: $border-radius-sm;
+  font-size: 11px;
+  font-weight: $font-weight-bold;
+  text-transform: uppercase;
+  background-color: lighten($color-warning, 35%);
+  color: darken($color-warning, 25%);
+  border: 1px solid $color-warning;
+}
+
+// ============================================
+// Ticket Info Section
+// ============================================
+
 .ticket-info {
-  padding: 32px;
+  background-color: $color-blanco;
+  padding: $spacing-xl;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-md;
+  margin-bottom: $spacing-xl;
 }
 
 .info-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 24px;
-  margin-bottom: 32px;
+  gap: $spacing-lg;
+  padding: $spacing-lg;
+  background-color: $color-neutro-claro;
+  border-radius: $border-radius-md;
+  margin-bottom: $spacing-xl;
 }
 
 .info-item {
   label {
-    display: block;
-    color: $neutral-dark;
-    font-size: 13px;
-    font-weight: 600;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-bold;
+    color: $color-neutro-oscuro;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    margin-bottom: 8px;
-  }
-  
-  span {
     display: block;
-    color: $primary-blue;
-    font-size: 15px;
-    font-weight: 500;
+    margin-bottom: $spacing-xs;
   }
-  
+
+  span {
+    font-size: $font-size-base;
+    color: $color-primario;
+    font-weight: $font-weight-medium;
+    display: block;
+  }
+
   .tecnico-asignado {
-    color: $accent-green;
-    font-weight: 600;
+    color: $color-acento;
+    font-weight: $font-weight-bold;
+
+    &::before {
+      content: '✓ ';
+    }
   }
-  
+
   .no-tecnico {
-    color: $neutral-dark;
+    color: $color-neutro-oscuro;
     font-style: italic;
+
+    &::before {
+      content: '○ ';
+    }
   }
 }
 
-// Descripción del problema
+// ============================================
+// Problem Sections
+// ============================================
+
+.problem-title,
 .problem-description {
-  background-color: $neutral-light;
-  padding: 24px;
-  border-radius: 8px;
-  margin-bottom: 24px;
-  
+  margin-bottom: $spacing-xl;
+  padding-bottom: $spacing-lg;
+  border-bottom: 2px solid $color-neutro-claro;
+
   h3 {
-    color: $primary-blue;
-    font-size: 18px;
-    margin: 0 0 16px 0;
-    font-weight: 600;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $color-primario;
+    margin-bottom: $spacing-md;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    &::before {
+      content: '📋';
+      font-size: $font-size-xl;
+    }
   }
-  
+
   p {
-    color: darken($neutral-dark, 10%);
-    line-height: 1.6;
+    font-size: $font-size-base;
+    color: $color-primario;
+    line-height: 1.7;
     margin: 0;
-    font-size: 15px;
+  }
+
+  strong {
+    font-weight: $font-weight-bold;
   }
 }
 
-// Adjuntos
+.problem-description {
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  h3::before {
+    content: '📝';
+  }
+}
+
+// ============================================
+// Attachments
+// ============================================
+
 .attachments {
-  margin-bottom: 24px;
-  
+  margin-top: $spacing-xl;
+  padding-top: $spacing-lg;
+  border-top: 2px solid $color-neutro-claro;
+
   h3 {
-    color: $primary-blue;
-    font-size: 18px;
-    margin: 0 0 16px 0;
-    font-weight: 600;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $color-primario;
+    margin-bottom: $spacing-md;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    &::before {
+      content: '📎';
+      font-size: $font-size-xl;
+    }
   }
 }
 
 .attachment-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: $spacing-md;
 }
 
 .attachment-item {
   .btn-download {
-    @include button-base;
-    background-color: $neutral-light;
-    color: $primary-blue;
-    border: 2px solid $secondary-blue;
     width: 100%;
-    text-align: left;
     display: flex;
     align-items: center;
-    gap: 8px;
-    
-    &:hover:not(:disabled) {
-      background-color: $secondary-blue;
-      color: $white;
+    gap: $spacing-sm;
+    padding: $spacing-md;
+    background-color: $color-neutro-claro;
+    border: 2px solid $color-border;
+    border-radius: $border-radius-md;
+    color: $color-primario;
+    font-family: $font-family;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    transition: $transition-base;
+    text-align: left;
+
+    &:hover {
+      background-color: $color-secundario;
+      border-color: $color-secundario;
+      color: $color-blanco;
+      transform: translateY(-2px);
+      box-shadow: $shadow-md;
+
+      .file-icon {
+        color: $color-blanco;
+      }
+    }
+  }
+
+  .file-icon {
+    font-size: 20px;
+    color: $color-secundario;
+    transition: $transition-fast;
+
+    &::before {
+      content: '📄';
+    }
+
+    &.pdf::before {
+      content: '📕';
+    }
+
+    &.image::before {
+      content: '🖼️';
+    }
+
+    &.excel::before {
+      content: '📊';
+    }
+
+    &.word::before {
+      content: '📘';
     }
   }
 }
 
-// Sección de asignación
+// ============================================
+// Admin & Personal Sections
+// ============================================
+
+.admin-section,
+.personal-section {
+  background-color: $color-blanco;
+  padding: $spacing-xl;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-md;
+  margin-bottom: $spacing-xl;
+  border-left: 5px solid $color-acento;
+}
+
+// State Management
+.state-management {
+  padding: $spacing-lg;
+  background-color: $color-neutro-claro;
+  border-radius: $border-radius-md;
+  margin-bottom: $spacing-xl;
+
+  h3 {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $color-primario;
+    margin-bottom: $spacing-md;
+  }
+
+  .state-controls {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+
+    label {
+      font-weight: $font-weight-medium;
+      color: $color-primario;
+    }
+
+    .form-control {
+      font-family: $font-family;
+      padding: $spacing-sm $spacing-md;
+      border: 2px solid $color-border;
+      border-radius: $border-radius-md;
+      background-color: $color-blanco;
+      color: $color-primario;
+      font-weight: $font-weight-medium;
+      transition: $transition-fast;
+      cursor: pointer;
+
+      &:focus {
+        border-color: $color-secundario;
+        box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.15);
+        outline: none;
+      }
+
+      &:hover {
+        border-color: $color-secundario;
+      }
+    }
+  }
+}
+
+// ============================================
+// Assignment Section
+// ============================================
+
 .assignment-section {
-  padding: 32px;
-  background-color: lighten($neutral-light, 2%);
-  border-top: 3px solid $primary-blue;
-  
+  margin-bottom: $spacing-xl;
+
   .section-header {
-    margin-bottom: 24px;
-    
+    margin-bottom: $spacing-lg;
+
     h2 {
-      color: $primary-blue;
-      font-size: 24px;
-      margin: 0;
-      font-weight: 700;
+      font-size: $font-size-xl;
+      font-weight: $font-weight-bold;
+      color: $color-primario;
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+
+      &::before {
+        content: '👷';
+        font-size: 24px;
+      }
     }
   }
 }
 
-.current-assignment {
-  margin-bottom: 24px;
-  
-  .assignment-info {
-    background-color: $white;
-    padding: 20px;
-    border-radius: 8px;
-    @include card-shadow;
+// Info Alerts
+.info-alert {
+  padding: $spacing-lg;
+  border-radius: $border-radius-md;
+  border-left: 4px solid $color-secundario;
+  background-color: lighten($color-secundario, 45%);
+  margin-bottom: $spacing-lg;
+
+  &.success {
+    border-left-color: $color-acento;
+    background-color: lighten($color-acento, 50%);
   }
-  
-  .assignment-actions {
-    margin-top: 16px;
+
+  strong {
+    font-weight: $font-weight-bold;
+    color: $color-primario;
+    display: block;
+    margin-bottom: $spacing-xs;
+  }
+
+  p {
+    color: $color-primario;
+    margin: $spacing-sm 0;
+    line-height: 1.6;
+  }
+}
+
+// Current Assignment
+.current-assignment {
+  margin-bottom: $spacing-lg;
+
+  .assignment-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: $spacing-md;
   }
 }
 
 .assignment-prompt {
-  .info-alert {
-    button {
-      margin-top: 16px;
-    }
-  }
+  text-align: center;
 }
 
-// Alerts
-.info-alert {
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 16px;
-  
-  strong {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 16px;
-  }
-  
-  p {
-    margin: 8px 0 0 0;
-    line-height: 1.5;
-  }
-  
-  &.success {
-    background-color: lighten($accent-green, 45%);
-    border-left: 4px solid $accent-green;
-    color: darken($accent-green, 20%);
-  }
-  
-  &.info {
-    background-color: lighten($secondary-blue, 45%);
-    border-left: 4px solid $secondary-blue;
-    color: darken($secondary-blue, 20%);
-  }
-  
-  &:not(.success):not(.info) {
-    background-color: lighten($warning-orange, 40%);
-    border-left: 4px solid $warning-orange;
-    color: darken($warning-orange, 20%);
-  }
-}
-
-// Formulario de asignación
+// Assignment Form
 .assignment-form {
-  background-color: $white;
-  padding: 28px;
-  border-radius: 8px;
-  @include card-shadow;
-  
-  .form-header {
-    margin-bottom: 24px;
-    padding-bottom: 16px;
-    border-bottom: 2px solid $neutral-light;
-    
-    h3 {
-      color: $primary-blue;
-      font-size: 20px;
-      margin: 0 0 8px 0;
-      font-weight: 700;
-    }
-    
-    .form-description {
-      color: $neutral-dark;
-      margin: 0;
-      line-height: 1.5;
-    }
-  }
-}
+  background-color: $color-neutro-claro;
+  padding: $spacing-xl;
+  border-radius: $border-radius-md;
+  border: 2px solid $color-border;
 
-.form-group {
-  margin-bottom: 24px;
-  
-  label {
-    display: block;
-    color: $primary-blue;
-    font-weight: 600;
-    margin-bottom: 8px;
-    font-size: 14px;
-  }
-  
-  .form-control {
-    width: 100%;
-    padding: 12px 16px;
-    border: 2px solid lighten($neutral-dark, 30%);
-    border-radius: 6px;
-    font-size: 15px;
-    transition: all 0.3s ease;
-    font-family: inherit;
-    
-    &:focus {
-      outline: none;
-      border-color: $secondary-blue;
-      box-shadow: 0 0 0 3px rgba($secondary-blue, 0.1);
+  .form-header {
+    margin-bottom: $spacing-xl;
+    padding-bottom: $spacing-lg;
+    border-bottom: 2px solid $color-border;
+
+    h3 {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-bold;
+      color: $color-primario;
+      margin-bottom: $spacing-sm;
     }
-    
-    &.is-invalid {
-      border-color: $error-red;
-      
-      &:focus {
-        box-shadow: 0 0 0 3px rgba($error-red, 0.1);
+
+    .form-description {
+      color: $color-neutro-oscuro;
+      line-height: 1.6;
+      margin: 0;
+
+      strong {
+        color: $color-warning;
       }
     }
   }
-  
-  textarea.form-control {
-    resize: vertical;
-    min-height: 100px;
+
+  .form-group {
+    margin-bottom: $spacing-lg;
+
+    label {
+      font-weight: $font-weight-bold;
+      color: $color-primario;
+      margin-bottom: $spacing-sm;
+      display: block;
+    }
+
+    .form-control {
+      width: 100%;
+      font-family: $font-family;
+      font-size: $font-size-base;
+      padding: $spacing-md;
+      border: 2px solid $color-border;
+      border-radius: $border-radius-md;
+      background-color: $color-blanco;
+      color: $color-primario;
+      transition: $transition-fast;
+
+      &::placeholder {
+        color: lighten($color-neutro-oscuro, 15%);
+        font-style: italic;
+      }
+
+      &:focus {
+        border-color: $color-secundario;
+        box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.15);
+        outline: none;
+      }
+
+      &.is-invalid {
+        border-color: $color-error;
+      }
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.6;
+    }
+  }
+
+  .error-message {
+    color: $color-error;
+    font-size: $font-size-sm;
+    margin-top: $spacing-xs;
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+
+    &::before {
+      content: '⚠';
+    }
+  }
+
+  .char-count {
+    font-size: $font-size-sm;
+    color: $color-neutro-oscuro;
+    text-align: right;
+    margin-top: $spacing-xs;
+    font-style: italic;
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-md;
+    margin-top: $spacing-xl;
+    padding-top: $spacing-lg;
+    border-top: 2px solid $color-border;
   }
 }
 
-.error-message {
-  color: $error-red;
-  font-size: 13px;
-  margin-top: 6px;
-  font-weight: 500;
-}
+// ============================================
+// Buttons
+// ============================================
 
-.char-count {
-  text-align: right;
-  color: $neutral-dark;
-  font-size: 12px;
-  margin-top: 4px;
-}
-
-.notification-info {
-  margin: 24px 0;
-}
-
-// Acciones del formulario
-.form-actions {
-  display: flex;
-  gap: 12px;
-  justify-content: flex-end;
-  margin-top: 28px;
-  padding-top: 20px;
-  border-top: 2px solid $neutral-light;
-}
-
-// Botones
 .btn {
-  @include button-base;
-  
-  &-primary {
-    background-color: $primary-blue;
-    color: $white;
-    
-    &:hover:not(:disabled) {
-      background-color: darken($primary-blue, 8%);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba($primary-blue, 0.3);
-    }
+  font-family: $font-family;
+  font-weight: $font-weight-medium;
+  padding: $spacing-sm $spacing-lg;
+  border-radius: $border-radius-md;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: $transition-base;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-xs;
+  font-size: $font-size-base;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
   }
-  
-  &-secondary {
-    background-color: $neutral-dark;
-    color: $white;
-    
-    &:hover:not(:disabled) {
-      background-color: darken($neutral-dark, 10%);
-    }
+
+  &:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
   }
-  
-  &-warning {
-    background-color: $warning-orange;
-    color: $white;
-    
-    &:hover:not(:disabled) {
-      background-color: darken($warning-orange, 10%);
-    }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
   }
 }
 
-// Sección de comentarios
-.comments-section {
-  padding: 32px;
-  border-top: 3px solid $neutral-light;
-  
+.btn-primary {
+  background-color: $color-secundario;
+  color: $color-blanco;
+  border-color: $color-secundario;
+
+  &:hover:not(:disabled) {
+    background-color: darken($color-secundario, 8%);
+    border-color: darken($color-secundario, 8%);
+  }
+}
+
+.btn-secondary {
+  background-color: $color-neutro-oscuro;
+  color: $color-blanco;
+  border-color: $color-neutro-oscuro;
+
+  &:hover:not(:disabled) {
+    background-color: darken($color-neutro-oscuro, 8%);
+    border-color: darken($color-neutro-oscuro, 8%);
+  }
+}
+
+.btn-warning {
+  background-color: $color-warning;
+  color: $color-primario;
+  border-color: $color-warning;
+
+  &:hover:not(:disabled) {
+    background-color: darken($color-warning, 8%);
+    border-color: darken($color-warning, 8%);
+  }
+}
+
+.btn-danger {
+  background-color: $color-error;
+  color: $color-blanco;
+  border-color: $color-error;
+
+  &:hover:not(:disabled) {
+    background-color: darken($color-error, 8%);
+    border-color: darken($color-error, 8%);
+  }
+}
+
+// ============================================
+// Danger Zone
+// ============================================
+
+.danger-actions {
+  padding: $spacing-xl;
+  background-color: lighten($color-error, 45%);
+  border: 2px solid $color-error;
+  border-radius: $border-radius-md;
+  margin-top: $spacing-xl;
+
   h3 {
-    color: $primary-blue;
-    font-size: 22px;
-    margin: 0 0 24px 0;
-    font-weight: 700;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $color-error;
+    margin-bottom: $spacing-md;
+  }
+
+  .danger-warning {
+    color: $color-primario;
+    font-size: $font-size-sm;
+    margin-top: $spacing-md;
+    line-height: 1.6;
+    font-style: italic;
+  }
+}
+
+// ============================================
+// Comments Section
+// ============================================
+
+.comments-section {
+  background-color: $color-blanco;
+  padding: $spacing-xl;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-md;
+  margin-bottom: $spacing-xl;
+
+  h3 {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $color-primario;
+    margin-bottom: $spacing-lg;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    &::before {
+      content: '💬';
+      font-size: 24px;
+    }
   }
 }
 
 .comments-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: $spacing-lg;
 }
 
 .comment-item {
-  background-color: $neutral-light;
-  padding: 20px;
-  border-radius: 8px;
-  border-left: 4px solid $secondary-blue;
-  
+  padding: $spacing-lg;
+  background-color: $color-neutro-claro;
+  border-radius: $border-radius-md;
+  border-left: 4px solid $color-secundario;
+  transition: $transition-fast;
+
+  &:hover {
+    box-shadow: $shadow-sm;
+    transform: translateX(4px);
+  }
+
   .comment-header {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
+    gap: $spacing-md;
+    margin-bottom: $spacing-md;
     flex-wrap: wrap;
-    
+
     .comment-author {
-      font-weight: 700;
-      color: $primary-blue;
-      font-size: 15px;
+      font-weight: $font-weight-bold;
+      color: $color-primario;
+      font-size: $font-size-base;
     }
-    
+
     .comment-date {
-      color: $neutral-dark;
-      font-size: 13px;
-    }
-    
-    .internal-badge {
-      background-color: $warning-orange;
-      color: $white;
-      padding: 3px 10px;
-      border-radius: 12px;
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
+      font-size: $font-size-sm;
+      color: $color-neutro-oscuro;
+      font-style: italic;
     }
   }
-  
+
   .comment-content {
-    color: darken($neutral-dark, 10%);
-    line-height: 1.6;
-    font-size: 14px;
+    color: $color-primario;
+    line-height: 1.7;
+    font-size: $font-size-base;
   }
 }
 
 .no-comments {
   text-align: center;
-  color: $neutral-dark;
-  padding: 40px;
+  color: $color-neutro-oscuro;
   font-style: italic;
+  padding: $spacing-xl;
 }
 
-// Agregar comentario
+// ============================================
+// Add Comment Section
+// ============================================
+
 .add-comment-section {
-  padding: 32px;
-  background-color: lighten($neutral-light, 2%);
-  border-top: 3px solid $neutral-light;
-  
-  h3 {
-    color: $primary-blue;
-    font-size: 20px;
-    margin: 0 0 20px 0;
-    font-weight: 700;
-  }
-}
+  background-color: $color-blanco;
+  padding: $spacing-xl;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-md;
 
-.comment-options {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 16px;
-  gap: 16px;
-  
-  .checkbox-label {
+  h3 {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $color-primario;
+    margin-bottom: $spacing-lg;
     display: flex;
     align-items: center;
-    gap: 8px;
-    color: $primary-blue;
-    font-weight: 500;
-    cursor: pointer;
-    
-    input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      cursor: pointer;
-      accent-color: $secondary-blue;
-    }
-  }
-}
+    gap: $spacing-sm;
 
-// Responsive
-@media (max-width: 768px) {
-  .ticket-container {
-    padding: 16px;
-  }
-  
-  .ticket-header {
-    padding: 24px;
-    
-    h1 {
+    &::before {
+      content: '✍️';
       font-size: 24px;
     }
   }
-  
-  .ticket-info,
-  .assignment-section,
-  .comments-section,
-  .add-comment-section {
-    padding: 20px;
+
+  .form-group {
+    margin-bottom: $spacing-lg;
+
+    textarea.form-control {
+      width: 100%;
+      font-family: $font-family;
+      font-size: $font-size-base;
+      padding: $spacing-md;
+      border: 2px solid $color-border;
+      border-radius: $border-radius-md;
+      background-color: $color-blanco;
+      color: $color-primario;
+      resize: vertical;
+      min-height: 100px;
+      line-height: 1.6;
+      transition: $transition-fast;
+
+      &:focus {
+        border-color: $color-secundario;
+        box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.15);
+        outline: none;
+      }
+    }
   }
-  
+
+  .comment-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+      cursor: pointer;
+      font-weight: $font-weight-medium;
+      color: $color-primario;
+
+      input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+        accent-color: $color-acento;
+      }
+    }
+  }
+}
+
+// File Input
+.file-input-label {
+  display: inline-block;
+  padding: $spacing-md $spacing-lg;
+  background-color: $color-neutro-claro;
+  border: 2px dashed $color-border;
+  border-radius: $border-radius-md;
+  color: $color-primario;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: $transition-base;
+  margin-bottom: $spacing-md;
+
+  &:hover {
+    background-color: $color-hover;
+    border-color: $color-secundario;
+    color: $color-secundario;
+  }
+}
+
+.file-input {
+  display: none;
+}
+
+.selected-files {
+  background-color: $color-neutro-claro;
+  padding: $spacing-lg;
+  border-radius: $border-radius-md;
+  margin-bottom: $spacing-lg;
+
+  h4 {
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
+    color: $color-primario;
+    margin-bottom: $spacing-md;
+  }
+}
+
+.selected-file-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-sm $spacing-md;
+  background-color: $color-blanco;
+  border: 2px solid $color-border;
+  border-radius: $border-radius-md;
+  margin-bottom: $spacing-sm;
+
+  .file-name {
+    font-size: $font-size-sm;
+    color: $color-primario;
+    font-weight: $font-weight-medium;
+  }
+
+  .btn-remove-file {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-color: $color-error;
+    color: $color-blanco;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: $font-weight-bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: $transition-fast;
+
+    &:hover {
+      background-color: darken($color-error, 8%);
+      transform: scale(1.1);
+    }
+  }
+}
+
+.btn-clear-files {
+  margin-top: $spacing-sm;
+  padding: $spacing-xs $spacing-md;
+  background-color: $color-blanco;
+  border: 2px solid $color-error;
+  color: $color-error;
+  font-family: $font-family;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  border-radius: $border-radius-md;
+  cursor: pointer;
+  transition: $transition-base;
+
+  &:hover {
+    background-color: $color-error;
+    color: $color-blanco;
+  }
+}
+
+// ============================================
+// Modal
+// ============================================
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $color-overlay;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background-color: $color-blanco;
+  padding: $spacing-xxl;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-lg;
+  max-width: 600px;
+  width: 90%;
+  animation: slideUp 0.3s ease;
+
+  h3 {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $color-error;
+    margin-bottom: $spacing-lg;
+  }
+
+  p {
+    color: $color-primario;
+    line-height: 1.7;
+    margin-bottom: $spacing-md;
+
+    strong {
+      font-weight: $font-weight-bold;
+    }
+  }
+
+  .ticket-info {
+    background-color: $color-neutro-claro;
+    padding: $spacing-lg;
+    border-radius: $border-radius-md;
+    margin: $spacing-lg 0;
+
+    p {
+      margin-bottom: $spacing-sm;
+      font-size: $font-size-base;
+
+      strong {
+        color: $color-primario;
+        display: inline-block;
+        min-width: 80px;
+      }
+    }
+  }
+
+  .danger-warning-modal {
+    color: $color-error;
+    font-weight: $font-weight-bold;
+    font-size: $font-size-base;
+    padding: $spacing-md;
+    background-color: lighten($color-error, 45%);
+    border-radius: $border-radius-md;
+    border-left: 4px solid $color-error;
+    margin: $spacing-lg 0;
+  }
+
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-md;
+    margin-top: $spacing-xl;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ============================================
+// Responsive Design
+// ============================================
+
+@media (max-width: 992px) {
+  .ticket-container {
+    padding: $spacing-lg;
+  }
+
+  .ticket-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-md;
+
+    h1 {
+      font-size: 24px;
+    }
+
+    .ticket-meta {
+      width: 100%;
+      justify-content: flex-start;
+    }
+  }
+
   .info-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
   }
-  
-  .form-actions {
+
+  .assignment-info {
     flex-direction: column;
-    
+    align-items: flex-start !important;
+
     .btn {
       width: 100%;
     }
   }
-  
+
   .comment-options {
     flex-direction: column;
-    align-items: stretch;
-    
+    align-items: flex-start !important;
+
     .btn {
       width: 100%;
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .ticket-container {
+    padding: $spacing-md;
+  }
+
+  .ticket-header,
+  .ticket-info,
+  .admin-section,
+  .personal-section,
+  .comments-section,
+  .add-comment-section {
+    padding: $spacing-lg;
+  }
+
+  .assignment-form {
+    padding: $spacing-lg;
+  }
+
+  .modal-content {
+    padding: $spacing-xl;
+    width: 95%;
+
+    h3 {
+      font-size: $font-size-lg;
+    }
+  }
+
+  .state-controls {
+    flex-direction: column;
+    align-items: flex-start !important;
+
+    .form-control {
+      width: 100%;
+      max-width: 100% !important;
+    }
+  }
+
+  .attachment-list {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;
+
+    .btn {
+      width: 100%;
+    }
+  }
+
+  .modal-actions {
+    flex-direction: column;
+
+    .btn {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .ticket-container {
+    padding: $spacing-sm;
+  }
+
+  .ticket-header {
+    h1 {
+      font-size: 20px;
+    }
+  }
+
+  .status-badge,
+  .priority-badge {
+    font-size: 11px;
+    padding: 4px $spacing-sm;
+  }
+
+  h3 {
+    font-size: $font-size-base;
+  }
+
+  .problem-title h3,
+  .problem-description h3,
+  .attachments h3,
+  .comments-section h3,
+  .add-comment-section h3 {
+    font-size: $font-size-base;
+  }
+}
+
+// ============================================
+// Print Styles
+// ============================================
+
+@media print {
+  .ticket-container {
+    background-color: $color-blanco;
+    padding: 0;
+  }
+
+  .admin-section,
+  .personal-section,
+  .add-comment-section,
+  .danger-actions,
+  .assignment-form,
+  .state-management,
+  .modal-overlay,
+  .btn {
+    display: none !important;
+  }
+
+  .ticket-header,
+  .ticket-info,
+  .comments-section {
+    box-shadow: none;
+    border: 1px solid $color-border;
+    page-break-inside: avoid;
+  }
+
+  .comment-item {
+    page-break-inside: avoid;
+  }
+}
+
+// ============================================
+// Utility Classes
+// ============================================
+
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: $color-neutro-oscuro;
+}
+
+.font-weight-bold {
+  font-weight: $font-weight-bold;
+}
+
+.mt-2 { margin-top: $spacing-md; }
+.mb-2 { margin-bottom: $spacing-md; }
+.mt-3 { margin-top: $spacing-lg; }
+.mb-3 { margin-bottom: $spacing-lg; }
+.mt-4 { margin-top: $spacing-xl; }
+.mb-4 { margin-bottom: $spacing-xl; }
+
+// ============================================
+// Accesibilidad
+// ============================================
+
+*:focus-visible {
+  outline: 2px solid $color-secundario;
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid $color-secundario;
+  outline-offset: 2px;
+}
+
+// ============================================
+// Estados de Carga
+// ============================================
+
+.btn {
+  position: relative;
+
+  &:disabled {
+    &::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      margin-left: $spacing-xs;
+      border: 2px solid transparent;
+      border-top-color: currentColor;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// ============================================
+// Scrollbar Personalizado
+// ============================================
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: $color-secundario $color-neutro-claro;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: $color-neutro-claro;
+  border-radius: $border-radius-sm;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: $color-secundario;
+  border-radius: $border-radius-sm;
+  border: 2px solid $color-neutro-claro;
+
+  &:hover {
+    background-color: darken($color-secundario, 10%);
+  }
+}
+
+// ============================================
+// Transiciones Suaves
+// ============================================
+
+.ticket-content > * {
+  transition: $transition-base;
+}
+
+// ============================================
+// Estados Hover Globales
+// ============================================
+
+a {
+  color: $color-secundario;
+  text-decoration: none;
+  transition: $transition-fast;
+
+  &:hover {
+    color: darken($color-secundario, 10%);
+    text-decoration: underline;
+  }
+}
+
+// ============================================
+// Mejoras de Contraste para Accesibilidad
+// ============================================
+
+@media (prefers-contrast: high) {
+  .status-badge,
+  .priority-badge {
+    border-width: 3px;
+    font-weight: $font-weight-bold;
+  }
+
+  .btn {
+    border-width: 3px;
+  }
+
+  .form-control {
+    border-width: 3px;
+  }
+}
+
+// ============================================
+// Modo de Movimiento Reducido
+// ============================================
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

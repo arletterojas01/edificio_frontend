@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { TicketsService } from '../services/tickets.service'; // ✅ Añade este import
+import { TicketsService } from '../services/tickets.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
   rolBadgeColor: string = '#6C757D';
   usuarioActual: any = null;
 
-  // ✅ NUEVAS PROPIEDADES PARA TICKETS
+  // Propiedades para tickets
   ticketsRecientes: any[] = [];
   loadingTickets: boolean = false;
   totalTickets: number = 0;
@@ -30,13 +30,13 @@ export class DashboardComponent implements OnInit {
   constructor(
     private auth: AuthService, 
     private router: Router,
-    private ticketsService: TicketsService // ✅ Inyecta el servicio
+    private ticketsService: TicketsService
   ) {}
 
   ngOnInit() {
     console.log('🔍 Iniciando dashboard...');
     this.cargarPerfilYVerificarRol();
-    this.cargarTicketsRecientes(); // ✅ Cargar tickets al iniciar
+    this.cargarTicketsRecientes();
   }
 
   // MÉTODO PRINCIPAL - Cargar perfil y verificar rol
@@ -59,7 +59,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  // ✅ NUEVO MÉTODO: CARGAR TICKETS RECIENTES
+  // CARGAR TICKETS RECIENTES
   cargarTicketsRecientes() {
     console.log('🎫 Cargando tickets recientes...');
     this.loadingTickets = true;
@@ -74,13 +74,12 @@ export class DashboardComponent implements OnInit {
       error: (error) => {
         console.error('❌ Error cargando tickets:', error);
         this.loadingTickets = false;
-        // Datos de ejemplo para desarrollo
         this.cargarTicketsEjemplo();
       }
     });
   }
 
-  // ✅ MÉTODO PARA CALCULAR ESTADÍSTICAS
+  // CALCULAR ESTADÍSTICAS
   calcularEstadisticasTickets(tickets: any[]) {
     this.totalTickets = tickets.length;
     this.ticketsAbiertos = tickets.filter(ticket => 
@@ -88,7 +87,7 @@ export class DashboardComponent implements OnInit {
     ).length;
   }
 
-  // ✅ MÉTODO DE FALLBACK CON DATOS DE EJEMPLO
+  // MÉTODO DE FALLBACK CON DATOS DE EJEMPLO
   cargarTicketsEjemplo() {
     console.log('🔄 Cargando datos de ejemplo...');
     this.ticketsRecientes = [
@@ -112,16 +111,96 @@ export class DashboardComponent implements OnInit {
     this.calcularEstadisticasTickets(this.ticketsRecientes);
   }
 
-  // ✅ NUEVO MÉTODO: IR A DETALLE DE TICKET
+  // VER DETALLE DE TICKET
   verTicket(ticketId: number) {
     console.log('🔍 Viendo ticket:', ticketId);
     this.router.navigate(['/tickets', ticketId]);
   }
 
-  // ✅ NUEVO MÉTODO: CREAR NUEVO TICKET
+  // CREAR NUEVO TICKET
   crearNuevoTicket() {
     console.log('➕ Creando nuevo ticket...');
     this.router.navigate(['/tickets/ticket-create']);
+  }
+
+  // NAVEGACIÓN A COMUNICACIÓN
+  goToComunicacion() {
+    console.log('💬 Navegando a Comunicación...');
+    this.router.navigate(['/comunicacion']).then(success => {
+      if (success) {
+        console.log('✅ Navegación exitosa a comunicación');
+      } else {
+        console.error('❌ Error navegando a comunicación');
+        alert('La página de comunicación no está disponible');
+      }
+    });
+  }
+
+  // NAVEGACIÓN A RESERVAS
+  goToReservas() {
+    console.log('📅 Navegando a Reservas...');
+    this.router.navigate(['/reservas']).then(success => {
+      if (success) {
+        console.log('✅ Navegación exitosa a reservas');
+      } else {
+        console.error('❌ Error navegando a reservas');
+        alert('La página de reservas no está disponible');
+      }
+    });
+  }
+
+  goToPerfil() {
+    console.log('📍 Navegando a Mi Perfil...');
+    this.router.navigate(['/perfil']).then(success => {
+      if (success) {
+        console.log('✅ Navegación exitosa a perfil');
+      } else {
+        console.error('❌ Error navegando a perfil');
+        alert('La página de perfil no está disponible');
+      }
+    });
+  }
+
+  goToTickets() {
+    console.log('🎫 Navegando a Tickets de Soporte...');
+    this.router.navigate(['/tickets']).then(success => {
+      if (success) {
+        console.log('✅ Navegación exitosa a tickets de soporte');
+      } else {
+        console.error('❌ Error navegando a tickets de soporte');
+        alert('La página de tickets de soporte no está disponible');
+      }
+    });
+  }
+
+  goToRoles() {
+    console.log('🎭 Navegando a Gestión de Roles...');
+    
+    if (!this.esAdmin) {
+      alert('❌ Solo los administradores pueden acceder a la gestión de roles');
+      return;
+    }
+    
+    this.router.navigate(['/roles']).then(success => {
+      if (success) {
+        console.log('✅ Navegación exitosa a gestión de roles');
+      } else {
+        console.error('❌ Error navegando a gestión de roles');
+        alert('La página de gestión de roles no está disponible');
+      }
+    });
+  }
+
+  goToAuditoria() {
+    console.log('📊 Navegando a Auditoría...');
+    this.router.navigate(['/auditoria']).then(success => {
+      if (success) {
+        console.log('✅ Navegación exitosa a auditoría');
+      } else {
+        console.error('❌ Error navegando a auditoría');
+        alert('La página de auditoría no está disponible');
+      }
+    });
   }
 
   // Fallback si falla la carga del perfil
@@ -168,75 +247,6 @@ export class DashboardComponent implements OnInit {
     this.rolBadgeColor = colores[this.userRole] || '#6C757D';
   }
 
-  // ✅ NUEVO MÉTODO: IR A RESERVAS
-  goToReservas() {
-    console.log('📅 Navegando a Reservas...');
-    this.router.navigate(['/reservas']).then(success => {
-      if (success) {
-        console.log('✅ Navegación exitosa a reservas');
-      } else {
-        console.error('❌ Error navegando a reservas');
-        alert('La página de reservas no está disponible');
-      }
-    });
-  }
-
-  goToPerfil() {
-    console.log('📍 Navegando a Mi Perfil...');
-    this.router.navigate(['/perfil']).then(success => {
-      if (success) {
-        console.log('✅ Navegación exitosa a perfil');
-      } else {
-        console.error('❌ Error navegando a perfil');
-        alert('La página de perfil no está disponible');
-      }
-    });
-  }
-
-  goToTickets() {
-    console.log('🎫 Navegando a Tickets de Soporte...');
-    this.router.navigate(['/tickets']).then(success => {
-      if (success) {
-        console.log('✅ Navegación exitosa a tickets de soporte');
-      } else {
-        console.error('❌ Error navegando a tickets de soporte');
-        alert('La página de tickets de soporte no está disponible');
-      }
-    });
-  }
-
-  goToRoles() {
-    console.log('🎭 Navegando a Gestión de Roles...');
-    
-    // Verificar permisos
-    if (!this.esAdmin) {
-      alert('❌ Solo los administradores pueden acceder a la gestión de roles');
-      return;
-    }
-    
-    this.router.navigate(['/roles']).then(success => {
-      if (success) {
-        console.log('✅ Navegación exitosa a gestión de roles');
-      } else {
-        console.error('❌ Error navegando a gestión de roles');
-        alert('La página de gestión de roles no está disponible');
-      }
-    });
-  }
-
-  goToAuditoria() {
-    console.log('📊 Navegando a Auditoría...');
-    this.router.navigate(['/auditoria']).then(success => {
-      if (success) {
-        console.log('✅ Navegación exitosa a auditoría');
-      } else {
-        console.error('❌ Error navegando a auditoría');
-        alert('La página de auditoría no está disponible');
-      }
-    });
-  }
-
-
   logout() {
     console.log('🚪 Cerrando sesión...');
     this.auth.logout().subscribe({
@@ -266,12 +276,10 @@ export class DashboardComponent implements OnInit {
   actualizarPerfil() {
     console.log('🔄 Forzando actualización de perfil...');
     this.cargarPerfilYVerificarRol();
-    this.cargarTicketsRecientes(); // ✅ Actualizar tickets también
+    this.cargarTicketsRecientes();
   }
+
   abrirChatAgente() {
-  // Aquí puedes integrar el flujo con n8n, o abrir una ventana/chat
-  console.log("Chat Agente activado");
-  // Por ejemplo:
-  // window.open('https://tu-n8n-instance/chat', '_blank');
-}
+    console.log("Chat Agente activado");
+  }
 }

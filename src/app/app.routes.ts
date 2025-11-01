@@ -21,11 +21,14 @@ import { ListaReservasComponent } from './reservas/lista-reservas/lista-reservas
 import { FormularioReservaComponent } from './reservas/formulario-reserva/formulario-reserva.component';
 import { QrConfirmacionComponent } from './reservas/qr-confirmacion/qr-confirmacion.component';
 
-// ✅ AÑADE ESTOS IMPORTS DE TICKETS
+// Componentes de Tickets
 import { TicketsListComponent } from './tickets/tickets-list/tickets-list.component';
 import { TicketCreateComponent } from './tickets/ticket-create/ticket-create.component';
 import { TicketDetailComponent } from './tickets/ticket-detail/ticket-detail.component';
 import { TicketsReportesComponent } from './tickets/tickets-reportes/tickets-reportes.component';
+
+// ✅ CORREGIDO: ComunicacionComponent en español
+import { ComunicacionComponent } from './comunicacion/comunicacion.component';
 
 export const routes: Routes = [
   // Rutas públicas (solo para usuarios NO autenticados)
@@ -87,7 +90,7 @@ export const routes: Routes = [
     canActivate: [AuthGuard] 
   },
 
-  // ✅ RUTAS DEL SISTEMA DE TICKETS - AÑADE ESTO
+  // Rutas del Sistema de Tickets
   { 
     path: 'tickets', 
     children: [
@@ -114,47 +117,48 @@ export const routes: Routes = [
     ]
   },
 
-  // ✅ RUTAS DEL SISTEMA DE RESERVAS
+  // Rutas del Sistema de Reservas
   { 
     path: 'reservas', 
     children: [
-      // Ruta principal de reservas - va al calendario (todos pueden ver)
       { 
         path: '', 
         component: CalendarioReservasComponent, 
         canActivate: [AuthGuard] 
       },
-      // Calendario de reservas (todos pueden ver)
       { 
         path: 'calendario', 
         component: CalendarioReservasComponent, 
         canActivate: [AuthGuard] 
       },
-      // Lista de mis reservas (todos pueden ver SUS reservas)
       { 
         path: 'mis-reservas', 
         component: ListaReservasComponent, 
         canActivate: [AuthGuard] 
       },
-      // Crear nueva reserva (todos pueden crear)
       { 
         path: 'nueva', 
         component: FormularioReservaComponent, 
         canActivate: [AuthGuard] 
       },
-      // Confirmación QR (todos pueden ver SUS QR)
       { 
         path: 'qr/:id', 
         component: QrConfirmacionComponent, 
         canActivate: [AuthGuard] 
       },
-      // ✅ SOLO ESTA RUTA ES RESTRINGIDA: Administración de reservas
       { 
         path: 'admin', 
         component: RolesComponent, 
-        canActivate: [AuthGuard] // ← Solo admin/junta/personal
+        canActivate: [AuthGuard]
       }
     ]
+  },
+
+  // ✅ CORREGIDO: ComunicacionComponent en español
+  { 
+    path: 'comunicacion', 
+    component: ComunicacionComponent, 
+    canActivate: [AuthGuard] 
   },
 
   // Redirección por defecto para rutas no encontradas
